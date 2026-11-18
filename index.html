@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Дизайн-проект комнаты 186 × 310 см</title>
+  <title>Дизайн-проект комнаты 186 × 310 см — Архитектурный альбом</title>
   <style>
     :root {
-      --bg: #f4f6f2;
+      --bg: #f1f3ef;
       --surface: #ffffff;
-      --surface-alt: #f9faf7;
-      --text: #1b221e;
-      --muted: #59645d;
-      --accent: #5e9642;
-      --accent-dark: #426e2c;
-      --accent-soft: #e7f2e0;
-      --warm: #d9823b;
-      --border: #dde3da;
-      --shadow-sm: 0 4px 14px rgba(20, 30, 22, 0.05);
-      --shadow-lg: 0 16px 38px rgba(20, 30, 22, 0.08);
+      --surface-alt: #f8f9f6;
+      --text: #181f1b;
+      --muted: #5a655e;
+      --accent: #568c3c;
+      --accent-dark: #3c6628;
+      --accent-soft: #e6f0e0;
+      --warm: #d47a32;
+      --border: #d9dfd6;
+      --shadow-sm: 0 4px 16px rgba(18, 26, 20, 0.05);
+      --shadow-lg: 0 20px 44px rgba(18, 26, 20, 0.09);
       --radius: 20px;
 
-      /* Динамические цвета стен для всех иллюстраций */
-      --wall-green: #b5d89a;
-      --wall-green-shade: #9ec482;
-      --wall-white: #f7f5ef;
-      --wall-white-shade: #e9e5dc;
+      /* Динамические оттенки стен */
+      --wall-green: #b6d69c;
+      --wall-green-deep: #96ba7b;
+      --wall-white: #f6f4ee;
+      --wall-white-deep: #e6e2d8;
     }
 
     * {
@@ -49,8 +49,8 @@
     /* ШАПКА */
     header {
       background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
@@ -58,44 +58,44 @@
     }
 
     .header-inner {
-      max-width: 1240px;
+      max-width: 1260px;
       margin: 0 auto;
-      padding: 12px 18px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
       flex-shrink: 0;
     }
 
     .brand-badge {
-      width: 36px;
+      padding: 0 10px;
       height: 36px;
       border-radius: 10px;
-      background: linear-gradient(135deg, #74b054, #4e7d35);
-      color: #fff;
-      font-weight: 800;
+      background: #1c241f;
+      color: #f4f7f2;
+      font-weight: 700;
       font-size: 0.78rem;
+      letter-spacing: 0.03em;
       display: grid;
       place-items: center;
-      box-shadow: 0 4px 12px rgba(94, 150, 66, 0.25);
     }
 
     .brand h1 {
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.2;
     }
 
     .brand p {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--muted);
     }
 
@@ -132,9 +132,9 @@
     }
 
     main {
-      max-width: 1240px;
+      max-width: 1260px;
       margin: 0 auto;
-      padding: 20px 18px 72px;
+      padding: 22px 20px 76px;
     }
 
     /* ОБЩАЯ КАРТИНА */
@@ -144,11 +144,11 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow-lg);
       overflow: hidden;
-      margin-bottom: 34px;
+      margin-bottom: 36px;
     }
 
     .hero-top-bar {
-      padding: 16px 20px;
+      padding: 16px 22px;
       border-bottom: 1px solid var(--border);
       display: flex;
       flex-wrap: wrap;
@@ -158,13 +158,13 @@
     }
 
     .hero-title h2 {
-      font-size: clamp(1.18rem, 2.6vw, 1.45rem);
+      font-size: clamp(1.16rem, 2.5vw, 1.42rem);
       font-weight: 700;
       letter-spacing: -0.02em;
     }
 
     .hero-title p {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       color: var(--muted);
     }
 
@@ -195,9 +195,9 @@
     }
 
     button.btn.active {
-      background: var(--accent);
+      background: #1c241f;
       color: #fff;
-      border-color: var(--accent);
+      border-color: #1c241f;
     }
 
     button.btn.warm-active {
@@ -208,20 +208,20 @@
 
     .visual-stage {
       position: relative;
-      background: radial-gradient(circle at 50% 35%, #eef4f7 0%, #dce6ec 100%);
-      padding: 14px;
+      background: radial-gradient(circle at 50% 30%, #f5f7f8 0%, #e4e9ec 100%);
+      padding: 16px;
       transition: background 0.4s ease;
       cursor: zoom-in;
     }
 
     body.night-mode .visual-stage {
-      background: radial-gradient(circle at 50% 35%, #242d38 0%, #151b22 100%);
+      background: radial-gradient(circle at 50% 30%, #1e2631 0%, #11161d 100%);
     }
 
     .visual-stage svg {
       width: 100%;
       height: auto;
-      max-height: 540px;
+      max-height: 580px;
       display: block;
       margin: 0 auto;
       border-radius: 12px;
@@ -229,48 +229,49 @@
 
     .zoom-badge {
       position: absolute;
-      right: 16px;
-      bottom: 16px;
-      background: rgba(255, 255, 255, 0.9);
+      right: 18px;
+      bottom: 18px;
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       color: var(--text);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 600;
-      padding: 5px 10px;
+      padding: 6px 11px;
       border-radius: 999px;
       pointer-events: none;
+      box-shadow: var(--shadow-sm);
     }
 
-    /* ВЕЧЕРНИЙ РЕЖИМ ДЛЯ ИЛЛЮСТРАЦИЙ */
+    /* СЛОИ ОСВЕЩЕНИЯ И РАЗМЕРОВ */
     .night-overlay {
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.45s ease;
       pointer-events: none;
     }
 
     .lamp-glow {
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.45s ease;
       pointer-events: none;
     }
 
     .sun-beam {
-      opacity: 0.42;
-      transition: opacity 0.4s ease;
+      opacity: 0.46;
+      transition: opacity 0.45s ease;
       pointer-events: none;
     }
 
     body.night-mode .night-overlay {
-      opacity: 0.36;
+      opacity: 0.42;
     }
 
     body.night-mode .lamp-glow {
-      opacity: 0.95;
+      opacity: 1;
     }
 
     body.night-mode .sun-beam {
-      opacity: 0.05;
+      opacity: 0.04;
     }
 
     .dim-group {
@@ -283,7 +284,7 @@
 
     /* ПАЛИТРА СТЕН */
     .palette-bar {
-      padding: 14px 20px;
+      padding: 14px 22px;
       background: var(--surface-alt);
       border-top: 1px solid var(--border);
       display: flex;
@@ -300,10 +301,10 @@
     }
 
     .ctrl-label {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       color: var(--muted);
     }
 
@@ -312,7 +313,7 @@
       height: 28px;
       border-radius: 50%;
       border: 2px solid #fff;
-      box-shadow: 0 0 0 1px #b5bfb6;
+      box-shadow: 0 0 0 1px #adb8af;
       cursor: pointer;
       transition: transform 0.15s ease;
     }
@@ -325,16 +326,16 @@
     /* ПЛАНИРОВКА И СВОДКА */
     .plan-overview {
       display: grid;
-      grid-template-columns: 310px 1fr;
+      grid-template-columns: 320px 1fr;
       gap: 22px;
-      margin-bottom: 40px;
+      margin-bottom: 42px;
     }
 
     .plan-card, .summary-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 22px;
       box-shadow: var(--shadow-sm);
     }
 
@@ -345,11 +346,11 @@
 
     .plan-svg {
       width: 100%;
-      max-width: 280px;
+      max-width: 285px;
       margin: 0 auto;
       height: auto;
       display: block;
-      background: #fafbf9;
+      background: #fbfcfa;
       border-radius: 12px;
       border: 1px solid var(--border);
     }
@@ -358,7 +359,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 12px;
-      margin-top: 14px;
+      margin-top: 16px;
     }
 
     .spec-item {
@@ -370,22 +371,22 @@
 
     .spec-item span {
       display: block;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       color: var(--muted);
       margin-bottom: 2px;
     }
 
     .spec-item strong {
-      font-size: 0.93rem;
+      font-size: 0.92rem;
     }
 
     /* ЗАГОЛОВОК 4 СТЕН */
     .section-head {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .section-head h2 {
-      font-size: clamp(1.3rem, 3vw, 1.6rem);
+      font-size: clamp(1.28rem, 3vw, 1.58rem);
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 4px;
@@ -400,7 +401,7 @@
     .walls-list {
       display: flex;
       flex-direction: column;
-      gap: 26px;
+      gap: 28px;
     }
 
     .wall-card {
@@ -409,7 +410,7 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow-lg);
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.18fr 0.82fr;
       overflow: hidden;
     }
 
@@ -419,7 +420,7 @@
 
     .wall-photo {
       position: relative;
-      background: #e9eff2;
+      background: #eceff1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -430,7 +431,7 @@
     .wall-photo svg {
       width: 100%;
       height: 100%;
-      min-height: 310px;
+      min-height: 320px;
       display: block;
     }
 
@@ -443,9 +444,10 @@
       border: 1px solid var(--border);
       padding: 5px 11px;
       border-radius: 999px;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 600;
       pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     .wall-body {
@@ -457,10 +459,10 @@
     }
 
     .wall-step {
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
       color: var(--accent-dark);
     }
 
@@ -478,15 +480,15 @@
 
     .chip {
       background: var(--accent-soft);
-      color: #264517;
+      color: #234015;
       padding: 4px 10px;
       border-radius: 8px;
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       font-weight: 600;
     }
 
     .wall-lead {
-      color: #2c3530;
+      color: #27302b;
       font-size: 0.94rem;
     }
 
@@ -502,7 +504,7 @@
       position: relative;
       padding-left: 18px;
       font-size: 0.89rem;
-      color: #3c4640;
+      color: #3a443e;
     }
 
     .wall-points li::before {
@@ -519,14 +521,14 @@
     .lightbox {
       position: fixed;
       inset: 0;
-      background: rgba(15, 20, 18, 0.88);
-      backdrop-filter: blur(8px);
+      background: rgba(14, 18, 16, 0.9);
+      backdrop-filter: blur(10px);
       z-index: 100;
       display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 14px;
     }
 
     .lightbox.open {
@@ -535,11 +537,11 @@
 
     .lightbox-box {
       width: 100%;
-      max-width: 1060px;
+      max-width: 1120px;
       background: var(--surface);
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
     }
 
     .lightbox-head {
@@ -547,25 +549,42 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 10px;
       border-bottom: 1px solid var(--border);
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
     }
 
-    .lightbox-close {
-      border: none;
-      background: var(--surface-alt);
+    .lightbox-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lightbox-btn {
       border: 1px solid var(--border);
+      background: var(--surface-alt);
       border-radius: 8px;
       padding: 6px 12px;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
+    }
+
+    .lightbox-viewport {
+      overflow: auto;
+      max-height: 80svh;
+      background: #eef1f3;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .lightbox-content {
+      transform-origin: top left;
+      transition: transform 0.2s ease;
     }
 
     .lightbox-content svg {
       width: 100%;
       height: auto;
-      max-height: 78svh;
       display: block;
     }
 
@@ -615,7 +634,7 @@
         padding: 12px 14px;
       }
       .wall-photo svg {
-        min-height: 230px;
+        min-height: 235px;
       }
       .wall-body {
         padding: 18px 16px;
@@ -633,12 +652,12 @@
     <div class="brand">
       <div class="brand-badge">186×310</div>
       <div>
-        <h1>Проект комнаты 186 × 310 см</h1>
-        <p>Общая картина и детальный обзор каждой из 4 стен</p>
+        <h1>Дизайн-проект комнаты 186 × 310 см</h1>
+        <p>Аксонометрия интерьера и рабочие развёртки всех 4 стен</p>
       </div>
     </div>
     <nav class="nav-links">
-      <a href="#overview">Общая картина</a>
+      <a href="#overview">Общий вид</a>
       <a href="#plan">План</a>
       <a href="#wall-1">1. Салатовая стена</a>
       <a href="#wall-2">2. Шкаф и дверь</a>
@@ -653,182 +672,304 @@
   <section id="overview" class="hero-card">
     <div class="hero-top-bar">
       <div class="hero-title">
-        <h2>Общая картина интерьера (вид в разрезе)</h2>
-        <p>Вся комната 186 × 310 × 238 см в масштабе — нажмите на картинку, чтобы открыть крупно</p>
+        <h2>Общая картина интерьера (аксонометрический разрез)</h2>
+        <p>Масштабная проекция 186 × 310 × 238 см — нажмите на визуализацию для детального просмотра</p>
       </div>
       <div class="hero-actions">
         <button class="btn" id="btn-night">☀️ День / Вечер</button>
-        <button class="btn active" id="btn-dims">📏 Размеры</button>
+        <button class="btn active" id="btn-dims">📐 Размеры</button>
       </div>
     </div>
 
-    <div class="visual-stage" data-lightbox="Общая картина комнаты 186 × 310 см">
-      <svg viewBox="0 0 920 560" xmlns="http://www.w3.org/2000/svg">
+    <div class="visual-stage" data-lightbox="Общая аксонометрия комнаты 186 × 310 × 238 см">
+      <svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#89c4eb"/>
-            <stop offset="65%" stop-color="#d8eefb"/>
-            <stop offset="100%" stop-color="#f2ede2"/>
+          <!-- Архитектурные градиенты и текстуры -->
+          <linearGradient id="skyStudio" x1="0" y1="0" x2="0.2" y2="1">
+            <stop offset="0%" stop-color="#9dc9e6"/>
+            <stop offset="58%" stop-color="#dfeff9"/>
+            <stop offset="100%" stop-color="#f3efe6"/>
           </linearGradient>
-          <linearGradient id="oakTop" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#cfa06b"/>
-            <stop offset="100%" stop-color="#b47e47"/>
+          <linearGradient id="oakSurface" x1="0" y1="0" x2="1" y2="0.8">
+            <stop offset="0%" stop-color="#cfa372"/>
+            <stop offset="50%" stop-color="#be8e5b"/>
+            <stop offset="100%" stop-color="#a87846"/>
           </linearGradient>
-          <linearGradient id="oakSide" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#a8733e"/>
-            <stop offset="100%" stop-color="#87582b"/>
+          <linearGradient id="oakShadow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#9c6c3d"/>
+            <stop offset="100%" stop-color="#7c522b"/>
           </linearGradient>
-          <linearGradient id="sunRay" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#fff8d6" stop-opacity="0.75"/>
-            <stop offset="100%" stop-color="#fff8d6" stop-opacity="0"/>
+          <linearGradient id="wallAO-Top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a221d" stop-opacity="0.14"/>
+            <stop offset="100%" stop-color="#1a221d" stop-opacity="0"/>
           </linearGradient>
-          <radialGradient id="warmLamp" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#ffcf75" stop-opacity="0.7"/>
-            <stop offset="100%" stop-color="#ffcf75" stop-opacity="0"/>
+          <linearGradient id="wallAO-Bottom" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#1a221d" stop-opacity="0.16"/>
+            <stop offset="100%" stop-color="#1a221d" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="cornerAO-L" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0%" stop-color="#1a221d" stop-opacity="0.13"/>
+            <stop offset="100%" stop-color="#1a221d" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="cornerAO-R" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a221d" stop-opacity="0.13"/>
+            <stop offset="100%" stop-color="#1a221d" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="sunShaft" x1="0" y1="0" x2="0.7" y2="1">
+            <stop offset="0%" stop-color="#fffbe6" stop-opacity="0.72"/>
+            <stop offset="65%" stop-color="#fffbe6" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#fffbe6" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="lampHalo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffd27d" stop-opacity="0.75"/>
+            <stop offset="55%" stop-color="#ffbe55" stop-opacity="0.24"/>
+            <stop offset="100%" stop-color="#ffbe55" stop-opacity="0"/>
           </radialGradient>
-          <pattern id="parquetPat" width="32" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(26)">
-            <rect width="32" height="16" fill="#a7723d"/>
-            <rect x="0.5" y="0.5" width="15" height="7" fill="#b58049"/>
-            <rect x="16.5" y="0.5" width="15" height="7" fill="#9c6834"/>
-            <rect x="8.5" y="8.5" width="15" height="7" fill="#ad7741"/>
+          <linearGradient id="heaterWarm" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ff8a3d" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#ff8a3d" stop-opacity="0"/>
+          </linearGradient>
+
+          <!-- Текстура инженерной доски / паркета -->
+          <pattern id="proParquet" width="44" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(26.5)">
+            <rect width="44" height="22" fill="#a87644"/>
+            <rect x="0.6" y="0.6" width="20.8" height="9.8" fill="#b68451"/>
+            <rect x="22.6" y="0.6" width="20.8" height="9.8" fill="#9f6d3c"/>
+            <rect x="11.6" y="11.6" width="20.8" height="9.8" fill="#ae7c49"/>
+            <rect x="33.6" y="11.6" width="10.4" height="9.8" fill="#a2703f"/>
+            <rect x="0" y="11.6" width="10.4" height="9.8" fill="#a2703f"/>
           </pattern>
+
+          <!-- Текстура буклированного ковра -->
+          <pattern id="rugWeave" width="6" height="6" patternUnits="userSpaceOnUse">
+            <rect width="6" height="6" fill="#ece7dd"/>
+            <circle cx="1.5" cy="1.5" r="0.8" fill="#dad3c5"/>
+            <circle cx="4.5" cy="4.5" r="0.8" fill="#dad3c5"/>
+          </pattern>
+
+          <filter id="archShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#141c17" flood-opacity="0.16"/>
+          </filter>
         </defs>
 
-        <!-- ПОЛ -->
-        <polygon points="420,235 740,395 490,520 170,360" fill="url(#parquetPat)" stroke="#754b24" stroke-width="2"/>
-
-        <!-- Ковёр в центре -->
-        <polygon points="405,280 585,370 465,430 285,340" fill="#ebe6dc" stroke="#c5beaf" stroke-width="1.5"/>
-        <polygon points="405,288 572,371 465,424 298,341" fill="none" stroke="#8fb379" stroke-width="2"/>
-
-        <!-- ЗАДНЯЯ ЛЕВАЯ СТЕНА (ОКОННАЯ 186 см) -->
-        <polygon points="170,135 420,10 420,235 170,360" style="fill: var(--wall-white);" stroke="#d5d1c7" stroke-width="1.5"/>
-        <!-- Окно 70 x 145 см -->
-        <polygon points="265,112 355,67 355,212 265,257" fill="url(#skyGrad)" stroke="#ffffff" stroke-width="5"/>
-        <circle cx="305" cy="175" r="24" fill="#77a65b" opacity="0.85"/>
-        <circle cx="330" cy="160" r="18" fill="#8bb86e" opacity="0.85"/>
-        <line x1="265" y1="168" x2="355" y2="123" stroke="#ffffff" stroke-width="4"/>
-        <polygon points="267,114 353,71 353,95 267,138" fill="#f7f5ee" opacity="0.92"/>
-        <!-- Подоконник -->
-        <polygon points="260,259 360,209 368,214 268,264" fill="url(#oakTop)"/>
-
-        <!-- Уголок цветов слева от окна -->
-        <polygon points="182,312 238,284 252,291 196,319" fill="url(#oakTop)"/>
-        <polygon points="205,274 242,255 254,261 217,280" fill="url(#oakTop)"/>
-        <ellipse cx="228" cy="252" rx="10" ry="6" fill="#d87b56"/>
-        <path d="M228,250 Q215,222 208,232 Q220,238 228,250 Q235,215 245,226 Q236,238 228,250 Z" fill="#4b8736"/>
-        <ellipse cx="195" cy="336" rx="13" ry="8" fill="#d87b56"/>
-        <path d="M195,332 Q176,296 172,312 Q186,318 195,332 Q204,290 218,306 Q204,318 195,332 Z" fill="#3f782c"/>
-
-        <!-- ЗАДНЯЯ ПРАВАЯ СТЕНА (БЕЛАЯ 310 см) -->
-        <polygon points="420,10 740,170 740,395 420,235" style="fill: var(--wall-white-shade);" stroke="#d5d1c7" stroke-width="1.5"/>
-
-        <!-- ВЫСТУП (ОТСТУП) 23 × 24 см СПРАВА ОТ ОКНА СО ВСТРОЕННЫМ ОБОГРЕВАТЕЛЕМ ВНУТРИ -->
-        <!-- Левая грань выступа (23 см) -->
-        <polygon points="392,24 420,10 420,235 392,249" fill="#d6dbd8" stroke="#a6ada9" stroke-width="1"/>
-        <!-- Правая грань выступа (24 см) -->
-        <polygon points="420,10 446,23 446,248 420,235" fill="#c6ccc9" stroke="#a6ada9" stroke-width="1"/>
-        <!-- Встроенный обогреватель внутри нижней части выступа 23×24 -->
-        <polygon points="423,166 443,176 443,241 423,231" fill="#3a403d" stroke="#eef2f0" stroke-width="1.5"/>
-        <line x1="425" y1="178" x2="441" y2="186" stroke="#dce2df" stroke-width="1.8"/>
-        <line x1="425" y1="190" x2="441" y2="198" stroke="#dce2df" stroke-width="1.8"/>
-        <line x1="425" y1="202" x2="441" y2="210" stroke="#dce2df" stroke-width="1.8"/>
-        <line x1="425" y1="214" x2="441" y2="222" stroke="#dce2df" stroke-width="1.8"/>
-        <line x1="425" y1="226" x2="441" y2="234" stroke="#dce2df" stroke-width="1.8"/>
-        <circle cx="439" cy="171" r="2.2" fill="#ff5e1a"/>
-
-        <!-- Столик 74 x 40 см у белой стены (сразу после выступа 23×24) -->
-        <polygon points="494,207 570,245 534,263 458,225" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="1"/>
-        <line x1="462" y1="227" x2="462" y2="293" stroke="#7c4e26" stroke-width="3.5"/>
-        <line x1="532" y1="263" x2="532" y2="329" stroke="#7c4e26" stroke-width="3.5"/>
-        <line x1="566" y1="246" x2="566" y2="309" stroke="#7c4e26" stroke-width="3.5"/>
-        <!-- Стул -->
-        <polygon points="474,259 514,279 488,292 448,272" fill="#e5e0d4" stroke="#b5afa2" stroke-width="1"/>
-        <polygon points="448,243 488,263 488,277 448,257" fill="url(#oakSide)"/>
-        <line x1="452" y1="273" x2="452" y2="313" stroke="#7c4e26" stroke-width="3"/>
-        <line x1="486" y1="291" x2="486" y2="331" stroke="#7c4e26" stroke-width="3"/>
-        <!-- Ноутбук и зелёная лампа -->
-        <polygon points="508,213 534,226 520,233 494,220" fill="#cfd4d7"/>
-        <circle cx="502" cy="195" r="9" fill="#6f9e58"/>
-        <line x1="504" y1="201" x2="504" y2="215" stroke="#d4af37" stroke-width="2"/>
-
-        <!-- Шкаф-пенал 66 x 36 x 205 см -->
-        <polygon points="564,133 598,116 598,321 564,338" fill="url(#oakSide)" stroke="#7c4e26" stroke-width="1"/>
-        <polygon points="564,133 598,116 666,150 632,167" fill="url(#oakTop)"/>
-        <polygon points="564,133 632,167 632,223 564,189" fill="#fcfbf8" stroke="#dcd8ce" stroke-width="1"/>
-        <polygon points="564,189 632,223 632,271 564,237" fill="#b4804a" stroke="#7c4e26" stroke-width="1"/>
-        <polygon points="576,213 582,216 582,240 576,237" fill="#6f9e58"/>
-        <polygon points="583,217 589,220 589,244 583,241" fill="#d87b56"/>
-        <polygon points="590,221 596,224 596,248 590,245" fill="#5c768d"/>
-        <polygon points="564,237 632,271 632,372 564,338" fill="#fcfbf8" stroke="#dcd8ce" stroke-width="1"/>
-
-        <!-- ПЕРЕДНЯЯ ЛЕВАЯ СТЕНА В РАЗРЕЗЕ (САЛАТОВАЯ 310 см) -->
-        <polygon points="170,135 490,295 490,520 170,360" style="fill: var(--wall-green);" opacity="0.32"/>
-        <polygon points="170,265 490,425 490,520 170,360" style="fill: var(--wall-green);" stroke="#7ea863" stroke-width="1.5"/>
-
-        <!-- 3 ботанических постера на салатовой стене -->
-        <g opacity="0.92">
-          <polygon points="242,148 282,168 282,222 242,202" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.5"/>
-          <circle cx="262" cy="184" r="9" fill="#74a358"/>
-          <polygon points="294,174 334,194 334,248 294,228" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.5"/>
-          <ellipse cx="314" cy="211" rx="7" ry="13" fill="#5b8a44"/>
-          <polygon points="346,200 386,220 386,274 346,254" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.5"/>
-          <circle cx="366" cy="236" r="9" fill="#89b56e"/>
+        <!-- АРХИТЕКТУРНОЕ ОСНОВАНИЕ (ПЛИТА ПЕРЕКРЫТИЯ В РАЗРЕЗЕ) -->
+        <g filter="url(#archShadow)">
+          <polygon points="168,382 500,548 772,412 772,428 500,564 168,398" fill="#d5d9d6"/>
+          <polygon points="168,382 500,548 500,564 168,398" fill="#c3c8c4"/>
         </g>
 
-        <!-- КРОВАТЬ 197 x 102 см у салатовой стены -->
-        <polygon points="222,262 318,214 318,268 222,316" fill="url(#oakSide)" stroke="#7c4e26" stroke-width="1"/>
-        <polygon points="222,316 318,268 504,361 408,409" fill="#faf8f2" stroke="#d8d4ca" stroke-width="1.5"/>
-        <polygon points="354,322 450,274 504,301 408,349" fill="#87b36d" opacity="0.92"/>
-        <polygon points="222,316 408,409 408,448 222,355" fill="url(#oakTop)" stroke="#7c4e26" stroke-width="1"/>
-        <polygon points="408,409 504,361 504,400 408,448" fill="url(#oakSide)" stroke="#7c4e26" stroke-width="1"/>
-        <polygon points="246,304 294,280 322,294 274,318" fill="#ffffff" stroke="#dcd8ce" stroke-width="1"/>
-        <polygon points="288,314 326,295 348,306 310,325" fill="#d9ebd0" stroke="#b6cfa8" stroke-width="1"/>
+        <!-- ПОЛ КОМНАТЫ (186 x 310 см) -->
+        <!-- Углы: Задний (440, 246), Правый (772, 412), Передний (500, 548), Левый (168, 382) -->
+        <polygon points="440,246 772,412 500,548 168,382" fill="url(#proParquet)" stroke="#7c522b" stroke-width="1.2"/>
 
-        <!-- ПЕРЕДНЯЯ ПРАВАЯ ЗОНА (ШКАФ 106 см + ДВЕРЬ 80 см с антресолью 33 см) -->
-        <polygon points="490,340 598,394 598,510 490,456" fill="#fcfbf8" fill-opacity="0.72" stroke="#b9b5ab" stroke-width="1.5"/>
-        <line x1="544" y1="367" x2="544" y2="483" stroke="#b9b5ab" stroke-width="1.2"/>
-        <polygon points="598,355 740,284 740,395 598,466" fill="url(#oakTop)" fill-opacity="0.78" stroke="#8c5c2e" stroke-width="1.5"/>
-        <polygon points="598,315 740,244 740,284 598,355" fill="#fcfbf8" fill-opacity="0.88" stroke="#b9b5ab" stroke-width="1.5"/>
+        <!-- Текстурный ковёр с бахромой и геометрическим кантом -->
+        <polygon points="418,296 604,389 476,453 290,360" fill="url(#rugWeave)" stroke="#cfc8b8" stroke-width="1.2"/>
+        <polygon points="418,305 590,391 476,448 304,362" fill="none" stroke="#85a86e" stroke-width="1.6"/>
 
-        <!-- Солнечный луч из окна -->
-        <polygon class="sun-beam" points="265,112 355,67 610,380 340,460" fill="url(#sunRay)"/>
+        <!-- ЗАДНЯЯ ЛЕВАЯ СТЕНА (ОКОННАЯ 186 см) -->
+        <polygon points="168,144 440,8 440,246 168,382" style="fill: var(--wall-white);" stroke="#d2cec4" stroke-width="1.2"/>
+        <!-- Светотень по стыку с полом и углом -->
+        <polygon points="168,354 440,218 440,246 168,382" fill="url(#wallAO-Bottom)"/>
 
-        <!-- Вечернее затемнение и тёплый свет ламп -->
-        <rect class="night-overlay" x="0" y="0" width="920" height="560" fill="#0d141d"/>
-        <circle class="lamp-glow" cx="235" cy="240" r="95" fill="url(#warmLamp)"/>
-        <circle class="lamp-glow" cx="502" cy="206" r="95" fill="url(#warmLamp)"/>
+        <!-- ОКНО 70 × 145 см С ГЛУБОКИМИ ОТКОСАМИ -->
+        <!-- Внешний проём -->
+        <polygon points="266,118 362,70 362,222 266,270" fill="#e6e3da" stroke="#cbc7bd" stroke-width="1"/>
+        <!-- Откос окна -->
+        <polygon points="274,114 362,70 362,222 274,266" fill="url(#skyStudio)" stroke="#ffffff" stroke-width="4.5"/>
+        <!-- Пейзаж за окном (мягкий архитектурный фон) -->
+        <path d="M276,225 Q306,182 332,196 Q350,174 360,185 L360,221 L276,263 Z" fill="#82ab68" opacity="0.82"/>
+        <circle cx="315" cy="184" r="22" fill="#6f9c54" opacity="0.72"/>
+        <!-- Горизонтальный импост и профиль рамы -->
+        <line x1="274" y1="176" x2="362" y2="132" stroke="#ffffff" stroke-width="4"/>
+        <line x1="274" y1="177" x2="362" y2="133" stroke="#d5d2c8" stroke-width="0.8"/>
+        <!-- Льняная римская штора в верхней части -->
+        <polygon points="276,115 360,73 360,96 276,138" fill="#f7f5ef" stroke="#dfd9cd" stroke-width="0.8"/>
+        <line x1="276" y1="126" x2="360" y2="84" stroke="#e2ddd1" stroke-width="1"/>
+        <!-- Дубовый подоконник -->
+        <polygon points="260,272 368,218 377,223 269,277" fill="url(#oakSurface)" stroke="#85582d" stroke-width="0.8"/>
+        <polygon points="260,272 269,277 269,282 260,277" fill="url(#oakShadow)"/>
 
-        <!-- РАЗМЕРНЫЕ ВЫНОСКИ -->
-        <g class="dim-group" font-family="sans-serif" font-size="12" font-weight="700">
-          <g transform="translate(155, 220)">
-            <rect x="-52" y="-13" width="104" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
-            <text x="0" y="3" fill="#fff" text-anchor="middle">Салатовая 310</text>
-          </g>
-          <g transform="translate(310, 56)">
-            <rect x="-44" y="-13" width="88" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
-            <text x="0" y="3" fill="#fff" text-anchor="middle">Окно 70 см</text>
-          </g>
-          <g transform="translate(436, 142)">
-            <rect x="-66" y="-13" width="132" height="24" rx="6" fill="#d9823b"/>
-            <text x="0" y="3" fill="#fff" text-anchor="middle">Обогреватель 23×24</text>
-          </g>
-          <g transform="translate(542, 184)">
-            <rect x="-48" y="-13" width="96" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
-            <text x="0" y="3" fill="#fff" text-anchor="middle">Столик 74×40</text>
-          </g>
-          <g transform="translate(650, 124)">
-            <rect x="-46" y="-13" width="92" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
-            <text x="0" y="3" fill="#fff" text-anchor="middle">Пенал 66 см</text>
-          </g>
-          <g transform="translate(325, 365)">
-            <rect x="-54" y="-13" width="108" height="24" rx="6" fill="#426e2c"/>
-            <text x="0" y="3" fill="#fff" text-anchor="middle">Кровать 197×102</text>
-          </g>
-          <g transform="translate(645, 425)">
-            <rect x="-66" y="-13" width="132" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
-            <text x="0" y="3" fill="#fff" text-anchor="middle">Шкаф 106 + Дверь 80</text>
-          </g>
+        <!-- УГОЛОК ЦВЕТОВ СЛЕВА ОТ ОКНА (простенок 75 см) -->
+        <!-- Тень на полу под цветами -->
+        <ellipse cx="212" cy="348" rx="34" ry="16" fill="#18201b" opacity="0.14"/>
+        <!-- Двухъярусная металлическо-дубовая этажерка -->
+        <line x1="186" y1="324" x2="186" y2="364" stroke="#f7f6f2" stroke-width="2.2"/>
+        <line x1="242" y1="296" x2="242" y2="336" stroke="#f7f6f2" stroke-width="2.2"/>
+        <line x1="254" y1="264" x2="254" y2="342" stroke="#f7f6f2" stroke-width="2.2"/>
+        <polygon points="182,324 242,294 256,301 196,331" fill="url(#oakSurface)" stroke="#8c5c2e" stroke-width="0.7"/>
+        <polygon points="210,282 246,264 258,270 222,288" fill="url(#oakSurface)" stroke="#8c5c2e" stroke-width="0.7"/>
+        <!-- Керамические кашпо и детальная зелень -->
+        <ellipse cx="234" cy="262" rx="9" ry="5" fill="#cf7551"/>
+        <path d="M234,260 C222,238 214,242 218,252 C224,254 230,256 234,260 C236,232 248,232 246,248 C242,253 238,256 234,260 Z" fill="#498235"/>
+        <path d="M234,260 C228,236 236,226 240,242 C238,250 236,255 234,260 Z" fill="#639e4c"/>
+        <!-- Крупное напольное кашпо -->
+        <path d="M186,338 L206,338 L203,358 L189,358 Z" fill="#d47a55"/>
+        <ellipse cx="196" cy="338" rx="10" ry="5" fill="#b8623f"/>
+        <path d="M196,338 C178,308 172,316 180,328 C186,332 192,335 196,338 C198,298 214,304 208,324 C204,330 200,334 196,338 Z" fill="#3e742b"/>
+        <path d="M196,338 C206,312 220,318 212,332 C206,335 201,336 196,338 Z" fill="#599143"/>
+
+        <!-- ЗАДНЯЯ ПРАВАЯ СТЕНА (ТЁПЛАЯ БЕЛАЯ 310 см) -->
+        <polygon points="440,8 772,174 772,412 440,246" style="fill: var(--wall-white-deep);" stroke="#d2cec4" stroke-width="1.2"/>
+        <polygon points="440,218 772,384 772,412 440,246" fill="url(#wallAO-Bottom)"/>
+
+        <!-- УГЛОВОЙ ВЫСТУП (ОТСТУП) 23 × 24 см СПРАВА ОТ ОКНА СО ВСТРОЕННЫМ ОБОГРЕВАТЕЛЕМ ВНУТРИ -->
+        <!-- Левая грань отступа (ширина 23 см вдоль оконной стены) -->
+        <polygon points="410,23 440,8 440,246 410,261" fill="#e5e7e4" stroke="#b6bcb8" stroke-width="1"/>
+        <!-- Правая грань отступа (глубина 24 см в комнату) -->
+        <polygon points="440,8 468,22 468,260 440,246" fill="#d7dbd8" stroke="#aeb4b0" stroke-width="1"/>
+        <!-- Тень отступа на правой стене -->
+        <polygon points="468,22 478,27 478,265 468,260" fill="url(#cornerAO-R)"/>
+
+        <!-- ВСТРОЕННЫЙ ОБОГРЕВАТЕЛЬ ВНУТРИ ОТСТУПА 23 × 24 см -->
+        <polygon points="443,172 465,183 465,253 443,242" fill="#f7f9f8" stroke="#9aa19d" stroke-width="1.2"/>
+        <polygon points="445,182 463,191 463,249 445,240" fill="#2f3532"/>
+        <!-- Алюминиевые жалюзи конвектора -->
+        <g stroke="#d5dcd8" stroke-width="1.5">
+          <line x1="447" y1="191" x2="461" y2="198"/>
+          <line x1="447" y1="201" x2="461" y2="208"/>
+          <line x1="447" y1="211" x2="461" y2="218"/>
+          <line x1="447" y1="221" x2="461" y2="228"/>
+          <line x1="447" y1="231" x2="461" y2="238"/>
+        </g>
+        <!-- Цифровой термостат и индикатор нагрева -->
+        <circle cx="460" cy="183" r="2" fill="#ff6224"/>
+        <polygon class="lamp-glow" points="443,172 465,183 495,268 443,242" fill="url(#heaterWarm)"/>
+
+        <!-- РАБОЧИЙ СТОЛИК 74 × 40 см СО СТУЛОМ (сразу после отступа 23×24) -->
+        <!-- Тень под столом и стулом -->
+        <polygon points="468,296 548,336 594,313 514,273" fill="#18201b" opacity="0.14"/>
+        <!-- Ножки стола (конусные, дуб) -->
+        <line x1="478" y1="238" x2="478" y2="306" stroke="#7c522b" stroke-width="3.2"/>
+        <line x1="552" y1="275" x2="552" y2="343" stroke="#7c522b" stroke-width="3.2"/>
+        <line x1="588" y1="257" x2="588" y2="323" stroke="#7c522b" stroke-width="3.2"/>
+        <!-- Корпус стола с двумя выдвижными ящиками -->
+        <polygon points="474,235 552,274 552,285 474,246" fill="#fcfbf8" stroke="#cfcbc0" stroke-width="0.8"/>
+        <line x1="513" y1="254.5" x2="513" y2="265.5" stroke="#cfcbc0" stroke-width="1"/>
+        <!-- Столешница -->
+        <polygon points="512,216 592,256 552,276 472,236" fill="url(#oakSurface)" stroke="#85582d" stroke-width="0.9"/>
+        <!-- Стул с мягким сиденьем и гнутой дубовой спинкой -->
+        <polygon points="488,268 530,289 502,303 460,282" fill="#eae5d9" stroke="#beb8aa" stroke-width="0.9"/>
+        <polygon points="460,250 502,271 502,286 460,265" fill="url(#oakShadow)" stroke="#7c522b" stroke-width="0.8"/>
+        <line x1="464" y1="284" x2="464" y2="325" stroke="#7c522b" stroke-width="2.8"/>
+        <line x1="500" y1="302" x2="500" y2="343" stroke="#7c522b" stroke-width="2.8"/>
+        <line x1="526" y1="290" x2="526" y2="330" stroke="#7c522b" stroke-width="2.8"/>
+        <!-- Ноутбук и дизайнерская лампа -->
+        <polygon points="526,222 554,236 538,244 510,230" fill="#d3d8db" stroke="#9ea5a9" stroke-width="0.7"/>
+        <polygon points="538,244 554,236 558,216 542,224" fill="#323c47"/>
+        <line x1="516" y1="224" x2="516" y2="207" stroke="#cfa842" stroke-width="2.2"/>
+        <ellipse cx="514" cy="204" rx="11" ry="6" fill="#639649" stroke="#4a7534" stroke-width="0.8"/>
+
+        <!-- ШКАФ-ПЕНАЛ 66 × 36 × 205 см -->
+        <!-- Тень на стене и полу -->
+        <polygon points="658,154 670,160 670,384 658,378" fill="url(#cornerAO-R)"/>
+        <!-- Левая дубовая боковина -->
+        <polygon points="586,136 622,118 622,332 586,350" fill="url(#oakShadow)" stroke="#7c522b" stroke-width="0.9"/>
+        <!-- Верхняя крышка -->
+        <polygon points="586,136 622,118 694,154 658,172" fill="url(#oakSurface)" stroke="#85582d" stroke-width="0.9"/>
+        <!-- Верхние закрытые секции (матовый белый push-to-open) -->
+        <polygon points="586,136 658,172 658,230 586,194" fill="#fcfbf8" stroke="#d5d1c7" stroke-width="1"/>
+        <line x1="622" y1="154" x2="622" y2="212" stroke="#d5d1c7" stroke-width="1"/>
+        <!-- Открытая средняя ниша из дуба с книгами и декором -->
+        <polygon points="586,194 658,230 658,280 586,244" fill="#9c6c3d" stroke="#7c522b" stroke-width="0.9"/>
+        <line x1="586" y1="219" x2="658" y2="255" stroke="url(#oakSurface)" stroke-width="3.5"/>
+        <!-- Корешки книг -->
+        <polygon points="596,222 602,225 602,250 596,247" fill="#639649"/>
+        <polygon points="603,226 609,229 609,254 603,251" fill="#d47a55"/>
+        <polygon points="610,230 616,233 616,258 610,255" fill="#526d85"/>
+        <polygon points="617,234 623,237 623,262 617,259" fill="#dfc475"/>
+        <!-- Керамическая ваза на верхней открытой полке -->
+        <ellipse cx="642" cy="238" rx="6" ry="9" fill="#f7f5ef"/>
+        <!-- Нижние закрытые секции -->
+        <polygon points="586,244 658,280 658,386 586,350" fill="#fcfbf8" stroke="#d5d1c7" stroke-width="1"/>
+        <line x1="622" y1="262" x2="622" y2="368" stroke="#d5d1c7" stroke-width="1"/>
+
+        <!-- ПЕРЕДНЯЯ ЛЕВАЯ СТЕНА В РАЗРЕЗЕ (САЛАТОВАЯ 310 см) -->
+        <!-- Полупрозрачный верхний контур стены -->
+        <polygon points="168,144 500,310 500,548 168,382" style="fill: var(--wall-green);" opacity="0.28"/>
+        <!-- Сплошная нижняя часть стены в разрезе -->
+        <polygon points="168,282 500,448 500,548 168,382" style="fill: var(--wall-green);" stroke="#7ea863" stroke-width="1.2"/>
+
+        <!-- 3 ботанических постера в дубовых рамах -->
+        <g opacity="0.95">
+          <polygon points="244,154 286,175 286,232 244,211" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.4"/>
+          <circle cx="265" cy="192" r="9.5" fill="#6ea152"/>
+          <polygon points="298,181 340,202 340,259 298,238" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.4"/>
+          <ellipse cx="319" cy="220" rx="7.5" ry="14" fill="#56873e"/>
+          <polygon points="352,208 394,229 394,286 352,265" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.4"/>
+          <circle cx="373" cy="246" r="9.5" fill="#84b368"/>
+        </g>
+
+        <!-- КРОВАТЬ 197 × 102 см У САЛАТОВОЙ СТЕНЫ -->
+        <!-- Тень под кроватью -->
+        <polygon points="218,368 320,317 516,415 414,466" fill="#18201b" opacity="0.18"/>
+        <!-- Дубовое изголовье -->
+        <polygon points="220,268 322,217 322,276 220,327" fill="url(#oakShadow)" stroke="#7c522b" stroke-width="1"/>
+        <!-- Матрас и одеяло -->
+        <polygon points="220,327 322,276 516,373 414,424" fill="#fcfbf7" stroke="#dcd8ce" stroke-width="1.2"/>
+        <!-- Складка одеяла и фактурный салатовый плед в ногах -->
+        <line x1="286" y1="294" x2="388" y2="345" stroke="#e4e0d5" stroke-width="1.4"/>
+        <polygon points="360,331 462,280 516,307 414,358" fill="#82ae67" opacity="0.94"/>
+        <!-- Боковые царги кровати из дуба -->
+        <polygon points="220,327 414,424 414,464 220,367" fill="url(#oakSurface)" stroke="#7c522b" stroke-width="1"/>
+        <polygon points="414,424 516,373 516,413 414,464" fill="url(#oakShadow)" stroke="#7c522b" stroke-width="1"/>
+        <!-- Две объёмные подушки -->
+        <polygon points="244,314 294,289 324,304 274,329" fill="#ffffff" stroke="#d5d1c7" stroke-width="0.9"/>
+        <polygon points="288,325 328,305 352,317 312,337" fill="#d9ebd0" stroke="#b3cca4" stroke-width="0.9"/>
+
+        <!-- ПЕРЕДНЯЯ ПРАВАЯ ЗОНА В РАЗРЕЗЕ (ШКАФ 106 см + ДВЕРЬ 80 см с антресолью 33 см) -->
+        <polygon points="500,352 616,410 616,534 500,476" fill="#fcfbf8" fill-opacity="0.76" stroke="#b5b1a7" stroke-width="1.3"/>
+        <line x1="558" y1="381" x2="558" y2="505" stroke="#b5b1a7" stroke-width="1.1"/>
+        <!-- Дверь 80 см и антресоль 33 см -->
+        <polygon points="616,368 772,290 772,412 616,490" fill="url(#oakSurface)" fill-opacity="0.82" stroke="#85582d" stroke-width="1.3"/>
+        <polygon points="616,324 772,246 772,290 616,368" fill="#fcfbf8" fill-opacity="0.90" stroke="#b5b1a7" stroke-width="1.3"/>
+
+        <!-- Естественный солнечный свет из окна -->
+        <polygon class="sun-beam" points="274,114 362,70 640,395 350,485" fill="url(#sunShaft)"/>
+
+        <!-- Вечерний сценарий освещения -->
+        <rect class="night-overlay" x="0" y="0" width="960" height="600" fill="#0d141d"/>
+        <circle class="lamp-glow" cx="235" cy="245" r="105" fill="url(#lampHalo)"/>
+        <circle class="lamp-glow" cx="514" cy="204" r="105" fill="url(#lampHalo)"/>
+
+        <!-- ТЕХНИЧЕСКИЕ ВЫНОСКИ РАЗМЕРОВ (CAD-СТИЛЬ) -->
+        <g class="dim-group" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" font-weight="700">
+          <!-- Выноска: Салатовая стена 3100 -->
+          <line x1="168" y1="225" x2="215" y2="225" stroke="#1c241f" stroke-width="1.2"/>
+          <circle cx="215" cy="225" r="2.5" fill="#1c241f"/>
+          <rect x="74" y="213" width="94" height="22" rx="5" fill="#ffffff" stroke="#1c241f" stroke-width="1.2"/>
+          <text x="121" y="228" fill="#1c241f" text-anchor="middle">СТЕНА 310 см</text>
+
+          <!-- Выноска: Окно 70 -->
+          <line x1="318" y1="56" x2="318" y2="90" stroke="#1c241f" stroke-width="1.2"/>
+          <circle cx="318" cy="90" r="2.5" fill="#1c241f"/>
+          <rect x="274" y="34" width="88" height="22" rx="5" fill="#ffffff" stroke="#1c241f" stroke-width="1.2"/>
+          <text x="318" y="49" fill="#1c241f" text-anchor="middle">ОКНО 70 см</text>
+
+          <!-- Выноска: Обогреватель внутри отступа 23×24 -->
+          <line x1="454" y1="145" x2="454" y2="188" stroke="#d47a32" stroke-width="1.4"/>
+          <circle cx="454" cy="188" r="3" fill="#d47a32"/>
+          <rect x="382" y="123" width="144" height="22" rx="5" fill="#d47a32"/>
+          <text x="454" y="138" fill="#ffffff" text-anchor="middle">ОБОГРЕВ. В 23×24</text>
+
+          <!-- Выноска: Столик 74×40 -->
+          <line x1="556" y1="186" x2="556" y2="232" stroke="#1c241f" stroke-width="1.2"/>
+          <circle cx="556" cy="232" r="2.5" fill="#1c241f"/>
+          <rect x="506" y="164" width="100" height="22" rx="5" fill="#ffffff" stroke="#1c241f" stroke-width="1.2"/>
+          <text x="556" y="179" fill="#1c241f" text-anchor="middle">СТОЛИК 74×40</text>
+
+          <!-- Выноска: Пенал 66 -->
+          <line x1="654" y1="118" x2="654" y2="144" stroke="#1c241f" stroke-width="1.2"/>
+          <circle cx="654" cy="144" r="2.5" fill="#1c241f"/>
+          <rect x="608" y="96" width="92" height="22" rx="5" fill="#ffffff" stroke="#1c241f" stroke-width="1.2"/>
+          <text x="654" y="111" fill="#1c241f" text-anchor="middle">ПЕНАЛ 66 см</text>
+
+          <!-- Выноска: Кровать 197×102 -->
+          <rect x="278" y="366" width="114" height="22" rx="5" fill="#3c6628"/>
+          <text x="335" y="381" fill="#ffffff" text-anchor="middle">КРОВАТЬ 197×102</text>
+
+          <!-- Выноска: Шкаф 106 + Дверь 80 -->
+          <rect x="602" y="452" width="142" height="22" rx="5" fill="#1c241f"/>
+          <text x="673" y="467" fill="#ffffff" text-anchor="middle">ШКАФ 106 + ДВЕРЬ 80</text>
         </g>
       </svg>
       <div class="zoom-badge">🔍 Нажмите для увеличения</div>
@@ -837,18 +978,18 @@
     <div class="palette-bar">
       <div class="swatch-group">
         <span class="ctrl-label">Салатовая стена:</span>
-        <div class="swatch selected" style="background:#b5d89a" data-green="#b5d89a" data-green-shade="#9ec482" title="Нежно-салатовый"></div>
-        <div class="swatch" style="background:#9fcb7e" data-green="#9fcb7e" data-green-shade="#89b568" title="Свежий фисташковый"></div>
-        <div class="swatch" style="background:#c5e0b4" data-green="#c5e0b4" data-green-shade="#aecb9c" title="Пастельный шалфей"></div>
-        <div class="swatch" style="background:#95bc82" data-green="#95bc82" data-green-shade="#7fa66c" title="Травяной приглушённый"></div>
+        <div class="swatch selected" style="background:#b6d69c" data-green="#b6d69c" data-green-deep="#96ba7b" title="Нежно-салатовый"></div>
+        <div class="swatch" style="background:#9fcb7e" data-green="#9fcb7e" data-green-deep="#82ad62" title="Свежий фисташковый"></div>
+        <div class="swatch" style="background:#c5e0b4" data-green="#c5e0b4" data-green-deep="#a6c493" title="Пастельный шалфей"></div>
+        <div class="swatch" style="background:#95bc82" data-green="#95bc82" data-green-deep="#789e66" title="Травяной приглушённый"></div>
       </div>
 
       <div class="swatch-group">
         <span class="ctrl-label">Белые стены:</span>
-        <div class="swatch selected" style="background:#f7f5ef" data-white="#f7f5ef" data-white-shade="#e9e5dc" title="Тёплый молочно-белый"></div>
-        <div class="swatch" style="background:#ffffff" data-white="#ffffff" data-white-shade="#f0f2f4" title="Чистый белый"></div>
-        <div class="swatch" style="background:#ece8de" data-white="#ece8de" data-white-shade="#ddd8cc" title="Светлый греж"></div>
-        <div class="swatch" style="background:#e5eaec" data-white="#e5eaec" data-white-shade="#d6dde0" title="Светло-серый туман"></div>
+        <div class="swatch selected" style="background:#f6f4ee" data-white="#f6f4ee" data-white-deep="#e6e2d8" title="Тёплый молочно-белый"></div>
+        <div class="swatch" style="background:#ffffff" data-white="#ffffff" data-white-deep="#eef1f3" title="Чистый белый"></div>
+        <div class="swatch" style="background:#ece8de" data-white="#ece8de" data-white-deep="#dbd5c8" title="Светлый греж"></div>
+        <div class="swatch" style="background:#e5eaec" data-white="#e5eaec" data-white-deep="#d4dce0" title="Светло-серый туман"></div>
       </div>
     </div>
   </section>
@@ -856,45 +997,57 @@
   <!-- 2D ЧЕРТЁЖ ПЛАНИРОВКИ И СВОДКА -->
   <section id="plan" class="plan-overview">
     <div class="plan-card">
-      <h3>Чертёж планировки (вид сверху)</h3>
+      <h3>Архитектурный план (М 1:25)</h3>
       <svg class="plan-svg" viewBox="0 0 320 440" xmlns="http://www.w3.org/2000/svg">
-        <rect x="55" y="45" width="210" height="350" fill="#ffffff" stroke="#1b221e" stroke-width="4" />
-        <line x1="55" y1="45" x2="55" y2="395" stroke="#5e9642" stroke-width="7" />
-        <rect x="61" y="51" width="66" height="54" rx="6" fill="#e7f2e0" stroke="#5e9642" stroke-dasharray="3 3" />
-        <text x="94" y="81" font-size="10" text-anchor="middle" fill="#2b4c1b" font-weight="600">Цветы</text>
-        <rect x="139" y="41" width="79" height="8" fill="#7fc3f0" stroke="#1b221e" stroke-width="1.5" />
-        <text x="178" y="34" font-size="10" text-anchor="middle" fill="#1b221e" font-weight="600">Окно 70</text>
+        <!-- Внешний контур стен -->
+        <rect x="55" y="45" width="210" height="350" fill="#ffffff" stroke="#181f1b" stroke-width="4" />
+        <!-- Салатовая стена -->
+        <line x1="55" y1="45" x2="55" y2="395" stroke="#568c3c" stroke-width="7" />
 
-        <!-- Выступ 23x24 со встроенным обогревателем внутри -->
-        <rect x="237" y="45" width="28" height="29" fill="#fde8d7" stroke="#d9823b" stroke-width="2" />
-        <line x1="237" y1="53" x2="237" y2="67" stroke="#d9823b" stroke-width="3" />
-        <text x="232" y="62" font-size="8.5" text-anchor="end" fill="#b85a16" font-weight="700">Обогрев. 23×24</text>
+        <!-- Зона цветов слева от окна -->
+        <rect x="61" y="51" width="66" height="54" rx="6" fill="#e6f0e0" stroke="#568c3c" stroke-dasharray="3 3" />
+        <text x="94" y="81" font-size="10" text-anchor="middle" fill="#234015" font-weight="600">Цветы</text>
 
-        <rect x="61" y="114" width="115" height="222" rx="6" fill="#edf4e8" stroke="#5e9642" stroke-width="1.8" />
-        <text x="118" y="222" font-size="11" text-anchor="middle" fill="#274718" font-weight="700">Кровать</text>
-        <text x="118" y="237" font-size="10" text-anchor="middle" fill="#274718">197 × 102 см</text>
+        <!-- Окно 70 см -->
+        <rect x="139" y="41" width="79" height="8" fill="#89c4eb" stroke="#181f1b" stroke-width="1.5" />
+        <text x="178" y="34" font-size="10" text-anchor="middle" fill="#181f1b" font-weight="600">Окно 70</text>
 
+        <!-- Отступ 23x24 со встроенным обогревателем внутри -->
+        <rect x="237" y="45" width="28" height="29" fill="#fde8d7" stroke="#d47a32" stroke-width="2" />
+        <line x1="237" y1="53" x2="237" y2="67" stroke="#d47a32" stroke-width="3.2" />
+        <text x="231" y="62" font-size="8.5" text-anchor="end" fill="#b35914" font-weight="700">Обогрев. 23×24</text>
+
+        <!-- Кровать 197 x 102 см -->
+        <rect x="61" y="114" width="115" height="222" rx="6" fill="#edf4e8" stroke="#568c3c" stroke-width="1.8" />
+        <text x="118" y="222" font-size="11" text-anchor="middle" fill="#234015" font-weight="700">Кровать</text>
+        <text x="118" y="237" font-size="10" text-anchor="middle" fill="#234015">197 × 102 см</text>
+
+        <!-- Столик 74 x 40 см -->
         <rect x="218" y="116" width="43" height="82" rx="4" fill="#f5ede3" stroke="#9e7449" stroke-width="1.5" />
         <text x="239" y="160" font-size="10" text-anchor="middle" fill="#6b4a28" font-weight="600">Столик</text>
 
-        <rect x="223" y="212" width="38" height="72" rx="4" fill="#f2f3f5" stroke="#5b665f" stroke-width="1.5" />
+        <!-- Шкаф-пенал 66 x 36 см -->
+        <rect x="223" y="212" width="38" height="72" rx="4" fill="#f2f3f5" stroke="#5a655e" stroke-width="1.5" />
         <text x="242" y="251" font-size="10" text-anchor="middle" fill="#36403a" font-weight="600">Шкаф</text>
 
-        <rect x="59" y="340" width="118" height="53" fill="#eef1ec" stroke="#1b221e" stroke-width="1.5" />
-        <text x="118" y="370" font-size="10" text-anchor="middle" fill="#1b221e" font-weight="600">Шкаф 106 см</text>
+        <!-- Встроенный шкаф 106 см -->
+        <rect x="59" y="340" width="118" height="53" fill="#eef1ec" stroke="#181f1b" stroke-width="1.5" />
+        <text x="118" y="370" font-size="10" text-anchor="middle" fill="#181f1b" font-weight="600">Шкаф 106 см</text>
 
+        <!-- Дверь 80 см + антресоль 33 см -->
         <line x1="177" y1="395" x2="265" y2="395" stroke="#ffffff" stroke-width="6" />
         <path d="M 177 395 L 177 315 A 80 80 0 0 1 257 395" fill="none" stroke="#9e7449" stroke-width="1.5" stroke-dasharray="4 3" />
-        <text x="222" y="414" font-size="10" text-anchor="middle" fill="#1b221e" font-weight="600">Дверь 80 + антр. 33</text>
-        <text x="160" y="16" font-size="11" text-anchor="middle" fill="#5b665f" font-weight="700">Ширина 186 см</text>
-        <text x="24" y="220" font-size="11" text-anchor="middle" fill="#5b665f" font-weight="700" transform="rotate(-90 24 220)">Длина 310 см</text>
+        <text x="222" y="414" font-size="10" text-anchor="middle" fill="#181f1b" font-weight="600">Дверь 80 + антр. 33</text>
+
+        <text x="160" y="16" font-size="11" text-anchor="middle" fill="#5a655e" font-weight="700">Ширина 186 см</text>
+        <text x="24" y="220" font-size="11" text-anchor="middle" fill="#5a655e" font-weight="700" transform="rotate(-90 24 220)">Длина 310 см</text>
       </svg>
     </div>
 
     <div class="summary-card">
-      <h3>Почему эта расстановка работает идеально</h3>
+      <h3>Эргономика и архитектурная логика расстановки</h3>
       <p style="color: var(--muted); font-size: 0.92rem;">
-        Комната вытянутая (<strong>186 × 310 см</strong>), поэтому вся крупная мебель выстроена в две чёткие линии по бокам. Так сохраняется свободный проход от двери до окна, а встроенный в угловой отступ <strong>23 × 24 см</strong> обогреватель не занимает полезную площадь стены.
+        В вытянутом помещении <strong>186 × 310 см</strong> важно сохранить сквозную ось от входа к окну. Мебель выстроена в два спокойных фланга без выступающих углов, а встроенный внутрь отступа <strong>23 × 24 см</strong> обогреватель полностью освобождает правую стену.
       </p>
       <div class="specs-grid">
         <div class="spec-item">
@@ -927,72 +1080,109 @@
 
   <!-- ПОДРОБНЫЙ ОБЗОР КАЖДОЙ ИЗ 4 СТЕН -->
   <div class="section-head">
-    <h2>Детальный обзор каждой из 4 стен</h2>
-    <p>Нажмите на любую иллюстрацию, чтобы открыть её во весь экран и рассмотреть детали.</p>
+    <h2>Детальные развёртки каждой из 4 стен</h2>
+    <p>Нажмите на любую развёртку, чтобы открыть её в высоком разрешении и рассмотреть узлы мебели.</p>
   </div>
 
   <div class="walls-list">
     <!-- СТОРОНА 1: САЛАТОВАЯ СТЕНА -->
     <article id="wall-1" class="wall-card">
-      <div class="wall-photo" data-lightbox="Сторона 1 • Салатовая стена (310 × 238 см)">
-        <span class="wall-tag">Сторона 1 • 310 × 238 см</span>
-        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="800" height="32" fill="#f2f4f0"/>
-          <rect x="0" y="32" width="800" height="388" style="fill: var(--wall-green);"/>
-          <rect x="0" y="32" width="800" height="10" fill="#ffffff"/>
-          <rect x="0" y="420" width="800" height="60" fill="url(#parquetPat)"/>
-          <rect x="0" y="408" width="800" height="12" fill="#7c4e26"/>
+      <div class="wall-photo" data-lightbox="Развёртка 01 • Салатовая акцентная стена (310 × 238 см)">
+        <span class="wall-tag">Развёртка 01 • 310 × 238 см</span>
+        <svg viewBox="0 0 840 500" xmlns="http://www.w3.org/2000/svg">
+          <!-- Потолок и теневой зазор -->
+          <rect x="0" y="0" width="840" height="34" fill="#f5f6f3"/>
+          <!-- Салатовая стена -->
+          <rect x="0" y="34" width="840" height="394" style="fill: var(--wall-green);"/>
+          <rect x="0" y="34" width="840" height="14" fill="url(#wallAO-Top)"/>
+          <rect x="0" y="34" width="840" height="7" fill="#ffffff"/>
+          <!-- Пол и дубовый плинтус -->
+          <rect x="0" y="428" width="840" height="72" fill="url(#proParquet)"/>
+          <rect x="0" y="415" width="840" height="13" fill="url(#oakShadow)"/>
 
-          <!-- Слева: световой блик от окна и этажерка с цветами -->
-          <polygon class="sun-beam" points="0,32 180,32 240,420 0,420" fill="url(#sunRay)"/>
-          <rect x="26" y="305" width="82" height="103" fill="none" stroke="#ffffff" stroke-width="4"/>
-          <rect x="22" y="302" width="90" height="7" rx="2" fill="url(#oakTop)"/>
-          <rect x="64" y="232" width="44" height="70" fill="none" stroke="#ffffff" stroke-width="4"/>
-          <rect x="60" y="229" width="52" height="7" rx="2" fill="url(#oakTop)"/>
-          <path d="M74,204 L98,204 L94,229 L78,229 Z" fill="#d87b56"/>
-          <path d="M86,204 Q66,162 58,180 Q74,190 86,204 Q92,152 108,172 Q96,188 86,204 Z" fill="#4b8736"/>
-          <path d="M36,280 L56,280 L53,302 L39,302 Z" fill="#f7f5ef"/>
-          <path d="M46,280 Q32,250 26,264 Q38,270 46,280 Q54,246 66,260 Q54,270 46,280 Z" fill="#5e9642"/>
-
-          <!-- Кровать 197 x 102 см -->
-          <rect x="155" y="242" width="16" height="178" rx="3" fill="url(#oakSide)"/>
-          <rect x="168" y="346" width="452" height="44" rx="4" fill="url(#oakTop)"/>
-          <rect x="180" y="390" width="12" height="30" fill="#7c4e26"/>
-          <rect x="596" y="390" width="12" height="30" fill="#7c4e26"/>
-          <rect x="171" y="314" width="445" height="32" rx="8" fill="#fcfbf7" stroke="#e2dfd6"/>
-          <rect x="475" y="312" width="143" height="36" rx="8" fill="#87b36d"/>
-          <path d="M174,314 Q192,276 232,294 Q242,306 238,314 Z" fill="#ffffff" stroke="#e2dfd6"/>
-          <path d="M218,314 Q234,284 268,298 Q276,308 272,314 Z" fill="#d9ebd0"/>
-
-          <!-- Бра над изголовьем -->
-          <rect x="182" y="182" width="8" height="24" rx="3" fill="#d4af37"/>
-          <path d="M190,192 L212,192 L222,208 L198,208 Z" fill="#fff6de" stroke="#d4af37" stroke-width="2"/>
-
-          <!-- Три ботанических постера -->
-          <g>
-            <rect x="256" y="106" width="92" height="124" rx="3" fill="#faf8f2" stroke="#8c5c2e" stroke-width="6"/>
-            <circle cx="302" cy="158" r="22" fill="#8eb874"/>
-            <ellipse cx="302" cy="186" rx="10" ry="24" fill="#5e9642"/>
-
-            <rect x="372" y="106" width="92" height="124" rx="3" fill="#faf8f2" stroke="#8c5c2e" stroke-width="6"/>
-            <ellipse cx="412" cy="166" rx="15" ry="34" transform="rotate(-14 412 166)" fill="#5b8a44"/>
-            <ellipse cx="428" cy="174" rx="12" ry="26" transform="rotate(18 428 174)" fill="#9ec482"/>
-
-            <rect x="488" y="106" width="92" height="124" rx="3" fill="#faf8f2" stroke="#8c5c2e" stroke-width="6"/>
-            <path d="M534,126 Q564,168 534,210 Q504,168 534,126 Z" fill="#74a358"/>
+          <!-- Высотная шкала слева (архитектурный стиль) -->
+          <g font-family="ui-monospace, monospace" font-size="10" fill="#46544b" opacity="0.8">
+            <text x="12" y="46">+2.38</text>
+            <text x="12" y="412">0.00</text>
           </g>
 
-          <!-- Справа: торец встроенного шкафа (глубина 52 см) -->
-          <rect x="676" y="32" width="124" height="388" fill="#fcfbf8" stroke="#dcd8ce" stroke-width="2"/>
-          <line x1="684" y1="32" x2="684" y2="420" stroke="#e4e0d6" stroke-width="2"/>
+          <!-- Слева: световой поток из окна и двухъярусная этажерка с растениями -->
+          <polygon class="sun-beam" points="0,34 195,34 260,428 0,428" fill="url(#sunShaft)"/>
+          <g filter="url(#archShadow)">
+            <rect x="42" y="310" width="86" height="105" fill="none" stroke="#ffffff" stroke-width="3.5"/>
+            <rect x="38" y="306" width="94" height="7" rx="2" fill="url(#oakSurface)"/>
+            <rect x="82" y="234" width="46" height="72" fill="none" stroke="#ffffff" stroke-width="3.5"/>
+            <rect x="78" y="230" width="54" height="7" rx="2" fill="url(#oakSurface)"/>
+          </g>
+          <!-- Детализированные растения -->
+          <path d="M93,204 L117,204 L113,230 L97,230 Z" fill="#cf7551"/>
+          <path d="M105,204 C84,166 76,178 86,192 C94,196 100,200 105,204 C108,154 126,164 118,186 C113,194 109,199 105,204 Z" fill="#498235"/>
+          <path d="M105,204 C114,170 130,178 122,194 C115,198 110,201 105,204 Z" fill="#659e4e"/>
+          <path d="M52,282 L72,282 L69,306 L55,306 Z" fill="#f7f5ef" stroke="#dcd8ce"/>
+          <path d="M62,282 C46,254 40,264 48,274 C54,277 58,280 62,282 C66,248 80,256 74,272 C70,276 66,279 62,282 Z" fill="#599143"/>
 
-          <rect class="night-overlay" x="0" y="0" width="800" height="480" fill="#0d141d"/>
-          <circle class="lamp-glow" cx="210" cy="215" r="110" fill="url(#warmLamp)"/>
+          <!-- По центру: Кровать 197 × 102 см (профильный фасад) -->
+          <g filter="url(#archShadow)">
+            <!-- Изголовье из массива дуба -->
+            <rect x="172" y="238" width="18" height="177" rx="3" fill="url(#oakShadow)"/>
+            <!-- Ножки и царга -->
+            <polygon points="196,390 210,390 207,415 198,415" fill="#7c522b"/>
+            <polygon points="616,390 630,390 627,415 618,415" fill="#7c522b"/>
+            <rect x="188" y="346" width="454" height="44" rx="4" fill="url(#oakSurface)" stroke="#8c5c2e" stroke-width="0.8"/>
+            <!-- Матрас с кантом -->
+            <rect x="190" y="314" width="448" height="32" rx="7" fill="#fcfbf7" stroke="#dfdcd2"/>
+            <line x1="194" y1="330" x2="634" y2="330" stroke="#ece9e0" stroke-width="1"/>
+            <!-- Стёганое одеяло и фактурный салатовый плед -->
+            <path d="M276,312 L636,312 Q642,312 642,320 L642,344 L276,344 Z" fill="#f7f5ef" stroke="#e2dfd5"/>
+            <rect x="492" y="311" width="150" height="36" rx="7" fill="#82ae67"/>
+            <!-- Подушки в два слоя -->
+            <path d="M192,314 Q210,274 252,292 Q264,304 258,314 Z" fill="#ffffff" stroke="#dcd8ce"/>
+            <path d="M236,314 Q252,284 286,298 Q296,308 290,314 Z" fill="#d9ebd0" stroke="#b9d1ab"/>
+          </g>
+
+          <!-- Поворотное латунное бра у изголовья -->
+          <rect x="198" y="178" width="7" height="26" rx="3" fill="#cfa842"/>
+          <line x1="205" y1="188" x2="224" y2="188" stroke="#cfa842" stroke-width="2.5"/>
+          <path d="M214,188 L234,188 L242,204 L208,204 Z" fill="#fff7e2" stroke="#cfa842" stroke-width="1.5"/>
+
+          <!-- Три ботанических постера с паспарту -->
+          <g filter="url(#archShadow)">
+            <rect x="276" y="104" width="96" height="128" rx="2" fill="#faf8f2" stroke="#8c5c2e" stroke-width="5"/>
+            <rect x="288" y="116" width="72" height="104" fill="none" stroke="#e6e1d6" stroke-width="1"/>
+            <circle cx="324" cy="158" r="21" fill="#84b368"/>
+            <ellipse cx="324" cy="186" rx="9" ry="23" fill="#56873e"/>
+
+            <rect x="394" y="104" width="96" height="128" rx="2" fill="#faf8f2" stroke="#8c5c2e" stroke-width="5"/>
+            <rect x="406" y="116" width="72" height="104" fill="none" stroke="#e6e1d6" stroke-width="1"/>
+            <ellipse cx="436" cy="166" rx="14" ry="33" transform="rotate(-14 436 166)" fill="#56873e"/>
+            <ellipse cx="452" cy="174" rx="11" ry="25" transform="rotate(18 452 174)" fill="#96ba7b"/>
+
+            <rect x="512" y="104" width="96" height="128" rx="2" fill="#faf8f2" stroke="#8c5c2e" stroke-width="5"/>
+            <rect x="524" y="116" width="72" height="104" fill="none" stroke="#e6e1d6" stroke-width="1"/>
+            <path d="M560,126 Q588,168 560,210 Q532,168 560,126 Z" fill="#6ea152"/>
+          </g>
+
+          <!-- Справа: боковина встроенного шкафа (52 см) -->
+          <rect x="704" y="34" width="136" height="394" fill="#fcfbf8" stroke="#d5d1c7" stroke-width="1.5"/>
+          <rect x="694" y="34" width="10" height="394" fill="url(#cornerAO-L)"/>
+          <line x1="712" y1="34" x2="712" y2="428" stroke="#e4e0d6" stroke-width="1.5"/>
+
+          <!-- Размерная цепочка -->
+          <g class="dim-group" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1c241f">
+            <line x1="172" y1="454" x2="642" y2="454" stroke="#1c241f" stroke-width="1.2"/>
+            <line x1="172" y1="448" x2="172" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <line x1="642" y1="448" x2="642" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <rect x="362" y="444" width="90" height="18" rx="4" fill="#ffffff"/>
+            <text x="407" y="457" text-anchor="middle">197 см</text>
+          </g>
+
+          <rect class="night-overlay" x="0" y="0" width="840" height="500" fill="#0d141d"/>
+          <circle class="lamp-glow" cx="225" cy="215" r="115" fill="url(#lampHalo)"/>
         </svg>
       </div>
 
       <div class="wall-body">
-        <span class="wall-step">Стена 01 • Главный акцент</span>
+        <span class="wall-step">Стена 01 • Главный цветовой акцент</span>
         <h3>Салатовая стена с кроватью 197 × 102 см</h3>
         <div class="chips">
           <span class="chip">Длина стены: 310 см</span>
@@ -1000,54 +1190,90 @@
           <span class="chip">Оттенок: пастельный шалфей</span>
         </div>
         <p class="wall-lead">
-          Длинная чистая стена слева от входа берёт на себя роль главного цветового акцента. Спокойный салатовый оттенок освежает комнату и визуально «отодвигает» стену, делая спальное место уютным.
+          Длинная свободная стена слева от входа задаёт спокойное настроение всей комнате. Матовый пастельно-салатовый оттенок визуально отдаляет плоскость стены и смягчает вытянутые пропорции.
         </p>
         <ul class="wall-points">
-          <li><strong>Точная посадка кровати:</strong> между шкафом у двери (52 см) и полками для цветов у окна (61 см) кровать встаёт без зазоров и лишних углов.</li>
-          <li><strong>Ритм по вертикали:</strong> три ботанических постера в дубовых рамах собирают композицию над кроватью и не дают стене выглядеть пустой.</li>
-          <li><strong>Вечерний сценарий:</strong> поворотное латунное бра у изголовья даёт мягкий свет для чтения, когда верхний свет выключен.</li>
+          <li><strong>Точная посадка кровати:</strong> между встроенным шкафом у двери (52 см) и этажеркой с цветами у окна (61 см) кровать встаёт без зазоров и лишних выступов.</li>
+          <li><strong>Вертикальный ритм:</strong> три ботанических принта с музейным паспарту в тонких дубовых рамах собирают композицию над изголовьем.</li>
+          <li><strong>Локальный свет:</strong> поворотное латунное бра даёт направленный тёплый луч для чтения, не перегружая комнату верхним светом.</li>
         </ul>
       </div>
     </article>
 
     <!-- СТОРОНА 2: ВХОДНАЯ СТЕНА И ШКАФ -->
     <article id="wall-2" class="wall-card">
-      <div class="wall-photo" data-lightbox="Сторона 2 • Встроенный шкаф 106 см и дверь с антресолью">
-        <span class="wall-tag">Сторона 2 • 186 × 238 см</span>
-        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="800" height="32" fill="#f2f4f0"/>
-          <rect x="0" y="32" width="800" height="388" style="fill: var(--wall-white);"/>
-          <rect x="0" y="420" width="800" height="60" fill="url(#parquetPat)"/>
+      <div class="wall-photo" data-lightbox="Развёртка 02 • Встроенный шкаф 106 см и дверь с антресолью">
+        <span class="wall-tag">Развёртка 02 • 186 × 238 см</span>
+        <svg viewBox="0 0 840 500" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="840" height="34" fill="#f5f6f3"/>
+          <rect x="0" y="34" width="840" height="394" style="fill: var(--wall-white);"/>
+          <rect x="0" y="428" width="840" height="72" fill="url(#proParquet)"/>
 
-          <!-- Встроенный шкаф 106 см -->
-          <rect x="80" y="32" width="370" height="388" fill="#fcfbf8" stroke="#d5d1c7" stroke-width="2"/>
-          <rect x="88" y="40" width="176" height="372" fill="#efeae0"/>
-          <rect x="88" y="92" width="176" height="6" fill="#b9824c"/>
-          <rect x="88" y="150" width="176" height="6" fill="#b9824c"/>
-          <rect x="88" y="302" width="176" height="6" fill="#b9824c"/>
-          <rect x="88" y="356" width="176" height="6" fill="#b9824c"/>
-          <rect x="102" y="56" width="66" height="36" rx="4" fill="#d8d0c2"/>
-          <rect x="180" y="56" width="66" height="36" rx="4" fill="#c5d4bc"/>
-          <line x1="88" y1="168" x2="264" y2="168" stroke="#9aa09c" stroke-width="4"/>
-          <rect x="104" y="170" width="18" height="114" rx="4" fill="#6f9e58"/>
-          <rect x="126" y="170" width="18" height="118" rx="4" fill="#f7f5ef" stroke="#dcd8ce"/>
-          <rect x="148" y="170" width="18" height="110" rx="4" fill="#5c768d"/>
-          <rect x="170" y="170" width="18" height="116" rx="4" fill="#d49a6a"/>
-          <rect x="192" y="170" width="18" height="112" rx="4" fill="#95bc82"/>
-          <rect x="266" y="36" width="180" height="380" fill="#fcfbf8" stroke="#dcd8ce" stroke-width="2"/>
+          <!-- Высотная шкала -->
+          <g font-family="ui-monospace, monospace" font-size="10" fill="#46544b" opacity="0.85">
+            <text x="14" y="46">+2.38</text>
+            <text x="14" y="102">+2.05</text>
+            <text x="14" y="416">0.00</text>
+          </g>
 
-          <!-- Дверь 80 x 205 см + антресоль 33 см -->
-          <rect x="450" y="32" width="270" height="64" fill="#fcfbf8" stroke="#d5d1c7" stroke-width="2"/>
-          <line x1="585" y1="32" x2="585" y2="96" stroke="#dcd8ce" stroke-width="2"/>
-          <rect x="450" y="96" width="270" height="324" fill="#ffffff" stroke="#dcd8ce" stroke-width="2"/>
-          <rect x="466" y="112" width="238" height="308" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="2"/>
-          <rect x="488" y="136" width="194" height="120" rx="3" fill="none" stroke="#9e6b38" stroke-width="2"/>
-          <rect x="488" y="274" width="194" height="120" rx="3" fill="none" stroke="#9e6b38" stroke-width="2"/>
-          <circle cx="484" cy="268" r="8" fill="#d4af37"/>
-          <rect x="480" y="265" width="24" height="6" rx="3" fill="#e5c158"/>
+          <!-- Слева: Встроенный шкаф 106 × 238 см (x: 84..468) -->
+          <rect x="84" y="34" width="384" height="394" fill="#fcfbf8" stroke="#cfcbc0" stroke-width="1.5"/>
+          <!-- Левая секция в разрезе (показывает внутреннюю эргономику) -->
+          <rect x="92" y="42" width="182" height="378" fill="#efeae0"/>
+          <rect x="92" y="42" width="182" height="12" fill="url(#wallAO-Top)"/>
+          <!-- Дубовые полки -->
+          <rect x="92" y="96" width="182" height="6" fill="url(#oakSurface)"/>
+          <rect x="92" y="154" width="182" height="6" fill="url(#oakSurface)"/>
+          <rect x="92" y="308" width="182" height="6" fill="url(#oakSurface)"/>
+          <rect x="92" y="362" width="182" height="6" fill="url(#oakSurface)"/>
+          <!-- Кофры для хранения на верхних полках -->
+          <rect x="106" y="58" width="70" height="38" rx="3" fill="#dad3c5" stroke="#c4bdb0"/>
+          <rect x="186" y="58" width="70" height="38" rx="3" fill="#c7d6be" stroke="#b0c2a6"/>
+          <rect x="106" y="116" width="150" height="38" rx="3" fill="#e4dfd4" stroke="#cfc9bc"/>
+          <!-- Штанга из шлифованной стали и одежда на плечиках -->
+          <line x1="92" y1="172" x2="274" y2="172" stroke="#9aa09c" stroke-width="3.5"/>
+          <rect x="108" y="175" width="19" height="116" rx="4" fill="#639649"/>
+          <rect x="131" y="175" width="19" height="120" rx="4" fill="#f7f5ef" stroke="#dcd8ce"/>
+          <rect x="154" y="175" width="19" height="112" rx="4" fill="#526d85"/>
+          <rect x="177" y="175" width="19" height="118" rx="4" fill="#cf9565"/>
+          <rect x="200" y="175" width="19" height="114" rx="4" fill="#8cb379"/>
+          <!-- Нижние секции под обувь и корзины -->
+          <rect x="108" y="324" width="68" height="38" rx="3" fill="#dcd5c7"/>
+          <rect x="188" y="324" width="68" height="38" rx="3" fill="#dcd5c7"/>
 
-          <rect class="night-overlay" x="0" y="0" width="800" height="480" fill="#0d141d"/>
-          <circle class="lamp-glow" cx="176" cy="180" r="105" fill="url(#warmLamp)"/>
+          <!-- Правая створка шкафа закрыта (гладкий фасад push-to-open с микро-зазором) -->
+          <rect x="276" y="38" width="188" height="386" fill="#fcfbf8" stroke="#d5d1c7" stroke-width="1.5"/>
+
+          <!-- Справа: Дверь 80 × 205 см + антресоль 33 см над ней (x: 468..756) -->
+          <!-- Антресольная секция 33 см (y: 34..98) -->
+          <rect x="468" y="34" width="288" height="64" fill="#fcfbf8" stroke="#cfcbc0" stroke-width="1.5"/>
+          <line x1="612" y1="34" x2="612" y2="98" stroke="#d5d1c7" stroke-width="1.2"/>
+
+          <!-- Дверной блок 80 × 205 см -->
+          <rect x="468" y="98" width="288" height="330" fill="#ffffff" stroke="#d5d1c7" stroke-width="1.5"/>
+          <rect x="484" y="114" width="256" height="314" fill="url(#oakSurface)" stroke="#85582d" stroke-width="1.5"/>
+          <!-- Архитектурные филёнки и латунная фурнитура -->
+          <rect x="508" y="138" width="208" height="122" rx="2" fill="none" stroke="#9c6c3d" stroke-width="1.5"/>
+          <rect x="508" y="278" width="208" height="122" rx="2" fill="none" stroke="#9c6c3d" stroke-width="1.5"/>
+          <circle cx="502" cy="272" r="7.5" fill="#cfa842"/>
+          <rect x="498" y="269" width="24" height="5.5" rx="2.5" fill="#e2be58"/>
+
+          <!-- Размерные цепочки -->
+          <g class="dim-group" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1c241f">
+            <line x1="84" y1="454" x2="468" y2="454" stroke="#1c241f" stroke-width="1.2"/>
+            <line x1="84" y1="448" x2="84" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <line x1="468" y1="448" x2="468" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <rect x="231" y="444" width="90" height="18" rx="4" fill="#ffffff"/>
+            <text x="276" y="457" text-anchor="middle">106 см</text>
+
+            <line x1="468" y1="454" x2="756" y2="454" stroke="#1c241f" stroke-width="1.2"/>
+            <line x1="756" y1="448" x2="756" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <rect x="572" y="444" width="80" height="18" rx="4" fill="#ffffff"/>
+            <text x="612" y="457" text-anchor="middle">80 см</text>
+          </g>
+
+          <rect class="night-overlay" x="0" y="0" width="840" height="500" fill="#0d141d"/>
+          <circle class="lamp-glow" cx="184" cy="180" r="110" fill="url(#lampHalo)"/>
         </svg>
       </div>
 
@@ -1060,167 +1286,234 @@
           <span class="chip">Антресоль: 33 см</span>
         </div>
         <p class="wall-lead">
-          Вся входная стена работает как единый мебельный блок: справа от двери встраивается глубокий шкаф под потолок, а пространство над проёмом закрывает аккуратная антресоль.
+          Входная стена спроектирована как монолитный мебельный портал: справа от двери встраивается глубокий шкаф под потолок, а пространство над проёмом закрывает антресоль высотой 33 см.
         </p>
         <ul class="wall-points">
-          <li><strong>Максимум объёма:</strong> внутри шкафа 106 см помещаются полноценная штанга для одежды, нижние ящики для обуви и две верхние полки для сезонных вещей.</li>
-          <li><strong>Антресоль 33 см над дверью:</strong> связывает шкаф со стеной в единую линию и даёт дополнительное место под чемоданы и коробки.</li>
-          <li><strong>Никакого визуального шума:</strong> матовые белые фасады без ручек (нажатие <em>push-to-open</em>) растворяются на фоне стены.</li>
+          <li><strong>Продуманное наполнение:</strong> внутри шкафа 106 см размещены полноценная штанга, нижние полки для обуви и кофров, а также два верхних яруса для сезонных вещей.</li>
+          <li><strong>Антресоль 33 см над дверью:</strong> объединяет верхнюю линию шкафа со стеной и вмещает чемоданы и редко используемые коробки.</li>
+          <li><strong>Чистая плоскость без ручек:</strong> матовые белые фасады с механизмом <em>push-to-open</em> выглядят как часть стены и не дробят пространство.</li>
         </ul>
       </div>
     </article>
 
     <!-- СТОРОНА 3: ОКНО, ОБОГРЕВАТЕЛЬ В ОТСТУПЕ 23×24 И ЦВЕТЫ -->
     <article id="wall-3" class="wall-card">
-      <div class="wall-photo" data-lightbox="Сторона 3 • Окно 70 см, обогреватель в отступе 23×24 см и цветы">
-        <span class="wall-tag">Сторона 3 • 186 × 238 см</span>
-        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="800" height="32" fill="#f2f4f0"/>
-          <rect x="0" y="32" width="800" height="388" style="fill: var(--wall-white);"/>
-          <rect x="0" y="420" width="800" height="60" fill="url(#parquetPat)"/>
-          <rect x="0" y="408" width="800" height="12" fill="#7c4e26"/>
+      <div class="wall-photo" data-lightbox="Развёртка 03 • Окно 70 см, обогреватель в отступе 23×24 см и цветы">
+        <span class="wall-tag">Развёртка 03 • 186 × 238 см</span>
+        <svg viewBox="0 0 840 500" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="840" height="34" fill="#f5f6f3"/>
+          <rect x="0" y="34" width="840" height="394" style="fill: var(--wall-white);"/>
+          <rect x="0" y="34" width="840" height="14" fill="url(#wallAO-Top)"/>
+          <rect x="0" y="428" width="840" height="72" fill="url(#proParquet)"/>
+          <rect x="0" y="415" width="840" height="13" fill="url(#oakShadow)"/>
 
-          <!-- СЛЕВА: Простенок 75 см под цветы (x: 40..310) -->
-          <path d="M58,342 L110,342 L102,408 L66,408 Z" fill="#d87b56"/>
-          <path d="M84,342 Q48,272 40,302 Q66,318 84,342 Q92,256 120,288 Q100,316 84,342 Q118,282 130,314 Q104,328 84,342 Z" fill="#3f782c"/>
-          <rect x="138" y="294" width="124" height="114" fill="none" stroke="#ffffff" stroke-width="4"/>
-          <rect x="132" y="290" width="136" height="8" rx="2" fill="url(#oakTop)"/>
-          <rect x="192" y="216" width="70" height="74" fill="none" stroke="#ffffff" stroke-width="4"/>
-          <rect x="186" y="212" width="82" height="8" rx="2" fill="url(#oakTop)"/>
-          <path d="M210,184 L244,184 L239,212 L215,212 Z" fill="#89a882"/>
-          <path d="M227,184 Q202,138 194,158 Q212,170 227,184 Q234,132 254,152 Q238,168 227,184 Z" fill="#4b8736"/>
-          <path d="M150,264 L178,264 L174,290 L154,290 Z" fill="#f2efe9" stroke="#dcd8ce"/>
-          <path d="M164,264 Q146,232 140,246 Q154,254 164,264 Q172,228 186,244 Q172,254 164,264 Z" fill="#5e9642"/>
-
-          <!-- ПО ЦЕНТРУ: Окно 70 x 145 см (x: 315..565, y: 66..302) -->
-          <rect x="315" y="66" width="250" height="236" rx="4" fill="url(#skyGrad)" stroke="#ffffff" stroke-width="10"/>
-          <circle cx="390" cy="215" r="46" fill="#77a65b" opacity="0.85"/>
-          <circle cx="455" cy="195" r="54" fill="#8bb86e" opacity="0.85"/>
-          <rect x="488" y="170" width="58" height="126" fill="#d8c7b4" opacity="0.75"/>
-          <line x1="315" y1="184" x2="565" y2="184" stroke="#ffffff" stroke-width="8"/>
-          <rect x="322" y="72" width="236" height="36" fill="#f7f5ee" opacity="0.95"/>
-          <line x1="322" y1="90" x2="558" y2="90" stroke="#e2dfd5" stroke-width="1.5"/>
-          <rect x="302" y="302" width="276" height="12" rx="3" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="1"/>
-          <rect x="336" y="284" width="22" height="18" rx="3" fill="#ffffff"/>
-          <circle cx="347" cy="280" r="9" fill="#6f9e58"/>
-
-          <!-- СПРАВА ОТ ОКНА: ОТСТУП (ВЫСТУП) 23 × 24 см СО ВСТРОЕННЫМ ОБОГРЕВАТЕЛЕМ ВНУТРИ (x: 642..760) -->
-          <!-- Боковая грань глубиной 24 см (показывает, что отступ выступает в комнату) -->
-          <polygon points="642,40 658,32 658,420 642,412" fill="#d2d7d4" stroke="#a6ada9" stroke-width="1.2"/>
-          <!-- Фронтальная часть отступа 23 см -->
-          <rect x="658" y="32" width="102" height="388" fill="#eaeeec" stroke="#b2b9b5" stroke-width="1.5"/>
-
-          <!-- ВСТРОЕННЫЙ ВНУТРЬ ОТСТУПА 23×24 ОБОГРЕВАТЕЛЬ -->
-          <rect x="668" y="274" width="82" height="124" rx="5" fill="#ffffff" stroke="#9ea5a1" stroke-width="1.5"/>
-          <rect x="674" y="294" width="70" height="96" rx="3" fill="#3a403d"/>
-          <!-- Горизонтальные ламели конвектора -->
-          <g stroke="#dce2df" stroke-width="3">
-            <line x1="678" y1="305" x2="740" y2="305"/>
-            <line x1="678" y1="317" x2="740" y2="317"/>
-            <line x1="678" y1="329" x2="740" y2="329"/>
-            <line x1="678" y1="341" x2="740" y2="341"/>
-            <line x1="678" y1="353" x2="740" y2="353"/>
-            <line x1="678" y1="365" x2="740" y2="365"/>
-            <line x1="678" y1="377" x2="740" y2="377"/>
+          <!-- Высотная шкала -->
+          <g font-family="ui-monospace, monospace" font-size="10" fill="#46544b" opacity="0.85">
+            <text x="14" y="46">+2.38</text>
+            <text x="14" y="314">+0.75</text>
+            <text x="14" y="416">0.00</text>
           </g>
-          <!-- Панель управления с регулятором и индикатором внутри отступа -->
-          <circle cx="732" cy="284" r="5" fill="#d4af37"/>
-          <circle cx="716" cy="284" r="3" fill="#ff5e1a"/>
 
-          <!-- Солнечный свет -->
-          <polygon class="sun-beam" points="315,66 565,66 630,420 220,420" fill="url(#sunRay)"/>
-          <rect class="night-overlay" x="0" y="0" width="800" height="480" fill="#0d141d"/>
+          <!-- СЛЕВА: Простенок 75 см под цветы (x: 68..330) -->
+          <g filter="url(#archShadow)">
+            <!-- Напольное кашпо -->
+            <path d="M84,344 L136,344 L128,415 L92,415 Z" fill="#cf7551"/>
+            <path d="M110,344 C76,278 68,298 86,320 C96,330 104,338 110,344 C116,262 142,276 130,312 C122,326 116,336 110,344 C140,286 154,306 136,328 C126,336 118,340 110,344 Z" fill="#3e742b"/>
+            <!-- Двухъярусная этажерка -->
+            <rect x="164" y="298" width="128" height="117" fill="none" stroke="#ffffff" stroke-width="3.5"/>
+            <rect x="158" y="294" width="140" height="8" rx="2" fill="url(#oakSurface)"/>
+            <rect x="220" y="218" width="72" height="76" fill="none" stroke="#ffffff" stroke-width="3.5"/>
+            <rect x="214" y="214" width="84" height="8" rx="2" fill="url(#oakSurface)"/>
+          </g>
+          <!-- Горшки на этажерке -->
+          <path d="M238,186 L272,186 L267,214 L243,214 Z" fill="#84a37d"/>
+          <path d="M255,186 C230,142 222,158 238,172 C246,178 251,182 255,186 C262,134 282,148 272,170 C265,178 260,182 255,186 Z" fill="#498235"/>
+          <path d="M176,266 L204,266 L200,294 L180,294 Z" fill="#f7f5ef" stroke="#dcd8ce"/>
+          <path d="M190,266 C172,236 166,248 178,258 C183,261 187,264 190,266 C198,230 212,242 204,258 C198,262 194,264 190,266 Z" fill="#599143"/>
+
+          <!-- ПО ЦЕНТРУ: Окно 70 × 145 см (x: 344..596, y: 66..308) -->
+          <!-- Глубокий оконный откос -->
+          <rect x="336" y="58" width="268" height="250" rx="3" fill="#e5e2d9" stroke="#cbc7bd" stroke-width="1"/>
+          <rect x="344" y="66" width="252" height="242" rx="2" fill="url(#skyStudio)" stroke="#ffffff" stroke-width="9"/>
+          <!-- Мягкий пейзаж за окном -->
+          <circle cx="420" cy="220" r="48" fill="#78a65d" opacity="0.82"/>
+          <circle cx="486" cy="200" r="56" fill="#8bb86e" opacity="0.82"/>
+          <rect x="520" y="176" width="66" height="128" fill="#d8c8b6" opacity="0.72"/>
+          <!-- Профиль рамы и льняная римская штора -->
+          <line x1="344" y1="186" x2="596" y2="186" stroke="#ffffff" stroke-width="8"/>
+          <line x1="344" y1="187" x2="596" y2="187" stroke="#d5d2c8" stroke-width="1"/>
+          <rect x="351" y="72" width="238" height="38" fill="#f7f5ef" stroke="#e2ddd1"/>
+          <line x1="351" y1="91" x2="589" y2="91" stroke="#e2ddd1" stroke-width="1.5"/>
+          <!-- Дубовый подоконник -->
+          <g filter="url(#archShadow)">
+            <rect x="330" y="308" width="280" height="12" rx="3" fill="url(#oakSurface)" stroke="#85582d" stroke-width="0.9"/>
+          </g>
+          <!-- Мини-кашпо на подоконнике -->
+          <rect x="366" y="290" width="22" height="18" rx="3" fill="#ffffff" stroke="#dcd8ce"/>
+          <circle cx="377" cy="285" r="9" fill="#639649"/>
+
+          <!-- СПРАВА ОТ ОКНА: ВЫСТУП (ОТСТУП) 23 × 24 см СО ВСТРОЕННЫМ ОБОГРЕВАТЕЛЕМ ВНУТРИ (x: 684..784) -->
+          <!-- Боковая грань глубиной 24 см (показывает выступ вглубь комнаты + падающая тень) -->
+          <rect x="662" y="34" width="12" height="394" fill="url(#cornerAO-L)"/>
+          <polygon points="674,40 688,34 688,428 674,422" fill="#d6dbd8" stroke="#aeb4b0" stroke-width="1"/>
+          <!-- Фронтальная плоскость выступа 23 см -->
+          <rect x="688" y="34" width="96" height="394" fill="#ecefed" stroke="#b6bcb8" stroke-width="1.2"/>
+
+          <!-- ВСТРОЕННЫЙ ОБОГРЕВАТЕЛЬ ВНУТРИ ВЫСТУПА 23 × 24 см -->
+          <rect x="698" y="274" width="76" height="126" rx="4" fill="#ffffff" stroke="#9aa19d" stroke-width="1.3"/>
+          <rect x="704" y="294" width="64" height="98" rx="2" fill="#2f3532"/>
+          <!-- Алюминиевые конвекторные жалюзи -->
+          <g stroke="#d5dcd8" stroke-width="2.6">
+            <line x1="708" y1="305" x2="764" y2="305"/>
+            <line x1="708" y1="317" x2="764" y2="317"/>
+            <line x1="708" y1="329" x2="764" y2="329"/>
+            <line x1="708" y1="341" x2="764" y2="341"/>
+            <line x1="708" y1="353" x2="764" y2="353"/>
+            <line x1="708" y1="365" x2="764" y2="365"/>
+            <line x1="708" y1="377" x2="764" y2="377"/>
+          </g>
+          <!-- Цифровой термостат и индикатор нагрева -->
+          <rect x="710" y="280" width="22" height="10" rx="2" fill="#1f2422"/>
+          <text x="721" y="288" font-family="monospace" font-size="7.5" fill="#ff8a3d" text-anchor="middle">23°</text>
+          <circle cx="758" cy="285" r="4.5" fill="#cfa842"/>
+          <circle cx="744" cy="285" r="2.8" fill="#ff6224"/>
+
+          <!-- Солнечный луч из окна -->
+          <polygon class="sun-beam" points="344,66 596,66 660,428 240,428" fill="url(#sunShaft)"/>
+
+          <!-- Размерные цепочки -->
+          <g class="dim-group" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1c241f">
+            <line x1="68" y1="454" x2="336" y2="454" stroke="#1c241f" stroke-width="1.2"/>
+            <line x1="68" y1="448" x2="68" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <line x1="336" y1="448" x2="336" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <rect x="162" y="444" width="80" height="18" rx="4" fill="#ffffff"/>
+            <text x="202" y="457" text-anchor="middle">75 см</text>
+
+            <line x1="336" y1="454" x2="604" y2="454" stroke="#1c241f" stroke-width="1.2"/>
+            <line x1="604" y1="448" x2="604" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <rect x="430" y="444" width="80" height="18" rx="4" fill="#ffffff"/>
+            <text x="470" y="457" text-anchor="middle">70 см</text>
+
+            <line x1="688" y1="454" x2="784" y2="454" stroke="#d47a32" stroke-width="1.4"/>
+            <line x1="688" y1="448" x2="688" y2="460" stroke="#d47a32" stroke-width="1.5"/>
+            <line x1="784" y1="448" x2="784" y2="460" stroke="#d47a32" stroke-width="1.5"/>
+            <rect x="701" y="444" width="70" height="18" rx="4" fill="#d47a32"/>
+            <text x="736" y="457" fill="#ffffff" text-anchor="middle">23×24</text>
+          </g>
+
+          <rect class="night-overlay" x="0" y="0" width="840" height="500" fill="#0d141d"/>
         </svg>
       </div>
 
       <div class="wall-body">
         <span class="wall-step">Стена 03 • Свет, тепло и зелень</span>
-        <h3>Окно 70 см, обогреватель в отступе 23 × 24 см и цветы</h3>
+        <h3>Окно 70 см, обогреватель внутри отступа 23 × 24 см и цветы</h3>
         <div class="chips">
           <span class="chip">Слева: 75 см под цветы</span>
           <span class="chip">Окно: 70 × 145 см</span>
           <span class="chip">Справа: отступ 23 × 24 см с обогревателем</span>
         </div>
         <p class="wall-lead">
-          Оконная стена разделена на три чёткие зоны: зелёный уголок слева, окно с дубовым подоконником по центру и правый угловой отступ <strong>23 × 24 см</strong>, внутрь которого встроен обогреватель.
+          Оконная стена разделена на три выверенных модуля: зелёный уголок слева, глубокое окно с дубовым подоконником по центру и угловой выступ <strong>23 × 24 см</strong> справа, внутрь которого встроен конвекторный обогреватель.
         </p>
         <ul class="wall-points">
-          <li><strong>Обогреватель внутри отступа 23 × 24 см:</strong> полностью интегрирован в этот выступ в нижней части — не требует отдельного места на соседней стене и сразу отсекает холод от окна.</li>
-          <li><strong>Уголок для цветов (75 см слева):</strong> двухъярусная подставка и крупное напольное кашпо получают максимум дневного света и красиво встречают взгляд от входа.</li>
-          <li><strong>Римская штора вместо тяжёлых портьер:</strong> не перекрывает доступ к обогревателю справа и не «съедает» ширину комнаты.</li>
+          <li><strong>Обогреватель внутри отступа 23 × 24 см:</strong> интегрирован в нижнюю часть этого выступа с цифровым термостатом — он не занимает ни сантиметра соседней стены и сразу отсекает холодный воздух от окна.</li>
+          <li><strong>Уголок для цветов (75 см слева):</strong> двухъярусная подставка и высокое напольное кашпо получают максимум дневного света и формируют живой акцент напротив входа.</li>
+          <li><strong>Римская штора вместо портьер:</strong> оставляет открытым доступ к обогревателю справа и визуально сохраняет ширину комнаты.</li>
         </ul>
       </div>
     </article>
 
     <!-- СТОРОНА 4: БЕЛАЯ СТЕНА, СТОЛИК И ШКАФ-ПЕНАЛ -->
     <article id="wall-4" class="wall-card">
-      <div class="wall-photo" data-lightbox="Сторона 4 • Белая стена, столик 74×40 и шкаф-пенал 66 см">
-        <span class="wall-tag">Сторона 4 • 310 × 238 см</span>
-        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="800" height="32" fill="#f2f4f0"/>
-          <rect x="0" y="32" width="800" height="388" style="fill: var(--wall-white);"/>
-          <rect x="0" y="32" width="800" height="10" fill="#ffffff"/>
-          <rect x="0" y="420" width="800" height="60" fill="url(#parquetPat)"/>
-          <rect x="0" y="408" width="800" height="12" fill="#7c4e26"/>
+      <div class="wall-photo" data-lightbox="Развёртка 04 • Белая стена, столик 74×40 и шкаф-пенал 66 см">
+        <span class="wall-tag">Развёртка 04 • 310 × 238 см</span>
+        <svg viewBox="0 0 840 500" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="840" height="34" fill="#f5f6f3"/>
+          <rect x="0" y="34" width="840" height="394" style="fill: var(--wall-white);"/>
+          <rect x="0" y="34" width="840" height="14" fill="url(#wallAO-Top)"/>
+          <rect x="0" y="34" width="840" height="7" fill="#ffffff"/>
+          <rect x="0" y="428" width="840" height="72" fill="url(#proParquet)"/>
+          <rect x="0" y="415" width="840" height="13" fill="url(#oakShadow)"/>
 
-          <!-- Слева (в углу у окна): Отступ 23 × 24 см со встроенным обогревателем внутри -->
-          <rect x="0" y="32" width="66" height="388" fill="#eaeeec" stroke="#b2b9b5" stroke-width="1.5"/>
-          <rect x="10" y="274" width="46" height="124" rx="4" fill="#ffffff" stroke="#9ea5a1" stroke-width="1.2"/>
-          <rect x="15" y="294" width="36" height="96" rx="2" fill="#3a403d"/>
-          <g stroke="#dce2df" stroke-width="2.5">
-            <line x1="18" y1="305" x2="48" y2="305"/>
-            <line x1="18" y1="317" x2="48" y2="317"/>
-            <line x1="18" y1="329" x2="48" y2="329"/>
-            <line x1="18" y1="341" x2="48" y2="341"/>
-            <line x1="18" y1="353" x2="48" y2="353"/>
-            <line x1="18" y1="365" x2="48" y2="365"/>
-            <line x1="18" y1="377" x2="48" y2="377"/>
+          <!-- Слева (в углу у окна): боковая проекция выступа 23 × 24 см (глубина 24 см) -->
+          <rect x="0" y="34" width="64" height="394" fill="#e2e6e3" stroke="#b6bcb8" stroke-width="1.2"/>
+          <rect x="64" y="34" width="12" height="394" fill="url(#cornerAO-R)"/>
+          <!-- Боковая вентиляционная решётка / профиль обогревателя в выступе -->
+          <rect x="44" y="276" width="14" height="122" rx="2" fill="#ffffff" stroke="#9aa19d" stroke-width="1"/>
+          <rect x="47" y="294" width="8" height="96" fill="#2f3532"/>
+
+          <!-- Столик 74 × 40 см (встаёт сразу после выступа 23×24) -->
+          <g filter="url(#archShadow)">
+            <polygon points="134,288 144,288 141,415 136,415" fill="#7c522b"/>
+            <polygon points="294,288 304,288 301,415 296,415" fill="#7c522b"/>
+            <!-- Столешница и два выдвижных ящика -->
+            <rect x="124" y="264" width="190" height="24" rx="3" fill="url(#oakSurface)" stroke="#85582d" stroke-width="0.9"/>
+            <rect x="135" y="268" width="80" height="16" rx="2" fill="#fcfbf8"/>
+            <rect x="223" y="268" width="80" height="16" rx="2" fill="#fcfbf8"/>
+            <rect x="169" y="274" width="12" height="2.5" fill="#cfa842"/>
+            <rect x="257" y="274" width="12" height="2.5" fill="#cfa842"/>
           </g>
-          <circle cx="44" cy="284" r="4" fill="#d4af37"/>
-          <circle cx="31" cy="284" r="2.5" fill="#ff5e1a"/>
 
-          <!-- Столик 74 x 40 см (встаёт сразу после отступа 23×24) -->
-          <rect x="124" y="286" width="10" height="134" fill="#7c4e26"/>
-          <rect x="276" y="286" width="10" height="134" fill="#7c4e26"/>
-          <rect x="115" y="264" width="180" height="24" rx="3" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="1.5"/>
-          <rect x="126" y="268" width="76" height="16" rx="2" fill="#fcfbf8"/>
-          <rect x="208" y="268" width="76" height="16" rx="2" fill="#fcfbf8"/>
-          <rect x="158" y="274" width="12" height="3" fill="#d4af37"/>
-          <rect x="240" y="274" width="12" height="3" fill="#d4af37"/>
+          <!-- Дизайнерская настольная лампа и профиль ноутбука -->
+          <rect x="150" y="260" width="24" height="4" rx="2" fill="#cfa842"/>
+          <line x1="162" y1="212" x2="162" y2="260" stroke="#cfa842" stroke-width="2.8"/>
+          <path d="M144,212 Q162,190 180,212 Z" fill="#639649" stroke="#4a7534" stroke-width="0.8"/>
+          <rect x="210" y="259" width="70" height="5" rx="2" fill="#cfd4d7"/>
+          <polygon points="274,259 280,259 272,220 266,220" fill="#323c47"/>
 
-          <!-- Настольная лампа и ноутбук -->
-          <rect x="140" y="260" width="24" height="4" rx="2" fill="#d4af37"/>
-          <line x1="152" y1="214" x2="152" y2="260" stroke="#d4af37" stroke-width="3"/>
-          <path d="M134,214 Q152,192 170,214 Z" fill="#6f9e58"/>
-          <rect x="198" y="259" width="66" height="5" rx="2" fill="#c8cdd0"/>
-          <polygon points="258,259 264,259 256,222 250,222" fill="#3a4552"/>
+          <!-- Эргономичный стул под столом -->
+          <rect x="174" y="328" width="90" height="12" rx="4" fill="#eae5d9" stroke="#beb8aa"/>
+          <polygon points="184,340 192,340 190,415 186,415" fill="#7c522b"/>
+          <polygon points="246,340 254,340 252,415 248,415" fill="#7c522b"/>
+          <rect x="178" y="294" width="82" height="22" rx="4" fill="url(#oakShadow)"/>
 
-          <!-- Стул под столом -->
-          <rect x="162" y="328" width="86" height="12" rx="4" fill="#e4dfd3" stroke="#bdb7aa"/>
-          <rect x="172" y="340" width="8" height="80" fill="#7c4e26"/>
-          <rect x="230" y="340" width="8" height="80" fill="#7c4e26"/>
-          <rect x="166" y="294" width="78" height="22" rx="4" fill="url(#oakSide)"/>
+          <!-- Шкаф-пенал 66 × 36 × 205 см -->
+          <g filter="url(#archShadow)">
+            <rect x="376" y="84" width="168" height="331" rx="3" fill="url(#oakSurface)" stroke="#85582d" stroke-width="1.2"/>
+            <!-- Верхние закрытые дверцы -->
+            <rect x="382" y="90" width="76" height="92" fill="#fcfbf8" stroke="#d5d1c7"/>
+            <rect x="462" y="90" width="76" height="92" fill="#fcfbf8" stroke="#d5d1c7"/>
+            <!-- Открытые центральные полки из дуба -->
+            <rect x="382" y="186" width="156" height="104" fill="#9c6c3d"/>
+            <line x1="382" y1="238" x2="538" y2="238" stroke="url(#oakSurface)" stroke-width="6"/>
+            <!-- Книги и декор -->
+            <rect x="394" y="198" width="10" height="37" fill="#639649"/>
+            <rect x="406" y="202" width="10" height="33" fill="#cf7551"/>
+            <rect x="418" y="196" width="10" height="39" fill="#526d85"/>
+            <rect x="430" y="204" width="10" height="31" fill="#dfc475"/>
+            <ellipse cx="506" cy="221" rx="10" ry="14" fill="#f7f5ef"/>
+            <rect x="398" y="254" width="62" height="32" rx="3" fill="#dad3c5"/>
+            <!-- Нижние закрытые дверцы -->
+            <rect x="382" y="294" width="76" height="114" fill="#fcfbf8" stroke="#d5d1c7"/>
+            <rect x="462" y="294" width="76" height="114" fill="#fcfbf8" stroke="#d5d1c7"/>
+          </g>
 
-          <!-- Шкаф-пенал 66 x 36 x 205 см -->
-          <rect x="355" y="84" width="160" height="336" rx="3" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="2"/>
-          <rect x="361" y="90" width="72" height="92" fill="#fcfbf8" stroke="#dcd8ce"/>
-          <rect x="437" y="90" width="72" height="92" fill="#fcfbf8" stroke="#dcd8ce"/>
-          <rect x="361" y="186" width="148" height="104" fill="#9c6938"/>
-          <line x1="361" y1="238" x2="509" y2="238" stroke="url(#oakTop)" stroke-width="6"/>
-          <rect x="371" y="198" width="10" height="37" fill="#6f9e58"/>
-          <rect x="383" y="202" width="10" height="33" fill="#d87b56"/>
-          <rect x="395" y="196" width="10" height="39" fill="#5c768d"/>
-          <rect x="407" y="204" width="10" height="31" fill="#e0c879"/>
-          <circle cx="479" cy="222" r="12" fill="#f7f5ef"/>
-          <rect x="375" y="254" width="58" height="32" rx="3" fill="#ded7c8"/>
-          <rect x="361" y="294" width="72" height="114" fill="#fcfbf8" stroke="#dcd8ce"/>
-          <rect x="437" y="294" width="72" height="114" fill="#fcfbf8" stroke="#dcd8ce"/>
+          <!-- Справа: свободная зона открывания двери (83 см) -->
+          <rect x="776" y="98" width="64" height="330" fill="url(#oakShadow)"/>
 
-          <!-- Справа: Свободная зона прохода у двери (83 см) -->
-          <rect x="742" y="96" width="58" height="324" fill="url(#oakSide)"/>
+          <!-- Размерные цепочки -->
+          <g class="dim-group" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1c241f">
+            <line x1="124" y1="454" x2="314" y2="454" stroke="#1c241f" stroke-width="1.2"/>
+            <line x1="124" y1="448" x2="124" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <line x1="314" y1="448" x2="314" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <rect x="179" y="444" width="80" height="18" rx="4" fill="#ffffff"/>
+            <text x="219" y="457" text-anchor="middle">74 см</text>
 
-          <rect class="night-overlay" x="0" y="0" width="800" height="480" fill="#0d141d"/>
-          <circle class="lamp-glow" cx="152" cy="225" r="105" fill="url(#warmLamp)"/>
+            <line x1="376" y1="454" x2="544" y2="454" stroke="#1c241f" stroke-width="1.2"/>
+            <line x1="376" y1="448" x2="376" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <line x1="544" y1="448" x2="544" y2="460" stroke="#1c241f" stroke-width="1.5"/>
+            <rect x="420" y="444" width="80" height="18" rx="4" fill="#ffffff"/>
+            <text x="460" y="457" text-anchor="middle">66 см</text>
+
+            <line x1="544" y1="454" x2="776" y2="454" stroke="#568c3c" stroke-width="1.4"/>
+            <line x1="776" y1="448" x2="776" y2="460" stroke="#568c3c" stroke-width="1.5"/>
+            <rect x="612" y="444" width="96" height="18" rx="4" fill="#e6f0e0"/>
+            <text x="660" y="457" fill="#234015" text-anchor="middle">проход 83 см</text>
+          </g>
+
+          <rect class="night-overlay" x="0" y="0" width="840" height="500" fill="#0d141d"/>
+          <circle class="lamp-glow" cx="162" cy="222" r="115" fill="url(#lampHalo)"/>
         </svg>
       </div>
 
@@ -1233,26 +1526,31 @@
           <span class="chip">Пенал: 66 × 36 × 205 см</span>
         </div>
         <p class="wall-lead">
-          Напротив салатовой стены выбран <strong>тёплый молочно-белый оттенок (RAL 9010)</strong>: он отражает свет из окна, убирает холодные тени и визуально расширяет комнату.
+          Напротив салатовой стены выбран <strong>тёплый молочно-белый оттенок (RAL 9010)</strong>: он мягко отражает дневной свет из окна, убирает холодные тени и зрительно расширяет комнату.
         </p>
         <ul class="wall-points">
-          <li><strong>Компактный столик (74 × 40 см):</strong> встаёт сразу за угловым отступом `23 × 24 см` с обогревателем — в самой светлой и тёплой части комнаты.</li>
-          <li><strong>Шкаф-пенал (66 × 36 × 205 см):</strong> глубина всего 36 см не загромождает проход, закрытые секции прячут вещи, а открытые полки по центру разгружают фасад.</li>
-          <li><strong>Свободный вход (83 см до угла двери):</strong> дверь открывается настежь и не упирается в боковину шкафа.</li>
+          <li><strong>Столик 74 × 40 см у окна:</strong> встаёт сразу за угловым выступом `23 × 24 см` со встроенным обогревателем — в самой светлой и тёплой точке комнаты.</li>
+          <li><strong>Шкаф-пенал 66 × 36 × 205 см:</strong> малая глубина 36 см не сужает проход, закрытые секции прячут бытовые мелочи, а открытая дубовая ниша по центру облегчает силуэт.</li>
+          <li><strong>Свободный вход (83 см до угла двери):</strong> полотно двери распахивается полностью и не задевает торец пенала.</li>
         </ul>
       </div>
     </article>
   </div>
 </main>
 
-<!-- ПОЛНОЭКРАННОЕ ОКНО ПРОСМОТРА -->
+<!-- ПОЛНОЭКРАННЫЙ ПРОСМОТР С ЗУМОМ -->
 <div class="lightbox" id="lightbox">
   <div class="lightbox-box">
     <div class="lightbox-head">
       <span id="lightbox-title">Просмотр</span>
-      <button class="lightbox-close" id="lightbox-close">✕ Закрыть</button>
+      <div class="lightbox-btns">
+        <button class="lightbox-btn" id="lightbox-zoom">🔍 1.6× Крупнее</button>
+        <button class="lightbox-btn" id="lightbox-close">✕ Закрыть</button>
+      </div>
     </div>
-    <div class="lightbox-content" id="lightbox-content"></div>
+    <div class="lightbox-viewport" id="lightbox-viewport">
+      <div class="lightbox-content" id="lightbox-content"></div>
+    </div>
   </div>
 </div>
 
@@ -1275,7 +1573,7 @@
       document.querySelectorAll('[data-green]').forEach((s) => s.classList.remove('selected'));
       sw.classList.add('selected');
       document.documentElement.style.setProperty('--wall-green', sw.dataset.green);
-      document.documentElement.style.setProperty('--wall-green-shade', sw.dataset.greenShade);
+      document.documentElement.style.setProperty('--wall-green-deep', sw.dataset.greenDeep);
     });
   });
 
@@ -1284,24 +1582,35 @@
       document.querySelectorAll('[data-white]').forEach((s) => s.classList.remove('selected'));
       sw.classList.add('selected');
       document.documentElement.style.setProperty('--wall-white', sw.dataset.white);
-      document.documentElement.style.setProperty('--wall-white-shade', sw.dataset.whiteShade);
+      document.documentElement.style.setProperty('--wall-white-deep', sw.dataset.whiteDeep);
     });
   });
 
   const lightbox = document.getElementById('lightbox');
   const lightboxTitle = document.getElementById('lightbox-title');
   const lightboxContent = document.getElementById('lightbox-content');
+  const lightboxZoom = document.getElementById('lightbox-zoom');
   const lightboxClose = document.getElementById('lightbox-close');
+  let zoomed = false;
 
   document.querySelectorAll('[data-lightbox]').forEach((box) => {
     box.addEventListener('click', () => {
       const svg = box.querySelector('svg');
       if (!svg) return;
+      zoomed = false;
+      lightboxContent.style.width = '100%';
+      lightboxZoom.textContent = '🔍 1.6× Крупнее';
       lightboxTitle.textContent = box.dataset.lightbox;
       lightboxContent.innerHTML = '';
       lightboxContent.appendChild(svg.cloneNode(true));
       lightbox.classList.add('open');
     });
+  });
+
+  lightboxZoom.addEventListener('click', () => {
+    zoomed = !zoomed;
+    lightboxContent.style.width = zoomed ? '165%' : '100%';
+    lightboxZoom.textContent = zoomed ? '🔍 1× По экрану' : '🔍 1.6× Крупнее';
   });
 
   lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
