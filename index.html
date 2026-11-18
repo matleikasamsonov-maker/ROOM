@@ -3,22 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>3D-дизайн комнаты 186 × 310 см — Интерактивный проект</title>
+  <title>Дизайн-проект комнаты 186 × 310 см</title>
   <style>
     :root {
-      --bg: #f3f5f1;
+      --bg: #f4f6f2;
       --surface: #ffffff;
       --surface-alt: #f9faf7;
       --text: #1b221e;
-      --muted: #5b665f;
+      --muted: #59645d;
       --accent: #5e9642;
-      --accent-dark: #45732e;
+      --accent-dark: #426e2c;
       --accent-soft: #e7f2e0;
       --warm: #d9823b;
       --border: #dde3da;
       --shadow-sm: 0 4px 14px rgba(20, 30, 22, 0.05);
-      --shadow-lg: 0 18px 42px rgba(20, 30, 22, 0.09);
+      --shadow-lg: 0 16px 38px rgba(20, 30, 22, 0.08);
       --radius: 20px;
+
+      /* Динамические цвета стен для всех иллюстраций */
+      --wall-green: #b5d89a;
+      --wall-green-shade: #9ec482;
+      --wall-white: #f7f5ef;
+      --wall-white-shade: #e9e5dc;
     }
 
     * {
@@ -40,34 +46,25 @@
       overflow-x: hidden;
     }
 
-    #shared-3d-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 3;
-      display: block;
-    }
-
+    /* ШАПКА */
     header {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 40;
     }
 
     .header-inner {
-      max-width: 1320px;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 12px 20px;
+      padding: 12px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
     }
 
     .brand {
@@ -84,14 +81,14 @@
       background: linear-gradient(135deg, #74b054, #4e7d35);
       color: #fff;
       font-weight: 800;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       display: grid;
       place-items: center;
-      box-shadow: 0 4px 12px rgba(94, 150, 66, 0.28);
+      box-shadow: 0 4px 12px rgba(94, 150, 66, 0.25);
     }
 
     .brand h1 {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.2;
@@ -108,8 +105,6 @@
       gap: 6px;
       overflow-x: auto;
       scrollbar-width: none;
-      -ms-overflow-style: none;
-      padding-bottom: 2px;
     }
 
     .nav-links::-webkit-scrollbar {
@@ -127,7 +122,7 @@
       font-weight: 500;
       white-space: nowrap;
       flex-shrink: 0;
-      transition: all 0.2s ease;
+      transition: all 0.18s ease;
     }
 
     .nav-links a:hover {
@@ -137,210 +132,61 @@
     }
 
     main {
-      max-width: 1320px;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 20px 20px 80px;
-      position: relative;
-      z-index: 1;
+      padding: 20px 18px 72px;
     }
 
+    /* ОБЩАЯ КАРТИНА */
     .hero-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow-lg);
       overflow: hidden;
-      margin-bottom: 36px;
+      margin-bottom: 34px;
     }
 
-    .viewer-wrap {
-      position: relative;
-      width: 100%;
-      height: 600px;
-      background: radial-gradient(circle at 50% 28%, #e5eef5 0%, #cfdbe3 100%);
-      cursor: grab;
-      touch-action: none;
-      user-select: none;
-      -webkit-user-select: none;
-      transition: background 0.5s ease;
-    }
-
-    .viewer-wrap.night-mode {
-      background: radial-gradient(circle at 50% 28%, #232c38 0%, #141920 100%);
-    }
-
-    .viewer-wrap:active {
-      cursor: grabbing;
-    }
-
-    .status-banner {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--text);
-      pointer-events: none;
-      z-index: 2;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .status-banner small {
-      font-weight: 400;
-      font-size: 0.8rem;
-      color: var(--muted);
-      max-width: 420px;
-    }
-
-    .hud-top {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      right: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 8px;
-      pointer-events: none;
-      z-index: 6;
-    }
-
-    .hud-pill {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(221, 227, 218, 0.95);
-      padding: 7px 12px;
-      border-radius: 11px;
-      font-size: 0.78rem;
-      color: var(--text);
-      box-shadow: var(--shadow-sm);
-      pointer-events: auto;
-    }
-
-    .hud-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      pointer-events: auto;
-    }
-
-    .zoom-pad {
-      position: absolute;
-      right: 12px;
-      bottom: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      z-index: 7;
-    }
-
-    .zoom-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 11px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.94);
-      color: var(--text);
-      font-size: 1.2rem;
-      font-weight: 700;
-      line-height: 1;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .zoom-btn:active {
-      transform: scale(0.94);
-      background: var(--accent-soft);
-    }
-
-    .dim-labels-layer {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 5;
-      transition: opacity 0.2s ease;
-    }
-
-    .dim-labels-layer.hidden {
-      opacity: 0;
-    }
-
-    .dim-tag {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      background: rgba(27, 34, 30, 0.88);
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 3px 7px;
-      border-radius: 6px;
-      white-space: nowrap;
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
-    }
-
-    .controls-panel {
-      position: relative;
-      z-index: 10;
+    .hero-top-bar {
       padding: 16px 20px;
-      background: var(--surface-alt);
-      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .presets-scroller {
-      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      padding-bottom: 2px;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .presets-scroller::-webkit-scrollbar {
-      display: none;
-    }
-
-    .ctrl-label {
-      font-size: 0.75rem;
+    .hero-title h2 {
+      font-size: clamp(1.18rem, 2.6vw, 1.45rem);
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title p {
+      font-size: 0.86rem;
       color: var(--muted);
-      white-space: nowrap;
-      flex-shrink: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     button.btn {
       border: 1px solid var(--border);
-      background: var(--surface);
+      background: var(--surface-alt);
       color: var(--text);
       padding: 8px 13px;
-      min-height: 36px;
       border-radius: 10px;
       font-size: 0.82rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-      transition: all 0.16s ease;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 5px;
+      gap: 6px;
+      transition: all 0.16s ease;
     }
 
     button.btn:hover {
@@ -348,15 +194,10 @@
       background: var(--accent-soft);
     }
 
-    button.btn:active {
-      transform: scale(0.97);
-    }
-
     button.btn.active {
       background: var(--accent);
-      color: #ffffff;
+      color: #fff;
       border-color: var(--accent);
-      box-shadow: 0 3px 10px rgba(94, 150, 66, 0.28);
     }
 
     button.btn.warm-active {
@@ -365,14 +206,91 @@
       border-color: var(--warm);
     }
 
-    .palette-row {
+    .visual-stage {
+      position: relative;
+      background: radial-gradient(circle at 50% 35%, #eef4f7 0%, #dce6ec 100%);
+      padding: 14px;
+      transition: background 0.4s ease;
+      cursor: zoom-in;
+    }
+
+    body.night-mode .visual-stage {
+      background: radial-gradient(circle at 50% 35%, #242d38 0%, #151b22 100%);
+    }
+
+    .visual-stage svg {
+      width: 100%;
+      height: auto;
+      max-height: 540px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px;
+    }
+
+    .zoom-badge {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    /* ВЕЧЕРНИЙ РЕЖИМ ДЛЯ ИЛЛЮСТРАЦИЙ */
+    .night-overlay {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .lamp-glow {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .sun-beam {
+      opacity: 0.42;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    body.night-mode .night-overlay {
+      opacity: 0.36;
+    }
+
+    body.night-mode .lamp-glow {
+      opacity: 0.95;
+    }
+
+    body.night-mode .sun-beam {
+      opacity: 0.05;
+    }
+
+    .dim-group {
+      transition: opacity 0.25s ease;
+    }
+
+    body.hide-dims .dim-group {
+      opacity: 0;
+    }
+
+    /* ПАЛИТРА СТЕН */
+    .palette-bar {
+      padding: 14px 20px;
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 12px 20px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--border);
+      gap: 12px 24px;
     }
 
     .swatch-group {
@@ -381,11 +299,19 @@
       gap: 9px;
     }
 
+    .ctrl-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
     .swatch {
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      border: 2px solid #ffffff;
+      border: 2px solid #fff;
       box-shadow: 0 0 0 1px #b5bfb6;
       cursor: pointer;
       transition: transform 0.15s ease;
@@ -393,34 +319,33 @@
 
     .swatch.selected {
       box-shadow: 0 0 0 2.5px var(--text);
-      transform: scale(1.06);
+      transform: scale(1.08);
     }
 
+    /* ПЛАНИРОВКА И СВОДКА */
     .plan-overview {
-      position: relative;
-      z-index: 10;
       display: grid;
-      grid-template-columns: 330px 1fr;
+      grid-template-columns: 310px 1fr;
       gap: 22px;
-      margin-bottom: 42px;
+      margin-bottom: 40px;
     }
 
     .plan-card, .summary-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px;
+      padding: 20px;
       box-shadow: var(--shadow-sm);
     }
 
     .plan-card h3, .summary-card h3 {
-      font-size: 1.08rem;
+      font-size: 1.06rem;
       margin-bottom: 12px;
     }
 
     .plan-svg {
       width: 100%;
-      max-width: 300px;
+      max-width: 280px;
       margin: 0 auto;
       height: auto;
       display: block;
@@ -431,7 +356,7 @@
 
     .specs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 12px;
       margin-top: 14px;
     }
@@ -440,43 +365,42 @@
       background: var(--surface-alt);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 13px 15px;
+      padding: 12px 14px;
     }
 
     .spec-item span {
       display: block;
       font-size: 0.76rem;
       color: var(--muted);
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .spec-item strong {
-      font-size: 0.94rem;
-      color: var(--text);
+      font-size: 0.93rem;
     }
 
+    /* ЗАГОЛОВОК 4 СТЕН */
     .section-head {
-      position: relative;
-      z-index: 10;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .section-head h2 {
-      font-size: clamp(1.32rem, 3vw, 1.65rem);
+      font-size: clamp(1.3rem, 3vw, 1.6rem);
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .section-head p {
       color: var(--muted);
-      font-size: 0.93rem;
+      font-size: 0.92rem;
     }
 
+    /* КАРТОЧКИ 4 СТЕН */
     .walls-list {
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 26px;
     }
 
     .wall-card {
@@ -485,57 +409,46 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow-lg);
       display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
+      grid-template-columns: 1.15fr 0.85fr;
       overflow: hidden;
     }
 
-    .wall-card:nth-child(even) .wall-3d {
+    .wall-card:nth-child(even) .wall-photo {
       order: 2;
     }
 
-    .wall-3d {
+    .wall-photo {
       position: relative;
-      min-height: 410px;
-      background: radial-gradient(circle at 50% 30%, #e7eff5 0%, #d4dfe6 100%);
-      cursor: grab;
-      touch-action: none;
-      user-select: none;
-      -webkit-user-select: none;
+      background: #e9eff2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-in;
+      overflow: hidden;
     }
 
-    .wall-3d:active {
-      cursor: grabbing;
+    .wall-photo svg {
+      width: 100%;
+      height: 100%;
+      min-height: 310px;
+      display: block;
     }
 
     .wall-tag {
       position: absolute;
       top: 12px;
       left: 12px;
-      background: rgba(255, 255, 255, 0.93);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       padding: 5px 11px;
       border-radius: 999px;
       font-size: 0.76rem;
       font-weight: 600;
       pointer-events: none;
-      z-index: 6;
-    }
-
-    .wall-quick-bar {
-      position: absolute;
-      left: 12px;
-      bottom: 12px;
-      display: flex;
-      gap: 6px;
-      z-index: 7;
     }
 
     .wall-body {
-      position: relative;
-      z-index: 10;
-      background: var(--surface);
       padding: 26px 28px;
       display: flex;
       flex-direction: column;
@@ -552,7 +465,7 @@
     }
 
     .wall-body h3 {
-      font-size: clamp(1.14rem, 2.4vw, 1.32rem);
+      font-size: clamp(1.14rem, 2.3vw, 1.32rem);
       font-weight: 700;
       line-height: 1.3;
     }
@@ -565,31 +478,108 @@
 
     .chip {
       background: var(--accent-soft);
-      color: #274718;
-      padding: 4px 9px;
+      color: #264517;
+      padding: 4px 10px;
       border-radius: 8px;
       font-size: 0.78rem;
       font-weight: 600;
     }
 
-    .wall-body p {
-      color: #36403a;
+    .wall-lead {
+      color: #2c3530;
+      font-size: 0.94rem;
+    }
+
+    .wall-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .wall-points li {
+      position: relative;
+      padding-left: 18px;
+      font-size: 0.89rem;
+      color: #3c4640;
+    }
+
+    .wall-points li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      top: -1px;
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    /* ПОЛНОЭКРАННЫЙ ПРОСМОТР (LIGHTBOX) */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 20, 18, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-box {
+      width: 100%;
+      max-width: 1060px;
+      background: var(--surface);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .lightbox-head {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
       font-size: 0.92rem;
     }
 
-    .wall-body ul {
-      padding-left: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 0.89rem;
-      color: #36403a;
+    .lightbox-close {
+      border: none;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-weight: 600;
+      cursor: pointer;
     }
 
-    @media (max-width: 960px) {
-      .plan-overview { grid-template-columns: 1fr; }
-      .wall-card { grid-template-columns: 1fr; }
-      .wall-card:nth-child(even) .wall-3d { order: 0; }
+    .lightbox-content svg {
+      width: 100%;
+      height: auto;
+      max-height: 78svh;
+      display: block;
+    }
+
+    /* МОБИЛЬНАЯ АДАПТАЦИЯ */
+    @media (max-width: 920px) {
+      .plan-overview {
+        grid-template-columns: 1fr;
+      }
+      .wall-card {
+        grid-template-columns: 1fr;
+      }
+      .wall-card:nth-child(even) .wall-photo {
+        order: 0;
+      }
     }
 
     @media (max-width: 640px) {
@@ -599,111 +589,294 @@
         padding: 10px 14px;
         gap: 8px;
       }
-      .brand p { display: none; }
-      main { padding: 12px 12px 64px; }
-      .hero-card { border-radius: 16px; margin-bottom: 24px; }
-      .viewer-wrap { height: 58svh; min-height: 350px; max-height: 460px; }
-      .hud-top { top: 10px; left: 10px; right: 10px; }
-      .hud-pill { width: 100%; font-size: 0.72rem; padding: 6px 10px; }
-      .hud-actions { width: 100%; justify-content: space-between; }
-      .hud-actions button.btn { flex: 1 1 auto; padding: 7px 8px; font-size: 0.75rem; }
-      .controls-panel { padding: 12px 14px; gap: 12px; }
-      .dim-tag { font-size: 0.62rem; padding: 2px 5px; }
-      .plan-card, .summary-card { padding: 16px; border-radius: 16px; }
-      .specs-grid { grid-template-columns: 1fr; gap: 8px; }
-      .wall-card { border-radius: 16px; }
-      .wall-3d { min-height: 320px; }
-      .wall-body { padding: 18px 16px; }
+      .brand p {
+        display: none;
+      }
+      main {
+        padding: 12px 12px 56px;
+      }
+      .hero-card, .wall-card, .plan-card, .summary-card {
+        border-radius: 16px;
+      }
+      .hero-top-bar {
+        padding: 14px;
+      }
+      .hero-actions {
+        width: 100%;
+      }
+      .hero-actions button.btn {
+        flex: 1;
+        justify-content: center;
+      }
+      .visual-stage {
+        padding: 8px;
+      }
+      .palette-bar {
+        padding: 12px 14px;
+      }
+      .wall-photo svg {
+        min-height: 230px;
+      }
+      .wall-body {
+        padding: 18px 16px;
+      }
+      .specs-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-<canvas id="shared-3d-canvas"></canvas>
-
 <header>
   <div class="header-inner">
     <div class="brand">
-      <div class="brand-badge">3D</div>
+      <div class="brand-badge">186×310</div>
       <div>
-        <h1>Комната 186 × 310 см</h1>
-        <p>Интерактивная 3D-модель с мебелью, окном и обогревателем</p>
+        <h1>Проект комнаты 186 × 310 см</h1>
+        <p>Общая картина и детальный обзор каждой из 4 стен</p>
       </div>
     </div>
     <nav class="nav-links">
-      <a href="#scene-main">Общая 3D</a>
+      <a href="#overview">Общая картина</a>
       <a href="#plan">План</a>
-      <a href="#side-1">1. Салатовая стена</a>
-      <a href="#side-2">2. Шкаф и дверь</a>
-      <a href="#side-3">3. Окно и обогреватель</a>
-      <a href="#side-4">4. Столик и пенал</a>
+      <a href="#wall-1">1. Салатовая стена</a>
+      <a href="#wall-2">2. Шкаф и дверь</a>
+      <a href="#wall-3">3. Окно и обогреватель</a>
+      <a href="#wall-4">4. Столик и пенал</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <!-- ГЛАВНАЯ ИНТЕРАКТИВНАЯ 3D-СЦЕНА -->
-  <section id="scene-main" class="hero-card">
-    <div id="main-viewer" class="viewer-wrap">
-      <div id="loader-status" class="status-banner">
-        <span>Загрузка 3D-модели комнаты...</span>
-        <small>Если модель не появилась через 3 секунды — нажмите «Поделиться» / «Открыть в браузере» (Chrome или Safari), так как встроенный просмотрщик файлов блокирует 3D.</small>
+  <!-- ОБЩАЯ КАРТИНА КОМНАТЫ -->
+  <section id="overview" class="hero-card">
+    <div class="hero-top-bar">
+      <div class="hero-title">
+        <h2>Общая картина интерьера (вид в разрезе)</h2>
+        <p>Вся комната 186 × 310 × 238 см в масштабе — нажмите на картинку, чтобы открыть крупно</p>
       </div>
-      <div class="dim-labels-layer" id="dim-layer"></div>
-
-      <div class="hud-top">
-        <div class="hud-pill">
-          <strong>Управление:</strong> 1 палец / ЛКМ — вращение • 2 пальца / ПКМ — зум и сдвиг
-        </div>
-        <div class="hud-actions">
-          <button class="btn" id="btn-lighting">☀️ День / Вечер</button>
-          <button class="btn" id="btn-wardrobes">🚪 Шкафы</button>
-          <button class="btn" id="btn-dims">📏 Размеры</button>
-          <button class="btn" id="btn-reset">↺ Сброс</button>
-        </div>
-      </div>
-
-      <div class="zoom-pad">
-        <button class="zoom-btn" data-zoom="main" data-dir="-1" aria-label="Приблизить">+</button>
-        <button class="zoom-btn" data-zoom="main" data-dir="1" aria-label="Отдалить">−</button>
+      <div class="hero-actions">
+        <button class="btn" id="btn-night">☀️ День / Вечер</button>
+        <button class="btn active" id="btn-dims">📏 Размеры</button>
       </div>
     </div>
 
-    <div class="controls-panel">
-      <div class="presets-scroller">
-        <span class="ctrl-label">Ракурс:</span>
-        <button class="btn active" data-preset="overview">Общий вид</button>
-        <button class="btn" data-preset="fromDoor">От двери</button>
-        <button class="btn" data-preset="greenWall">Салатовая стена</button>
-        <button class="btn" data-preset="wardrobe">Встроенный шкаф</button>
-        <button class="btn" data-preset="windowHeater">Окно и обогреватель</button>
-        <button class="btn" data-preset="deskCabinet">Столик и пенал</button>
+    <div class="visual-stage" data-lightbox="Общая картина комнаты 186 × 310 см">
+      <svg viewBox="0 0 920 560" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#89c4eb"/>
+            <stop offset="65%" stop-color="#d8eefb"/>
+            <stop offset="100%" stop-color="#f2ede2"/>
+          </linearGradient>
+          <linearGradient id="oakTop" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#cfa06b"/>
+            <stop offset="100%" stop-color="#b47e47"/>
+          </linearGradient>
+          <linearGradient id="oakSide" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#a8733e"/>
+            <stop offset="100%" stop-color="#87582b"/>
+          </linearGradient>
+          <linearGradient id="floorGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#b8844c"/>
+            <stop offset="100%" stop-color="#966331"/>
+          </linearGradient>
+          <linearGradient id="sunRay" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#fff8d6" stop-opacity="0.75"/>
+            <stop offset="100%" stop-color="#fff8d6" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="warmLamp" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffcf75" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#ffcf75" stop-opacity="0"/>
+          </radialGradient>
+          <pattern id="parquetPat" width="32" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(26)">
+            <rect width="32" height="16" fill="#a7723d"/>
+            <rect x="0.5" y="0.5" width="15" height="7" fill="#b58049"/>
+            <rect x="16.5" y="0.5" width="15" height="7" fill="#9c6834"/>
+            <rect x="8.5" y="8.5" width="15" height="7" fill="#ad7741"/>
+          </pattern>
+        </defs>
+
+        <!-- ПОЛ (Изометрический ромб комнаты 186 x 310) -->
+        <!-- Углы пола: Задний (420, 235), Правый (740, 395), Передний (490, 520), Левый (170, 360) -->
+        <polygon points="420,235 740,395 490,520 170,360" fill="url(#parquetPat)" stroke="#754b24" stroke-width="2"/>
+
+        <!-- Ковёр в центре -->
+        <polygon points="405,280 585,370 465,430 285,340" fill="#ebe6dc" stroke="#c5beaf" stroke-width="1.5"/>
+        <polygon points="405,288 572,371 465,424 298,341" fill="none" stroke="#8fb379" stroke-width="2"/>
+
+        <!-- ЗАДНЯЯ ЛЕВАЯ СТЕНА (ОКОННАЯ 186 см) -->
+        <polygon points="170,135 420,10 420,235 170,360" style="fill: var(--wall-white);" stroke="#d5d1c7" stroke-width="1.5"/>
+        <!-- Окно 70 x 145 см -->
+        <polygon points="265,112 355,67 355,212 265,257" fill="url(#skyGrad)" stroke="#ffffff" stroke-width="5"/>
+        <!-- Дерево за окном -->
+        <circle cx="305" cy="175" r="24" fill="#77a65b" opacity="0.85"/>
+        <circle cx="330" cy="160" r="18" fill="#8bb86e" opacity="0.85"/>
+        <!-- Переплёт окна и римская штора -->
+        <line x1="265" y1="168" x2="355" y2="123" stroke="#ffffff" stroke-width="4"/>
+        <polygon points="267,114 353,71 353,95 267,138" fill="#f7f5ee" opacity="0.92"/>
+        <!-- Подоконник -->
+        <polygon points="260,259 360,209 368,214 268,264" fill="url(#oakTop)"/>
+
+        <!-- Короб 23x24 справа от окна (в углу) -->
+        <polygon points="392,24 420,10 420,235 392,249" fill="#c6cbc8" stroke="#9aa19d" stroke-width="1"/>
+        <polygon points="420,10 446,23 446,248 420,235" fill="#b4bab6" stroke="#9aa19d" stroke-width="1"/>
+
+        <!-- Уголок цветов слева от окна -->
+        <polygon points="182,312 238,284 252,291 196,319" fill="url(#oakTop)"/>
+        <polygon points="205,274 242,255 254,261 217,280" fill="url(#oakTop)"/>
+        <!-- Горшки и листья -->
+        <ellipse cx="228" cy="252" rx="10" ry="6" fill="#d87b56"/>
+        <path d="M228,250 Q215,222 208,232 Q220,238 228,250 Q235,215 245,226 Q236,238 228,250 Z" fill="#4b8736"/>
+        <ellipse cx="195" cy="336" rx="13" ry="8" fill="#d87b56"/>
+        <path d="M195,332 Q176,296 172,312 Q186,318 195,332 Q204,290 218,306 Q204,318 195,332 Z" fill="#3f782c"/>
+
+        <!-- ЗАДНЯЯ ПРАВАЯ СТЕНА (БЕЛАЯ 310 см) -->
+        <polygon points="420,10 740,170 740,395 420,235" style="fill: var(--wall-white-shade);" stroke="#d5d1c7" stroke-width="1.5"/>
+
+        <!-- Встроенный обогреватель справа от окна -->
+        <polygon points="454,195 504,220 504,268 454,243" fill="#e4e8e6" stroke="#9ba39f" stroke-width="1.5"/>
+        <line x1="458" y1="206" x2="500" y2="227" stroke="#6c7570" stroke-width="1.5"/>
+        <line x1="458" y1="215" x2="500" y2="236" stroke="#6c7570" stroke-width="1.5"/>
+        <line x1="458" y1="224" x2="500" y2="245" stroke="#6c7570" stroke-width="1.5"/>
+        <line x1="458" y1="233" x2="500" y2="254" stroke="#6c7570" stroke-width="1.5"/>
+        <circle cx="497" cy="216" r="2.5" fill="#e66b27"/>
+
+        <!-- Столик 74 x 40 см у белой стены -->
+        <!-- Столешница -->
+        <polygon points="512,216 588,254 552,272 476,234" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="1"/>
+        <!-- Ножки стола -->
+        <line x1="480" y1="236" x2="480" y2="302" stroke="#7c4e26" stroke-width="3.5"/>
+        <line x1="550" y1="272" x2="550" y2="338" stroke="#7c4e26" stroke-width="3.5"/>
+        <line x1="584" y1="255" x2="584" y2="318" stroke="#7c4e26" stroke-width="3.5"/>
+        <!-- Стул -->
+        <polygon points="492,268 532,288 506,301 466,281" fill="#e5e0d4" stroke="#b5afa2" stroke-width="1"/>
+        <polygon points="466,252 506,272 506,286 466,266" fill="url(#oakSide)"/>
+        <line x1="470" y1="282" x2="470" y2="322" stroke="#7c4e26" stroke-width="3"/>
+        <line x1="504" y1="300" x2="504" y2="340" stroke="#7c4e26" stroke-width="3"/>
+        <!-- Ноутбук и зелёная лампа -->
+        <polygon points="526,222 552,235 538,242 512,229" fill="#cfd4d7"/>
+        <circle cx="520" cy="204" r="9" fill="#6f9e58"/>
+        <line x1="522" y1="210" x2="522" y2="224" stroke="#d4af37" stroke-width="2"/>
+
+        <!-- Шкаф-пенал 66 x 36 x 205 см -->
+        <!-- Бок -->
+        <polygon points="570,136 604,119 604,324 570,341" fill="url(#oakSide)" stroke="#7c4e26" stroke-width="1"/>
+        <!-- Верх -->
+        <polygon points="570,136 604,119 672,153 638,170" fill="url(#oakTop)"/>
+        <!-- Фасад (верхняя и нижняя секции белые, середина открытые полки с книгами) -->
+        <polygon points="570,136 638,170 638,226 570,192" fill="#fcfbf8" stroke="#dcd8ce" stroke-width="1"/>
+        <polygon points="570,192 638,226 638,274 570,240" fill="#b4804a" stroke="#7c4e26" stroke-width="1"/>
+        <!-- Книги на полке -->
+        <polygon points="582,216 588,219 588,243 582,240" fill="#6f9e58"/>
+        <polygon points="589,220 595,223 595,247 589,244" fill="#d87b56"/>
+        <polygon points="596,224 602,227 602,251 596,248" fill="#5c768d"/>
+        <polygon points="570,240 638,274 638,375 570,341" fill="#fcfbf8" stroke="#dcd8ce" stroke-width="1"/>
+
+        <!-- ПЕРЕДНЯЯ ЛЕВАЯ СТЕНА В РАЗРЕЗЕ (САЛАТОВАЯ 310 см) -->
+        <polygon points="170,135 490,295 490,520 170,360" style="fill: var(--wall-green);" opacity="0.32"/>
+        <!-- Нижний срез салатовой стены (чтобы была видна кровать и цвет стены) -->
+        <polygon points="170,265 490,425 490,520 170,360" style="fill: var(--wall-green);" stroke="#7ea863" stroke-width="1.5"/>
+
+        <!-- 3 ботанических постера на салатовой стене -->
+        <g opacity="0.92">
+          <polygon points="242,148 282,168 282,222 242,202" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.5"/>
+          <circle cx="262" cy="184" r="9" fill="#74a358"/>
+          <polygon points="294,174 334,194 334,248 294,228" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.5"/>
+          <ellipse cx="314" cy="211" rx="7" ry="13" fill="#5b8a44"/>
+          <polygon points="346,200 386,220 386,274 346,254" fill="#faf8f2" stroke="#8c5c2e" stroke-width="2.5"/>
+          <circle cx="366" cy="236" r="9" fill="#89b56e"/>
+        </g>
+
+        <!-- КРОВАТЬ 197 x 102 см у салатовой стены -->
+        <!-- Изголовье -->
+        <polygon points="222,262 318,214 318,268 222,316" fill="url(#oakSide)" stroke="#7c4e26" stroke-width="1"/>
+        <!-- Каркас и матрас -->
+        <polygon points="222,316 318,268 504,361 408,409" fill="#faf8f2" stroke="#d8d4ca" stroke-width="1.5"/>
+        <!-- Салатовый плед в ногах -->
+        <polygon points="354,322 450,274 504,301 408,349" fill="#87b36d" opacity="0.92"/>
+        <!-- Боковины кровати -->
+        <polygon points="222,316 408,409 408,448 222,355" fill="url(#oakTop)" stroke="#7c4e26" stroke-width="1"/>
+        <polygon points="408,409 504,361 504,400 408,448" fill="url(#oakSide)" stroke="#7c4e26" stroke-width="1"/>
+        <!-- Подушки -->
+        <polygon points="246,304 294,280 322,294 274,318" fill="#ffffff" stroke="#dcd8ce" stroke-width="1"/>
+        <polygon points="288,314 326,295 348,306 310,325" fill="#d9ebd0" stroke="#b6cfa8" stroke-width="1"/>
+
+        <!-- ПЕРЕДНЯЯ ПРАВАЯ ЗОНА (ШКАФ 106 см + ДВЕРЬ 80 см с антресолью 33 см) -->
+        <!-- Встроенный шкаф 106 x 238 x 52 см (полупрозрачный контур, чтобы не перекрывать кровать) -->
+        <polygon points="490,340 598,394 598,510 490,456" fill="#fcfbf8" fill-opacity="0.72" stroke="#b9b5ab" stroke-width="1.5"/>
+        <line x1="544" y1="367" x2="544" y2="483" stroke="#b9b5ab" stroke-width="1.2"/>
+        <!-- Дверь 80 см + антресоль 33 см -->
+        <polygon points="598,355 740,284 740,395 598,466" fill="url(#oakTop)" fill-opacity="0.78" stroke="#8c5c2e" stroke-width="1.5"/>
+        <polygon points="598,315 740,244 740,284 598,355" fill="#fcfbf8" fill-opacity="0.88" stroke="#b9b5ab" stroke-width="1.5"/>
+
+        <!-- Солнечный луч из окна -->
+        <polygon class="sun-beam" points="265,112 355,67 610,380 340,460" fill="url(#sunRay)"/>
+
+        <!-- Вечернее затемнение и тёплый свет ламп -->
+        <rect class="night-overlay" x="0" y="0" width="920" height="560" fill="#0d141d"/>
+        <circle class="lamp-glow" cx="235" cy="240" r="95" fill="url(#warmLamp)"/>
+        <circle class="lamp-glow" cx="520" cy="215" r="95" fill="url(#warmLamp)"/>
+
+        <!-- РАЗМЕРНЫЕ ВЫНОСКИ -->
+        <g class="dim-group" font-family="sans-serif" font-size="12" font-weight="700">
+          <g transform="translate(155, 220)">
+            <rect x="-52" y="-13" width="104" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
+            <text x="0" y="3" fill="#fff" text-anchor="middle">Салатовая 310</text>
+          </g>
+          <g transform="translate(310, 56)">
+            <rect x="-44" y="-13" width="88" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
+            <text x="0" y="3" fill="#fff" text-anchor="middle">Окно 70 см</text>
+          </g>
+          <g transform="translate(480, 175)">
+            <rect x="-52" y="-13" width="104" height="24" rx="6" fill="#d9823b"/>
+            <text x="0" y="3" fill="#fff" text-anchor="middle">Обогреватель</text>
+          </g>
+          <g transform="translate(555, 195)">
+            <rect x="-48" y="-13" width="96" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
+            <text x="0" y="3" fill="#fff" text-anchor="middle">Столик 74×40</text>
+          </g>
+          <g transform="translate(655, 128)">
+            <rect x="-46" y="-13" width="92" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
+            <text x="0" y="3" fill="#fff" text-anchor="middle">Пенал 66 см</text>
+          </g>
+          <g transform="translate(325, 365)">
+            <rect x="-54" y="-13" width="108" height="24" rx="6" fill="#426e2c"/>
+            <text x="0" y="3" fill="#fff" text-anchor="middle">Кровать 197×102</text>
+          </g>
+          <g transform="translate(645, 425)">
+            <rect x="-66" y="-13" width="132" height="24" rx="6" fill="#1b221e" opacity="0.9"/>
+            <text x="0" y="3" fill="#fff" text-anchor="middle">Шкаф 106 + Дверь 80</text>
+          </g>
+        </g>
+      </svg>
+      <div class="zoom-badge">🔍 Нажмите для увеличения</div>
+    </div>
+
+    <div class="palette-bar">
+      <div class="swatch-group">
+        <span class="ctrl-label">Салатовая стена:</span>
+        <div class="swatch selected" style="background:#b5d89a" data-green="#b5d89a" data-green-shade="#9ec482" title="Нежно-салатовый"></div>
+        <div class="swatch" style="background:#9fcb7e" data-green="#9fcb7e" data-green-shade="#89b568" title="Свежий фисташковый"></div>
+        <div class="swatch" style="background:#c5e0b4" data-green="#c5e0b4" data-green-shade="#aecb9c" title="Пастельный шалфей"></div>
+        <div class="swatch" style="background:#95bc82" data-green="#95bc82" data-green-shade="#7fa66c" title="Травяной приглушённый"></div>
       </div>
 
-      <div class="palette-row">
-        <div class="swatch-group">
-          <span class="ctrl-label">Салатовый:</span>
-          <div class="swatch selected" style="background:#b5d89a" data-green="#b5d89a" title="Нежно-салатовый"></div>
-          <div class="swatch" style="background:#9fcb7e" data-green="#9fcb7e" title="Свежий фисташковый"></div>
-          <div class="swatch" style="background:#c5e0b4" data-green="#c5e0b4" title="Пастельный шалфей"></div>
-          <div class="swatch" style="background:#95bc82" data-green="#95bc82" title="Травяной приглушённый"></div>
-        </div>
-
-        <div class="swatch-group">
-          <span class="ctrl-label">Белые стены:</span>
-          <div class="swatch selected" style="background:#f7f5ef" data-white="#f7f5ef" title="Тёплый молочно-белый"></div>
-          <div class="swatch" style="background:#ffffff" data-white="#ffffff" title="Чистый белый"></div>
-          <div class="swatch" style="background:#ece8de" data-white="#ece8de" title="Светлый греж"></div>
-          <div class="swatch" style="background:#e5eaec" data-white="#e5eaec" title="Светло-серый туман"></div>
-        </div>
+      <div class="swatch-group">
+        <span class="ctrl-label">Белые стены:</span>
+        <div class="swatch selected" style="background:#f7f5ef" data-white="#f7f5ef" data-white-shade="#e9e5dc" title="Тёплый молочно-белый"></div>
+        <div class="swatch" style="background:#ffffff" data-white="#ffffff" data-white-shade="#f0f2f4" title="Чистый белый"></div>
+        <div class="swatch" style="background:#ece8de" data-white="#ece8de" data-white-shade="#ddd8cc" title="Светлый греж"></div>
+        <div class="swatch" style="background:#e5eaec" data-white="#e5eaec" data-white-shade="#d6dde0" title="Светло-серый туман"></div>
       </div>
     </div>
   </section>
 
-  <!-- 2D ЧЕРТЁЖ ПЛАНИРОВКИ И СПЕЦИФИКАЦИЯ -->
+  <!-- 2D ЧЕРТЁЖ ПЛАНИРОВКИ И СВОДКА -->
   <section id="plan" class="plan-overview">
     <div class="plan-card">
-      <h3>План комнаты (вид сверху)</h3>
+      <h3>Чертёж планировки (вид сверху)</h3>
       <svg class="plan-svg" viewBox="0 0 320 440" xmlns="http://www.w3.org/2000/svg">
         <rect x="55" y="45" width="210" height="350" fill="#ffffff" stroke="#1b221e" stroke-width="4" />
         <line x1="55" y1="45" x2="55" y2="395" stroke="#5e9642" stroke-width="7" />
@@ -733,25 +906,25 @@
     </div>
 
     <div class="summary-card">
-      <h3>Эргономика и точная расстановка мебели</h3>
+      <h3>Почему эта расстановка работает идеально</h3>
       <p style="color: var(--muted); font-size: 0.92rem;">
-        Все элементы расставлены в реальном масштабе <strong>186 × 310 × 238 см</strong> так, чтобы сохранить удобные проходы, доступ к обогревателю и полный угол открывания входной двери <strong>80 см</strong>.
+        Комната вытянутая (<strong>186 × 310 см</strong>), поэтому главная задача — не превратить её в «вагон». Вся крупная мебель выстроена в две чёткие линии по бокам, оставляя свободный проход от двери до окна и открытый доступ к обогревателю.
       </p>
       <div class="specs-grid">
         <div class="spec-item">
-          <span>Спальная зона (салатовая стена)</span>
-          <strong>Кровать 197 × 102 см</strong>
+          <span>Спальная зона</span>
+          <strong>Кровать 197 × 102 см у салатовой стены</strong>
         </div>
         <div class="spec-item">
-          <span>Основное хранение у входа</span>
-          <strong>Шкаф 106 см + антресоль 33 см</strong>
+          <span>Главный шкаф у входа</span>
+          <strong>106 см в ширину + антресоль 33 см</strong>
         </div>
         <div class="spec-item">
           <span>Отопление справа от окна</span>
           <strong>Короб 23×24 см + конвектор в стене</strong>
         </div>
         <div class="spec-item">
-          <span>Рабочая зона у окна (белая стена)</span>
+          <span>Рабочее место</span>
           <strong>Столик 74 × 40 см со стулом</strong>
         </div>
         <div class="spec-item">
@@ -759,1166 +932,425 @@
           <strong>Шкаф-пенал 66 × 36 × 205 см</strong>
         </div>
         <div class="spec-item">
-          <span>Светлый угол слева от окна</span>
+          <span>Зелёный угол у окна</span>
           <strong>Этажерка под цветы (простенок 75 см)</strong>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ПОДРОБНЫЙ РАЗБОР КАЖДОЙ ИЗ 4 СТОРОН -->
+  <!-- ПОДРОБНЫЙ ОБЗОР КАЖДОЙ ИЗ 4 СТЕН -->
   <div class="section-head">
-    <h2>Детальный 3D-обзор каждой из четырёх стен</h2>
-    <p>Каждую сцену ниже можно вращать одним пальцем, приближать двумя пальцами или кнопками «+» / «−».</p>
+    <h2>Детальный обзор каждой из 4 стен</h2>
+    <p>Нажмите на любую иллюстрацию, чтобы открыть её во весь экран и рассмотреть детали.</p>
   </div>
 
   <div class="walls-list">
-    <article id="side-1" class="wall-card">
-      <div id="view-wall-1" class="wall-3d">
-        <div class="wall-tag">Сторона 1 • Салатовая акцентная стена</div>
-        <div class="wall-quick-bar">
-          <button class="btn" data-wall-reset="w1">↺ Сброс</button>
-        </div>
-        <div class="zoom-pad">
-          <button class="zoom-btn" data-zoom="w1" data-dir="-1">+</button>
-          <button class="zoom-btn" data-zoom="w1" data-dir="1">−</button>
-        </div>
+    <!-- СТОРОНА 1: САЛАТОВАЯ СТЕНА -->
+    <article id="wall-1" class="wall-card">
+      <div class="wall-photo" data-lightbox="Сторона 1 • Салатовая стена (310 × 238 см)">
+        <span class="wall-tag">Сторона 1 • 310 × 238 см</span>
+        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+          <!-- Потолок и карниз -->
+          <rect x="0" y="0" width="800" height="32" fill="#f2f4f0"/>
+          <!-- Салатовая стена -->
+          <rect x="0" y="32" width="800" height="388" style="fill: var(--wall-green);"/>
+          <rect x="0" y="32" width="800" height="10" fill="#ffffff"/>
+          <!-- Пол и плинтус -->
+          <rect x="0" y="420" width="800" height="60" fill="url(#parquetPat)"/>
+          <rect x="0" y="408" width="800" height="12" fill="#7c4e26"/>
+
+          <!-- Слева: световой блик от окна и этажерка с цветами (зона 61 см) -->
+          <polygon class="sun-beam" points="0,32 180,32 240,420 0,420" fill="url(#sunRay)"/>
+          <rect x="26" y="305" width="82" height="103" fill="none" stroke="#ffffff" stroke-width="4"/>
+          <rect x="22" y="302" width="90" height="7" rx="2" fill="url(#oakTop)"/>
+          <rect x="64" y="232" width="44" height="70" fill="none" stroke="#ffffff" stroke-width="4"/>
+          <rect x="60" y="229" width="52" height="7" rx="2" fill="url(#oakTop)"/>
+          <!-- Растения на этажерке -->
+          <path d="M74,204 L98,204 L94,229 L78,229 Z" fill="#d87b56"/>
+          <path d="M86,204 Q66,162 58,180 Q74,190 86,204 Q92,152 108,172 Q96,188 86,204 Z" fill="#4b8736"/>
+          <path d="M36,280 L56,280 L53,302 L39,302 Z" fill="#f7f5ef"/>
+          <path d="M46,280 Q32,250 26,264 Q38,270 46,280 Q54,246 66,260 Q54,270 46,280 Z" fill="#5e9642"/>
+
+          <!-- По центру: Кровать 197 x 102 см (x: 155..620) -->
+          <!-- Изголовье -->
+          <rect x="155" y="242" width="16" height="178" rx="3" fill="url(#oakSide)"/>
+          <!-- Царга и ножки -->
+          <rect x="168" y="346" width="452" height="44" rx="4" fill="url(#oakTop)"/>
+          <rect x="180" y="390" width="12" height="30" fill="#7c4e26"/>
+          <rect x="596" y="390" width="12" height="30" fill="#7c4e26"/>
+          <!-- Матрас и одеяло -->
+          <rect x="171" y="314" width="445" height="32" rx="8" fill="#fcfbf7" stroke="#e2dfd6"/>
+          <!-- Салатовый плед в ногах -->
+          <rect x="475" y="312" width="143" height="36" rx="8" fill="#87b36d"/>
+          <!-- Подушки -->
+          <path d="M174,314 Q192,276 232,294 Q242,306 238,314 Z" fill="#ffffff" stroke="#e2dfd6"/>
+          <path d="M218,314 Q234,284 268,298 Q276,308 272,314 Z" fill="#d9ebd0"/>
+
+          <!-- Бра над изголовьем -->
+          <rect x="182" y="182" width="8" height="24" rx="3" fill="#d4af37"/>
+          <path d="M190,192 L212,192 L222,208 L198,208 Z" fill="#fff6de" stroke="#d4af37" stroke-width="2"/>
+
+          <!-- Три ботанических постера над кроватью -->
+          <g>
+            <rect x="256" y="106" width="92" height="124" rx="3" fill="#faf8f2" stroke="#8c5c2e" stroke-width="6"/>
+            <circle cx="302" cy="158" r="22" fill="#8eb874"/>
+            <ellipse cx="302" cy="186" rx="10" ry="24" fill="#5e9642"/>
+
+            <rect x="372" y="106" width="92" height="124" rx="3" fill="#faf8f2" stroke="#8c5c2e" stroke-width="6"/>
+            <ellipse cx="412" cy="166" rx="15" ry="34" transform="rotate(-14 412 166)" fill="#5b8a44"/>
+            <ellipse cx="428" cy="174" rx="12" ry="26" transform="rotate(18 428 174)" fill="#9ec482"/>
+
+            <rect x="488" y="106" width="92" height="124" rx="3" fill="#faf8f2" stroke="#8c5c2e" stroke-width="6"/>
+            <path d="M534,126 Q564,168 534,210 Q504,168 534,126 Z" fill="#74a358"/>
+          </g>
+
+          <!-- Справа: торец встроенного шкафа (глубина 52 см) -->
+          <rect x="676" y="32" width="124" height="388" fill="#fcfbf8" stroke="#dcd8ce" stroke-width="2"/>
+          <line x1="684" y1="32" x2="684" y2="420" stroke="#e4e0d6" stroke-width="2"/>
+
+          <rect class="night-overlay" x="0" y="0" width="800" height="480" fill="#0d141d"/>
+          <circle class="lamp-glow" cx="210" cy="215" r="110" fill="url(#warmLamp)"/>
+        </svg>
       </div>
+
       <div class="wall-body">
-        <span class="wall-step">Стена 01 • 310 × 238 см</span>
-        <h3>Акцентная салатовая стена с кроватью и декором</h3>
+        <span class="wall-step">Стена 01 • Главный акцент</span>
+        <h3>Салатовая стена с кроватью 197 × 102 см</h3>
         <div class="chips">
-          <span class="chip">Длина: 310 см</span>
+          <span class="chip">Длина стены: 310 см</span>
           <span class="chip">Кровать: 197 × 102 см</span>
-          <span class="chip">Оттенок: NCS S 1515-G30Y</span>
+          <span class="chip">Оттенок: пастельный шалфей</span>
         </div>
-        <p>Чистая длинная стена слева от входа окрашивается в спокойный пастельно-салатовый цвет. Кровать <strong>197 × 102 см</strong> встаёт ровно между уголком для цветов у окна (61 см) и встроенным шкафом у двери (52 см).</p>
-        <ul>
-          <li><strong>Декор над кроватью:</strong> три вертикальных ботанических постера в дубовых рамах уравновешивают длину стены.</li>
-          <li><strong>Локальный свет:</strong> поворотное латунное бра у изголовья позволяет читать вечером без верхнего света.</li>
+        <p class="wall-lead">
+          Длинная чистая стена слева от входа берёт на себя роль главного цветового акцента. Спокойный салатовый оттенок освежает комнату и визуально «отодвигает» стену, делая спальное место уютным.
+        </p>
+        <ul class="wall-points">
+          <li><strong>Точная посадка кровати:</strong> между шкафом у двери (52 см) и полками для цветов у окна (61 см) кровать встаёт без зазоров и лишних углов.</li>
+          <li><strong>Ритм по вертикали:</strong> три ботанических постера в дубовых рамах собирают композицию над кроватью и не дают стене выглядеть пустой.</li>
+          <li><strong>Вечерний сценарий:</strong> поворотное латунное бра у изголовья даёт мягкий свет для чтения, когда верхний свет выключен.</li>
         </ul>
       </div>
     </article>
 
-    <article id="side-2" class="wall-card">
-      <div id="view-wall-2" class="wall-3d">
-        <div class="wall-tag">Сторона 2 • Входная стена и встроенный шкаф</div>
-        <div class="wall-quick-bar">
-          <button class="btn active" data-wall-door="w2">🚪 Створки шкафа</button>
-          <button class="btn" data-wall-reset="w2">↺ Сброс</button>
-        </div>
-        <div class="zoom-pad">
-          <button class="zoom-btn" data-zoom="w2" data-dir="-1">+</button>
-          <button class="zoom-btn" data-zoom="w2" data-dir="1">−</button>
-        </div>
+    <!-- СТОРОНА 2: ВХОДНАЯ СТЕНА И ШКАФ -->
+    <article id="wall-2" class="wall-card">
+      <div class="wall-photo" data-lightbox="Сторона 2 • Встроенный шкаф 106 см и дверь с антресолью">
+        <span class="wall-tag">Сторона 2 • 186 × 238 см</span>
+        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="800" height="32" fill="#f2f4f0"/>
+          <rect x="0" y="32" width="800" height="388" style="fill: var(--wall-white);"/>
+          <rect x="0" y="420" width="800" height="60" fill="url(#parquetPat)"/>
+
+          <!-- Слева (вид изнутри комнаты): Встроенный шкаф 106 см (x: 80..450) -->
+          <rect x="80" y="32" width="370" height="388" fill="#fcfbf8" stroke="#d5d1c7" stroke-width="2"/>
+          <!-- Левая створка открыта в разрезе, чтобы показать наполнение -->
+          <rect x="88" y="40" width="176" height="372" fill="#efeae0"/>
+          <!-- Полки внутри шкафа -->
+          <rect x="88" y="92" width="176" height="6" fill="#b9824c"/>
+          <rect x="88" y="150" width="176" height="6" fill="#b9824c"/>
+          <rect x="88" y="302" width="176" height="6" fill="#b9824c"/>
+          <rect x="88" y="356" width="176" height="6" fill="#b9824c"/>
+          <!-- Коробки на верхней полке -->
+          <rect x="102" y="56" width="66" height="36" rx="4" fill="#d8d0c2"/>
+          <rect x="180" y="56" width="66" height="36" rx="4" fill="#c5d4bc"/>
+          <!-- Штанга и одежда -->
+          <line x1="88" y1="168" x2="264" y2="168" stroke="#9aa09c" stroke-width="4"/>
+          <rect x="104" y="170" width="18" height="114" rx="4" fill="#6f9e58"/>
+          <rect x="126" y="170" width="18" height="118" rx="4" fill="#f7f5ef" stroke="#dcd8ce"/>
+          <rect x="148" y="170" width="18" height="110" rx="4" fill="#5c768d"/>
+          <rect x="170" y="170" width="18" height="116" rx="4" fill="#d49a6a"/>
+          <rect x="192" y="170" width="18" height="112" rx="4" fill="#95bc82"/>
+          <!-- Правая створка шкафа закрыта (гладкий фасад без ручек) -->
+          <rect x="266" y="36" width="180" height="380" fill="#fcfbf8" stroke="#dcd8ce" stroke-width="2"/>
+
+          <!-- Справа: Дверь 80 x 205 см + антресоль 33 см над ней (x: 450..720) -->
+          <!-- Антресоль 33 см (y: 32..96) -->
+          <rect x="450" y="32" width="270" height="64" fill="#fcfbf8" stroke="#d5d1c7" stroke-width="2"/>
+          <line x1="585" y1="32" x2="585" y2="96" stroke="#dcd8ce" stroke-width="2"/>
+
+          <!-- Дверной наличник и дубовое полотно -->
+          <rect x="450" y="96" width="270" height="324" fill="#ffffff" stroke="#dcd8ce" stroke-width="2"/>
+          <rect x="466" y="112" width="238" height="308" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="2"/>
+          <!-- Филёнка двери и латунная ручка -->
+          <rect x="488" y="136" width="194" height="120" rx="3" fill="none" stroke="#9e6b38" stroke-width="2"/>
+          <rect x="488" y="274" width="194" height="120" rx="3" fill="none" stroke="#9e6b38" stroke-width="2"/>
+          <circle cx="484" cy="268" r="8" fill="#d4af37"/>
+          <rect x="480" y="265" width="24" height="6" rx="3" fill="#e5c158"/>
+
+          <rect class="night-overlay" x="0" y="0" width="800" height="480" fill="#0d141d"/>
+          <circle class="lamp-glow" cx="176" cy="180" r="105" fill="url(#warmLamp)"/>
+        </svg>
       </div>
+
       <div class="wall-body">
-        <span class="wall-step">Стена 02 • 186 × 238 см</span>
-        <h3>Дверь 80 см, антресоль 33 см и встроенный шкаф 106 см</h3>
+        <span class="wall-step">Стена 02 • Система хранения у входа</span>
+        <h3>Встроенный шкаф 106 см, дверь 80 см и антресоль 33 см</h3>
         <div class="chips">
+          <span class="chip">Шкаф: 106 × 238 см</span>
           <span class="chip">Дверь: 80 × 205 см</span>
-          <span class="chip">Над дверью: 33 см</span>
-          <span class="chip">Шкаф справа: 106 см</span>
+          <span class="chip">Антресоль: 33 см</span>
         </div>
-        <p>Справа от двери в нишу глубиной 52 см встраивается платяной шкаф шириной <strong>106 см</strong>, который переходит в антресольную секцию высотой <strong>33 см</strong> над дверным проёмом.</p>
-        <ul>
-          <li><strong>Наполнение:</strong> штанга для одежды, нижние полки для обуви и ящиков, плюс вместительная верхняя антресоль.</li>
-          <li><strong>Фасады без ручек:</strong> матовые белые дверцы с системой <em>push-to-open</em> сливаются со стеной.</li>
+        <p class="wall-lead">
+          Вся входная стена работает как единый мебельный блок: справа от двери встраивается глубокий шкаф под потолок, а пространство над проёмом закрывает аккуратная антресоль.
+        </p>
+        <ul class="wall-points">
+          <li><strong>Максимум объёма:</strong> внутри шкафа 106 см помещаются полноценная штанга для одежды, нижние ящики для обуви и две верхние полки для сезонных вещей.</li>
+          <li><strong>Антресоль 33 см над дверью:</strong> связывает шкаф со стеной в единую линию и даёт дополнительное место под чемоданы и коробки.</li>
+          <li><strong>Никакого визуального шума:</strong> матовые белые фасады без ручек (нажатие <em>push-to-open</em>) растворяются на фоне стены.</li>
         </ul>
       </div>
     </article>
 
-    <article id="side-3" class="wall-card">
-      <div id="view-wall-3" class="wall-3d">
-        <div class="wall-tag">Сторона 3 • Окно, обогреватель и цветы</div>
-        <div class="wall-quick-bar">
-          <button class="btn" data-wall-reset="w3">↺ Сброс</button>
-        </div>
-        <div class="zoom-pad">
-          <button class="zoom-btn" data-zoom="w3" data-dir="-1">+</button>
-          <button class="zoom-btn" data-zoom="w3" data-dir="1">−</button>
-        </div>
+    <!-- СТОРОНА 3: ОКНО, ОБОГРЕВАТЕЛЬ И ЦВЕТЫ -->
+    <article id="wall-3" class="wall-card">
+      <div class="wall-photo" data-lightbox="Сторона 3 • Окно 70 см, обогреватель справа и уголок цветов">
+        <span class="wall-tag">Сторона 3 • 186 × 238 см</span>
+        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="800" height="32" fill="#f2f4f0"/>
+          <rect x="0" y="32" width="800" height="388" style="fill: var(--wall-white);"/>
+          <rect x="0" y="420" width="800" height="60" fill="url(#parquetPat)"/>
+          <rect x="0" y="408" width="800" height="12" fill="#7c4e26"/>
+
+          <!-- СЛЕВА: Простенок 75 см под цветы (x: 40..280) -->
+          <!-- Напольное кашпо -->
+          <path d="M62,342 L114,342 L106,408 L70,408 Z" fill="#d87b56"/>
+          <path d="M88,342 Q52,272 44,302 Q70,318 88,342 Q96,256 124,288 Q104,316 88,342 Q122,282 134,314 Q108,328 88,342 Z" fill="#3f782c"/>
+          <!-- Двухъярусная этажерка -->
+          <rect x="142" y="294" width="124" height="114" fill="none" stroke="#ffffff" stroke-width="4"/>
+          <rect x="136" y="290" width="136" height="8" rx="2" fill="url(#oakTop)"/>
+          <rect x="196" y="216" width="70" height="74" fill="none" stroke="#ffffff" stroke-width="4"/>
+          <rect x="190" y="212" width="82" height="8" rx="2" fill="url(#oakTop)"/>
+          <!-- Горшки на полках -->
+          <path d="M214,184 L248,184 L243,212 L219,212 Z" fill="#89a882"/>
+          <path d="M231,184 Q206,138 198,158 Q216,170 231,184 Q238,132 258,152 Q242,168 231,184 Z" fill="#4b8736"/>
+          <path d="M154,264 L182,264 L178,290 L158,290 Z" fill="#f2efe9" stroke="#dcd8ce"/>
+          <path d="M168,264 Q150,232 144,246 Q158,254 168,264 Q176,228 190,244 Q176,254 168,264 Z" fill="#5e9642"/>
+
+          <!-- ПО ЦЕНТРУ: Окно 70 x 145 см (x: 295..535, y: 66..302) -->
+          <rect x="295" y="66" width="240" height="236" rx="4" fill="url(#skyGrad)" stroke="#ffffff" stroke-width="10"/>
+          <!-- Пейзаж за окном -->
+          <circle cx="370" cy="215" r="46" fill="#77a65b" opacity="0.85"/>
+          <circle cx="435" cy="195" r="54" fill="#8bb86e" opacity="0.85"/>
+          <rect x="468" y="170" width="52" height="126" fill="#d8c7b4" opacity="0.75"/>
+          <!-- Рама окна и римская штора -->
+          <line x1="295" y1="184" x2="535" y2="184" stroke="#ffffff" stroke-width="8"/>
+          <rect x="302" y="72" width="226" height="36" fill="#f7f5ee" opacity="0.95"/>
+          <line x1="302" y1="90" x2="528" y2="90" stroke="#e2dfd5" stroke-width="1.5"/>
+          <!-- Дубовый подоконник -->
+          <rect x="282" y="302" width="266" height="12" rx="3" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="1"/>
+          <!-- Маленький суккулент на подоконнике -->
+          <rect x="316" y="284" width="22" height="18" rx="3" fill="#ffffff"/>
+          <circle cx="327" cy="280" r="9" fill="#6f9e58"/>
+
+          <!-- СПРАВА: Короб 23x24 см (x: 688..768) и встроенный в стену обогреватель (x: 562..674) -->
+          <!-- Вертикальный короб в правом углу -->
+          <rect x="688" y="32" width="80" height="388" fill="#c8cdca" stroke="#9ea5a1" stroke-width="1.5"/>
+          <rect x="682" y="32" width="8" height="388" fill="url(#oakSide)"/>
+
+          <!-- ВСТРОЕННЫЙ ОБОГРЕВАТЕЛЬ СПРАВА ОТ ОКНА -->
+          <rect x="558" y="314" width="114" height="84" rx="6" fill="#e8ecea" stroke="#9ba39f" stroke-width="2"/>
+          <rect x="568" y="324" width="94" height="64" rx="3" fill="#3a3f3d"/>
+          <!-- Ламели конвектора -->
+          <g stroke="#dce2df" stroke-width="3">
+            <line x1="572" y1="333" x2="658" y2="333"/>
+            <line x1="572" y1="343" x2="658" y2="343"/>
+            <line x1="572" y1="353" x2="658" y2="353"/>
+            <line x1="572" y1="363" x2="658" y2="363"/>
+            <line x1="572" y1="373" x2="658" y2="373"/>
+            <line x1="572" y1="383" x2="658" y2="383"/>
+          </g>
+          <!-- Регулятор и индикатор тепла -->
+          <circle cx="652" cy="320" r="5" fill="#d4af37"/>
+          <circle cx="638" cy="320" r="3" fill="#ff5e1a"/>
+
+          <!-- Солнечный свет -->
+          <polygon class="sun-beam" points="295,66 535,66 620,420 210,420" fill="url(#sunRay)"/>
+          <rect class="night-overlay" x="0" y="0" width="800" height="480" fill="#0d141d"/>
+        </svg>
       </div>
+
       <div class="wall-body">
-        <span class="wall-step">Стена 03 • 186 × 238 см</span>
+        <span class="wall-step">Стена 03 • Свет, тепло и зелень</span>
         <h3>Окно 70 см, встроенный обогреватель справа и зона цветов</h3>
         <div class="chips">
           <span class="chip">Слева: 75 см под цветы</span>
           <span class="chip">Окно: 70 × 145 см</span>
           <span class="chip">Справа: короб 23×24 + обогреватель</span>
         </div>
-        <p>В торцевой стене расположен оконный проём шириной <strong>70 см</strong> с деревянным подоконником и полупрозрачной римской шторой. Справа от окна находится вертикальный короб (<strong>23 × 24 см</strong>) и встроенный в стену конвекторный обогреватель.</p>
-        <ul>
-          <li><strong>Обогреватель справа от окна:</strong> утоплен в стену на высоте 14 см от пола, оснащён ламелями теплоотдачи и регулятором температуры.</li>
-          <li><strong>Уголок для цветов (75 см слева):</strong> многоярусная подставка и напольное кашпо получают максимум дневного света.</li>
+        <p class="wall-lead">
+          Оконная стена разделена на три функциональные части: светолюбивый мини-сад слева, само окно с тёплым дубовым подоконником по центру и технический узел с обогревателем справа.
+        </p>
+        <ul class="wall-points">
+          <li><strong>Обогреватель справа от окна:</strong> встроен в стену рядом с угловым коробом `23×24 см`. Он не выступает в комнату, не мешает столику и быстро отсекает холодный воздух от стекла.</li>
+          <li><strong>Уголок для цветов (75 см слева):</strong> двухъярусная подставка и крупное напольное кашпо получают максимум дневного света и красиво встречают взгляд при входе в комнату.</li>
+          <li><strong>Римская штора вместо тяжелых портьер:</strong> не «съедает» ширину узкой комнаты и оставляет подоконник свободным.</li>
         </ul>
       </div>
     </article>
 
-    <article id="side-4" class="wall-card">
-      <div id="view-wall-4" class="wall-3d">
-        <div class="wall-tag">Сторона 4 • Белая стена, столик и шкаф-пенал</div>
-        <div class="wall-quick-bar">
-          <button class="btn" data-wall-door="w4">🚪 Створки пенала</button>
-          <button class="btn" data-wall-reset="w4">↺ Сброс</button>
-        </div>
-        <div class="zoom-pad">
-          <button class="zoom-btn" data-zoom="w4" data-dir="-1">+</button>
-          <button class="zoom-btn" data-zoom="w4" data-dir="1">−</button>
-        </div>
+    <!-- СТОРОНА 4: БЕЛАЯ СТЕНА, СТОЛИК И ШКАФ-ПЕНАЛ -->
+    <article id="wall-4" class="wall-card">
+      <div class="wall-photo" data-lightbox="Сторона 4 • Белая стена, столик 74×40 и шкаф-пенал 66 см">
+        <span class="wall-tag">Сторона 4 • 310 × 238 см</span>
+        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="800" height="32" fill="#f2f4f0"/>
+          <rect x="0" y="32" width="800" height="388" style="fill: var(--wall-white);"/>
+          <rect x="0" y="32" width="800" height="10" fill="#ffffff"/>
+          <rect x="0" y="420" width="800" height="60" fill="url(#parquetPat)"/>
+          <rect x="0" y="408" width="800" height="12" fill="#7c4e26"/>
+
+          <!-- Слева (ближе к окну): Короб 23x24 + встроенный обогреватель -->
+          <rect x="0" y="32" width="54" height="388" fill="#c8cdca" stroke="#9ea5a1" stroke-width="1.5"/>
+          <rect x="74" y="318" width="96" height="80" rx="5" fill="#e8ecea" stroke="#9ba39f" stroke-width="1.5"/>
+          <g stroke="#6e7672" stroke-width="2.5">
+            <line x1="84" y1="332" x2="160" y2="332"/>
+            <line x1="84" y1="344" x2="160" y2="344"/>
+            <line x1="84" y1="356" x2="160" y2="356"/>
+            <line x1="84" y1="368" x2="160" y2="368"/>
+            <line x1="84" y1="380" x2="160" y2="380"/>
+          </g>
+
+          <!-- Столик 74 x 40 см (x: 195..375) -->
+          <!-- Ножки -->
+          <rect x="204" y="286" width="10" height="134" fill="#7c4e26"/>
+          <rect x="356" y="286" width="10" height="134" fill="#7c4e26"/>
+          <!-- Столешница и два выдвижных ящика -->
+          <rect x="195" y="264" width="180" height="24" rx="3" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="1.5"/>
+          <rect x="206" y="268" width="76" height="16" rx="2" fill="#fcfbf8"/>
+          <rect x="288" y="268" width="76" height="16" rx="2" fill="#fcfbf8"/>
+          <rect x="238" y="274" width="12" height="3" fill="#d4af37"/>
+          <rect x="320" y="274" width="12" height="3" fill="#d4af37"/>
+
+          <!-- Настольная лампа и ноутбук -->
+          <rect x="220" y="260" width="24" height="4" rx="2" fill="#d4af37"/>
+          <line x1="232" y1="214" x2="232" y2="260" stroke="#d4af37" stroke-width="3"/>
+          <path d="M214,214 Q232,192 250,214 Z" fill="#6f9e58"/>
+          <rect x="278" y="259" width="66" height="5" rx="2" fill="#c8cdd0"/>
+          <polygon points="338,259 344,259 336,222 330,222" fill="#3a4552"/>
+
+          <!-- Стул под столом -->
+          <rect x="242" y="328" width="86" height="12" rx="4" fill="#e4dfd3" stroke="#bdb7aa"/>
+          <rect x="252" y="340" width="8" height="80" fill="#7c4e26"/>
+          <rect x="310" y="340" width="8" height="80" fill="#7c4e26"/>
+          <rect x="246" y="294" width="78" height="22" rx="4" fill="url(#oakSide)"/>
+
+          <!-- Шкаф-пенал 66 x 36 x 205 см (x: 410..570, y: 84..420) -->
+          <rect x="410" y="84" width="160" height="336" rx="3" fill="url(#oakTop)" stroke="#8c5c2e" stroke-width="2"/>
+          <!-- Верхние закрытые дверцы -->
+          <rect x="416" y="90" width="72" height="92" fill="#fcfbf8" stroke="#dcd8ce"/>
+          <rect x="492" y="90" width="72" height="92" fill="#fcfbf8" stroke="#dcd8ce"/>
+          <!-- Открытые полки с книгами по центру -->
+          <rect x="416" y="186" width="148" height="104" fill="#9c6938"/>
+          <line x1="416" y1="238" x2="564" y2="238" stroke="url(#oakTop)" stroke-width="6"/>
+          <!-- Книги и декор -->
+          <rect x="426" y="198" width="10" height="37" fill="#6f9e58"/>
+          <rect x="438" y="202" width="10" height="33" fill="#d87b56"/>
+          <rect x="450" y="196" width="10" height="39" fill="#5c768d"/>
+          <rect x="462" y="204" width="10" height="31" fill="#e0c879"/>
+          <circle cx="534" cy="222" r="12" fill="#f7f5ef"/>
+          <rect x="430" y="254" width="58" height="32" rx="3" fill="#ded7c8"/>
+          <!-- Нижние закрытые дверцы -->
+          <rect x="416" y="294" width="72" height="114" fill="#fcfbf8" stroke="#dcd8ce"/>
+          <rect x="492" y="294" width="72" height="114" fill="#fcfbf8" stroke="#dcd8ce"/>
+
+          <!-- Справа: Свободная зона прохода у двери (83 см) -->
+          <rect x="742" y="96" width="58" height="324" fill="url(#oakSide)"/>
+
+          <rect class="night-overlay" x="0" y="0" width="800" height="480" fill="#0d141d"/>
+          <circle class="lamp-glow" cx="232" cy="225" r="105" fill="url(#warmLamp)"/>
+        </svg>
       </div>
+
       <div class="wall-body">
-        <span class="wall-step">Стена 04 • 310 × 238 см</span>
-        <h3>Тёплая белая стена, компактный столик и шкаф-пенал</h3>
+        <span class="wall-step">Стена 04 • Рабочее место и баланс света</span>
+        <h3>Тёплая белая стена, столик 74 × 40 см и шкаф-пенал</h3>
         <div class="chips">
+          <span class="chip">Цвет: тёплый молочно-белый</span>
           <span class="chip">Столик: 74 × 40 см</span>
-          <span class="chip">Шкаф-пенал: 66 × 36 × 205 см</span>
-          <span class="chip">Цвет: RAL 9010 Тёплый белый</span>
+          <span class="chip">Пенал: 66 × 36 × 205 см</span>
         </div>
-        <p>Напротив салатовой стены выбран <strong>тёплый молочно-белый оттенок</strong>: он нейтрализует холодные тени, отражает свет из окна и визуально расширяет комнату.</p>
-        <ul>
-          <li><strong>Столик (74 × 40 см):</strong> стоит ближе к окну и обогревателю; мягкий стул полностью задвигается под столешницу.</li>
-          <li><strong>Шкаф-пенал (66 × 36 × 205 см):</strong> закрытые секции сверху и снизу + открытые полки по центру, установлен с отступом 83 см от угла двери для свободного входа.</li>
+        <p class="wall-lead">
+          Напротив салатовой стены выбран <strong>тёплый молочно-белый оттенок (RAL 9010)</strong>: он работает как отражатель света из окна, убирает холодные тени и визуально расширяет комнату.
+        </p>
+        <ul class="wall-points">
+          <li><strong>Компактный столик (74 × 40 см):</strong> стоит в самой светлой части у окна и обогревателя. Двух ящиков хватает для мелочей, а стул полностью задвигается под столешницу.</li>
+          <li><strong>Шкаф-пенал (66 × 36 × 205 см):</strong> глубина всего 36 см не загромождает проход, при этом закрытые секции прячут бытовые вещи, а открытые полки по центру разгружают фасад.</li>
+          <li><strong>Свободный вход (83 см до угла двери):</strong> дверь открывается настежь и не упирается в боковину шкафа.</li>
         </ul>
       </div>
     </article>
   </div>
 </main>
 
+<!-- ПОЛНОЭКРАННОЕ ОКНО ПРОСМОТРА -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-box">
+    <div class="lightbox-head">
+      <span id="lightbox-title">Просмотр</span>
+      <button class="lightbox-close" id="lightbox-close">✕ Закрыть</button>
+    </div>
+    <div class="lightbox-content" id="lightbox-content"></div>
+  </div>
+</div>
+
 <script>
-  // =========================================================
-  // 0. ПАРАЛЛЕЛЬНАЯ ЗАГРУЗКА THREE.JS + ТАЙМАУТ НА АВТОНОМНЫЙ 3D
-  // =========================================================
-  function loadScript(url) {
-    return new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = url;
-      s.async = true;
-      s.onload = () => (window.THREE ? resolve(window.THREE) : reject(new Error('No THREE')));
-      s.onerror = () => reject(new Error('Failed ' + url));
-      document.head.appendChild(s);
-    });
-  }
-
-  function loadThreeWithTimeout(ms = 2600) {
-    if (window.THREE) return Promise.resolve(window.THREE);
-    const urls = [
-      'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
-      'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js',
-      'https://unpkg.com/three@0.128.0/build/three.min.js'
-    ];
-    const raceLoaders = Promise.any
-      ? Promise.any(urls.map(loadScript))
-      : loadScript(urls[0]);
-
-    const timeout = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('CDN timeout')), ms)
-    );
-    return Promise.race([raceLoaders, timeout]);
-  }
-
-  // =========================================================
-  // ОБЩЕЕ УПРАВЛЕНИЕ КАМЕРОЙ И UI ДЛЯ ОБОИХ ДВИЖКОВ
-  // =========================================================
-  const isMobile = window.innerWidth <= 640;
-  const sharedCanvas = document.getElementById('shared-3d-canvas');
-  const viewportMap = {};
-  const viewports = [];
-  let activeViewport = null;
-
-  const mainPresetDefault = {
-    radius: isMobile ? 5.15 : 4.55,
-    theta: 0.68,
-    phi: 1.04,
-    target: { x: -0.02, y: 1.05, z: -0.08 }
-  };
-
-  const presets = {
-    overview:     mainPresetDefault,
-    fromDoor:     { radius: isMobile ? 2.85 : 2.55, theta: 0.04,  phi: 1.38, target: { x: 0.0, y: 1.10, z: -0.82 } },
-    greenWall:    { radius: isMobile ? 3.55 : 3.15, theta: 1.50,  phi: 1.28, target: { x: -0.65, y: 1.05, z: 0.02 } },
-    wardrobe:     { radius: isMobile ? 3.30 : 2.95, theta: 3.08,  phi: 1.28, target: { x: 0.0, y: 1.18, z: 1.15 } },
-    windowHeater: { radius: isMobile ? 2.75 : 2.45, theta: -0.36, phi: 1.28, target: { x: 0.28, y: 0.96, z: -1.25 } },
-    deskCabinet:  { radius: isMobile ? 3.25 : 2.85, theta: -1.48, phi: 1.28, target: { x: 0.65, y: 1.02, z: -0.02 } }
-  };
-
-  function createBaseViewportState(key, containerId, initSpherical, initTarget, isMain = false) {
-    const container = document.getElementById(containerId);
-    const state = {
-      initSpherical: { ...initSpherical },
-      initTarget: { ...initTarget },
-      radius: initSpherical.radius,
-      theta: initSpherical.theta,
-      phi: initSpherical.phi,
-      target: { ...initTarget },
-      goalRadius: initSpherical.radius,
-      goalTheta: initSpherical.theta,
-      goalPhi: initSpherical.phi,
-      goalTarget: { ...initTarget },
-      pointers: new Map(),
-      lastPinchDist: 0,
-      lastMidX: 0,
-      lastMidY: 0,
-      wardrobesOpen: false,
-      nightMode: false,
-      greenColor: '#b5d89a',
-      whiteColor: '#f7f5ef'
-    };
-
-    const vp = { key, container, state, isMain, labelEls: [] };
-
-    if (isMain) {
-      const dimAnchors = [
-        { text: 'Длина 310 см', pos: { x: -0.93, y: 2.46, z: 0.0 } },
-        { text: 'Ширина 186 см', pos: { x: 0.0, y: 2.46, z: -1.55 } },
-        { text: 'Кровать 197×102', pos: { x: -0.42, y: 0.65, z: 0.04 } },
-        { text: 'Окно 70 см', pos: { x: 0.17, y: 1.55, z: -1.55 } },
-        { text: 'Короб 23×24', pos: { x: 0.81, y: 1.85, z: -1.32 } },
-        { text: 'Обогреватель', pos: { x: 0.90, y: 0.56, z: -1.02 } },
-        { text: 'Столик 74×40', pos: { x: 0.72, y: 0.85, z: -0.38 } },
-        { text: 'Пенал 66 см', pos: { x: 0.74, y: 2.12, z: 0.38 } },
-        { text: 'Шкаф 106 см', pos: { x: -0.40, y: 2.46, z: 1.30 } },
-        { text: 'Дверь 80 + 33', pos: { x: 0.53, y: 2.22, z: 1.30 } }
-      ];
-      const layer = document.getElementById('dim-layer');
-      if (isMobile) layer.classList.add('hidden');
-      vp.labelEls = dimAnchors.map((d) => {
-        const el = document.createElement('div');
-        el.className = 'dim-tag';
-        el.textContent = d.text;
-        layer.appendChild(el);
-        return { el, pos: d.pos };
-      });
-    }
-
-    container.addEventListener('contextmenu', (e) => e.preventDefault());
-
-    container.addEventListener('pointerdown', (e) => {
-      if (e.target.closest('button')) return;
-      activeViewport = vp;
-      state.pointers.set(e.pointerId, {
-        x: e.clientX,
-        y: e.clientY,
-        button: e.button,
-        shift: e.shiftKey
-      });
-      if (state.pointers.size === 2) {
-        const pts = Array.from(state.pointers.values());
-        state.lastPinchDist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
-        state.lastMidX = (pts[0].x + pts[1].x) * 0.5;
-        state.lastMidY = (pts[0].y + pts[1].y) * 0.5;
-      }
-    });
-
-    container.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      state.goalRadius = Math.max(1.4, Math.min(7.5, state.goalRadius + e.deltaY * 0.0028));
-    }, { passive: false });
-
-    viewports.push(vp);
-    viewportMap[key] = vp;
-    return vp;
-  }
-
-  window.addEventListener('pointermove', (e) => {
-    if (!activeViewport) return;
-    const st = activeViewport.state;
-    if (!st.pointers.has(e.pointerId)) return;
-
-    const prev = st.pointers.get(e.pointerId);
-    const dx = e.clientX - prev.x;
-    const dy = e.clientY - prev.y;
-    prev.x = e.clientX;
-    prev.y = e.clientY;
-
-    if (st.pointers.size === 1) {
-      if (prev.button === 2 || prev.shift) {
-        const panSpeed = 0.0022 * st.radius;
-        const rx = Math.cos(st.theta), rz = -Math.sin(st.theta);
-        st.goalTarget.x -= rx * dx * panSpeed;
-        st.goalTarget.z -= rz * dx * panSpeed;
-        st.goalTarget.y = Math.max(0.2, Math.min(2.1, st.goalTarget.y + dy * panSpeed));
-      } else {
-        st.goalTheta -= dx * 0.0085;
-        st.goalPhi = Math.max(0.24, Math.min(Math.PI / 2 - 0.03, st.goalPhi - dy * 0.0075));
-      }
-    } else if (st.pointers.size === 2) {
-      const pts = Array.from(st.pointers.values());
-      const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
-      const midX = (pts[0].x + pts[1].x) * 0.5;
-      const midY = (pts[0].y + pts[1].y) * 0.5;
-
-      if (st.lastPinchDist > 0) {
-        const deltaDist = st.lastPinchDist - dist;
-        st.goalRadius = Math.max(1.4, Math.min(7.5, st.goalRadius + deltaDist * 0.012));
-      }
-
-      const panSpeed = 0.0024 * st.radius;
-      const rx = Math.cos(st.theta), rz = -Math.sin(st.theta);
-      st.goalTarget.x -= rx * (midX - st.lastMidX) * panSpeed;
-      st.goalTarget.z -= rz * (midX - st.lastMidX) * panSpeed;
-      st.goalTarget.y = Math.max(0.2, Math.min(2.1, st.goalTarget.y + (midY - st.lastMidY) * panSpeed));
-
-      st.lastPinchDist = dist;
-      st.lastMidX = midX;
-      st.lastMidY = midY;
-    }
+  // Переключение День / Вечер
+  const btnNight = document.getElementById('btn-night');
+  btnNight.addEventListener('click', () => {
+    const isNight = document.body.classList.toggle('night-mode');
+    btnNight.classList.toggle('warm-active', isNight);
+    btnNight.textContent = isNight ? '🌙 Вечерний свет' : '☀️ День / Вечер';
   });
 
-  function clearPointer(e) {
-    for (const vp of viewports) {
-      vp.state.pointers.delete(e.pointerId);
-      if (vp.state.pointers.size < 2) vp.state.lastPinchDist = 0;
-    }
-    if (activeViewport && activeViewport.state.pointers.size === 0) activeViewport = null;
-  }
-
-  window.addEventListener('pointerup', clearPointer);
-  window.addEventListener('pointercancel', clearPointer);
-
-  // Регистрация всех 5 окон
-  const mainView = createBaseViewportState('main', 'main-viewer', mainPresetDefault, mainPresetDefault.target, true);
-  createBaseViewportState('w1', 'view-wall-1', { radius: isMobile ? 3.65 : 3.25, theta: 1.48,  phi: 1.28 }, { x: -0.65, y: 1.05, z: 0.02 });
-  const v2 = createBaseViewportState('w2', 'view-wall-2', { radius: isMobile ? 3.30 : 2.95, theta: 3.06,  phi: 1.30 }, { x: 0.0, y: 1.18, z: 1.15 });
-  v2.state.wardrobesOpen = true;
-  createBaseViewportState('w3', 'view-wall-3', { radius: isMobile ? 2.95 : 2.65, theta: -0.25, phi: 1.28 }, { x: 0.18, y: 0.98, z: -1.25 });
-  createBaseViewportState('w4', 'view-wall-4', { radius: isMobile ? 3.55 : 3.15, theta: -1.48, phi: 1.28 }, { x: 0.65, y: 1.05, z: -0.02 });
-
-  function applyPreset(key) {
-    const p = presets[key];
-    if (!p) return;
-    mainView.state.goalRadius = p.radius;
-    mainView.state.goalTheta = p.theta;
-    mainView.state.goalPhi = p.phi;
-    Object.assign(mainView.state.goalTarget, p.target);
-  }
-
-  document.querySelectorAll('[data-preset]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-preset]').forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      applyPreset(btn.dataset.preset);
-    });
-  });
-
-  document.getElementById('btn-reset').addEventListener('click', () => {
-    document.querySelectorAll('[data-preset]').forEach((b) => b.classList.remove('active'));
-    document.querySelector('[data-preset="overview"]').classList.add('active');
-    applyPreset('overview');
-  });
-
-  const btnLighting = document.getElementById('btn-lighting');
-  const mainContainer = document.getElementById('main-viewer');
-  btnLighting.addEventListener('click', () => {
-    mainView.state.nightMode = !mainView.state.nightMode;
-    mainContainer.classList.toggle('night-mode', mainView.state.nightMode);
-    btnLighting.classList.toggle('warm-active', mainView.state.nightMode);
-    btnLighting.textContent = mainView.state.nightMode ? '🌙 Вечер' : '☀️ День / Вечер';
-  });
-
-  const btnWardrobes = document.getElementById('btn-wardrobes');
-  btnWardrobes.addEventListener('click', () => {
-    mainView.state.wardrobesOpen = !mainView.state.wardrobesOpen;
-    btnWardrobes.classList.toggle('active', mainView.state.wardrobesOpen);
-    btnWardrobes.textContent = mainView.state.wardrobesOpen ? '🚪 Закрыть' : '🚪 Шкафы';
-  });
-
+  // Переключение меток размеров
   const btnDims = document.getElementById('btn-dims');
-  const dimLayer = document.getElementById('dim-layer');
-  if (!isMobile) btnDims.classList.add('active');
   btnDims.addEventListener('click', () => {
-    const isHidden = dimLayer.classList.toggle('hidden');
-    btnDims.classList.toggle('active', !isHidden);
+    const hidden = document.body.classList.toggle('hide-dims');
+    btnDims.classList.toggle('active', !hidden);
   });
 
-  document.querySelectorAll('[data-zoom]').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const vp = viewportMap[btn.dataset.zoom];
-      if (!vp) return;
-      vp.state.goalRadius = Math.max(1.4, Math.min(7.5, vp.state.goalRadius + Number(btn.dataset.dir) * 0.55));
-    });
-  });
-
-  document.querySelectorAll('[data-wall-door]').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const vp = viewportMap[btn.dataset.wallDoor];
-      if (!vp) return;
-      vp.state.wardrobesOpen = !vp.state.wardrobesOpen;
-      btn.classList.toggle('active', vp.state.wardrobesOpen);
-    });
-  });
-
-  document.querySelectorAll('[data-wall-reset]').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const vp = viewportMap[btn.dataset.wallReset];
-      if (!vp) return;
-      vp.state.goalRadius = vp.state.initSpherical.radius;
-      vp.state.goalTheta = vp.state.initSpherical.theta;
-      vp.state.goalPhi = vp.state.initSpherical.phi;
-      Object.assign(vp.state.goalTarget, vp.state.initTarget);
-    });
-  });
-
+  // Живая смена цвета салатовой стены на всех иллюстрациях
   document.querySelectorAll('[data-green]').forEach((sw) => {
     sw.addEventListener('click', () => {
       document.querySelectorAll('[data-green]').forEach((s) => s.classList.remove('selected'));
       sw.classList.add('selected');
-      viewports.forEach((v) => {
-        v.state.greenColor = sw.dataset.green;
-        if (v.room) v.room.greenWallMat.color.set(sw.dataset.green);
-      });
+      document.documentElement.style.setProperty('--wall-green', sw.dataset.green);
+      document.documentElement.style.setProperty('--wall-green-shade', sw.dataset.greenShade);
     });
   });
 
+  // Живая смена цвета белых стен на всех иллюстрациях
   document.querySelectorAll('[data-white]').forEach((sw) => {
     sw.addEventListener('click', () => {
       document.querySelectorAll('[data-white]').forEach((s) => s.classList.remove('selected'));
       sw.classList.add('selected');
-      viewports.forEach((v) => {
-        v.state.whiteColor = sw.dataset.white;
-        if (v.room) v.room.whiteWallMat.color.set(sw.dataset.white);
-      });
+      document.documentElement.style.setProperty('--wall-white', sw.dataset.white);
+      document.documentElement.style.setProperty('--wall-white-shade', sw.dataset.whiteShade);
     });
   });
 
-  // =========================================================
-  // ВАРИАНТ А: ПОЛНОЦЕННЫЙ WEBGL-РЕНДЕР (THREE.JS)
-  // =========================================================
-  function startThreeApp() {
-    const statusEl = document.getElementById('loader-status');
-    if (statusEl) statusEl.style.display = 'none';
-
-    function makeParquetTexture() {
-      const c = document.createElement('canvas');
-      c.width = 512; c.height = 512;
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = '#8b5a2b';
-      ctx.fillRect(0, 0, 512, 512);
-      const w = 64, h = 16;
-      const palette = ['#7c4d23', '#8f5e30', '#9c6938', '#73451d', '#865528'];
-      for (let y = 0; y < 512; y += h) {
-        const shift = ((y / h) % 2) * (w * 0.5);
-        for (let x = -w; x < 512 + w; x += w) {
-          const idx = Math.abs(Math.floor((x + y * 3) / 16)) % palette.length;
-          ctx.fillStyle = palette[idx];
-          ctx.fillRect(x + shift + 0.8, y + 0.8, w - 1.6, h - 1.6);
-        }
-      }
-      const tex = new THREE.CanvasTexture(c);
-      tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(4, 6); tex.rotation = Math.PI / 4;
-      return tex;
-    }
-
-    function makeGrilleTexture() {
-      const c = document.createElement('canvas');
-      c.width = 128; c.height = 128;
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = '#c4c9c7'; ctx.fillRect(0, 0, 128, 128);
-      ctx.fillStyle = '#4e5452';
-      for (let y = 6; y < 128; y += 10) {
-        for (let x = 6; x < 128; x += 10) {
-          ctx.beginPath(); ctx.arc(x, y, 2.3, 0, Math.PI * 2); ctx.fill();
-        }
-      }
-      const tex = new THREE.CanvasTexture(c);
-      tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(2, 12);
-      return tex;
-    }
-
-    function makeArtTexture(bg, c1, c2, style) {
-      const c = document.createElement('canvas');
-      c.width = 256; c.height = 340;
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = bg; ctx.fillRect(0, 0, 256, 340);
-      ctx.strokeStyle = '#e5e0d5'; ctx.lineWidth = 14; ctx.strokeRect(7, 7, 242, 326);
-      ctx.fillStyle = c1;
-      if (style === 0) {
-        ctx.beginPath(); ctx.arc(128, 145, 56, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = c2; ctx.beginPath(); ctx.ellipse(128, 210, 22, 65, 0, 0, Math.PI * 2); ctx.fill();
-      } else if (style === 1) {
-        ctx.beginPath(); ctx.ellipse(115, 165, 36, 82, -0.25, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = c2; ctx.beginPath(); ctx.ellipse(152, 185, 28, 62, 0.3, 0, Math.PI * 2); ctx.fill();
-      } else {
-        ctx.beginPath(); ctx.moveTo(128, 70); ctx.quadraticCurveTo(196, 165, 128, 260); ctx.quadraticCurveTo(60, 165, 128, 70); ctx.fill();
-      }
-      return new THREE.CanvasTexture(c);
-    }
-
-    function makeCitySkyTexture() {
-      const c = document.createElement('canvas');
-      c.width = 512; c.height = 512;
-      const ctx = c.getContext('2d');
-      const grad = ctx.createLinearGradient(0, 0, 0, 512);
-      grad.addColorStop(0, '#8cc4eb'); grad.addColorStop(0.6, '#d9ecf8'); grad.addColorStop(1, '#f3ede2');
-      ctx.fillStyle = grad; ctx.fillRect(0, 0, 512, 512);
-      ctx.fillStyle = '#d3beaa'; ctx.fillRect(20, 240, 155, 272);
-      ctx.fillStyle = '#bfa690'; ctx.fillRect(300, 210, 190, 302);
-      ctx.fillStyle = '#6f9f54';
-      ctx.beginPath(); ctx.arc(215, 325, 78, 0, Math.PI * 2); ctx.arc(265, 345, 58, 0, Math.PI * 2); ctx.fill();
-      return new THREE.CanvasTexture(c);
-    }
-
-    function buildRoomModel() {
-      const root = new THREE.Group();
-      const W = 1.86, L = 3.10, H = 2.38, wt = 0.09;
-
-      const greenWallMat = new THREE.MeshStandardMaterial({ color: 0xb5d89a, roughness: 0.86 });
-      const whiteWallMat = new THREE.MeshStandardMaterial({ color: 0xf7f5ef, roughness: 0.86 });
-      const wardrobeWhiteMat = new THREE.MeshStandardMaterial({ color: 0xfdfcfa, roughness: 0.58 });
-      const oakMat = new THREE.MeshStandardMaterial({ color: 0xb9824c, roughness: 0.52 });
-      const darkOakMat = new THREE.MeshStandardMaterial({ color: 0x774c27, roughness: 0.58 });
-      const frameWhiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.38 });
-      const brassMat = new THREE.MeshStandardMaterial({ color: 0xd6b04c, metalness: 0.72, roughness: 0.25 });
-      const grilleMat = new THREE.MeshStandardMaterial({ map: makeGrilleTexture(), metalness: 0.35, roughness: 0.45 });
-
-      const floor = new THREE.Mesh(
-        new THREE.BoxGeometry(W, 0.07, L),
-        new THREE.MeshStandardMaterial({ map: makeParquetTexture(), roughness: 0.42 })
-      );
-      floor.position.set(0, -0.035, 0);
-      floor.receiveShadow = true;
-      root.add(floor);
-
-      const rug = new THREE.Mesh(
-        new THREE.BoxGeometry(1.36, 0.012, 2.08),
-        new THREE.MeshStandardMaterial({ color: 0xeae5db, roughness: 0.95 })
-      );
-      rug.position.set(-0.18, 0.006, 0.02);
-      rug.receiveShadow = true;
-      root.add(rug);
-
-      const leftWallGroup = new THREE.Group();
-      const leftWall = new THREE.Mesh(new THREE.BoxGeometry(wt, H, L), greenWallMat);
-      leftWall.position.set(-W / 2 - wt / 2, H / 2, 0);
-      leftWall.receiveShadow = true;
-      leftWallGroup.add(leftWall);
-      root.add(leftWallGroup);
-
-      const rightWallGroup = new THREE.Group();
-      const rightWall = new THREE.Mesh(new THREE.BoxGeometry(wt, H, L), whiteWallMat);
-      rightWall.position.set(W / 2 + wt / 2, H / 2, 0);
-      rightWall.receiveShadow = true;
-      rightWallGroup.add(rightWall);
-      root.add(rightWallGroup);
-
-      // Оконная стена
-      const winWallGroup = new THREE.Group();
-      const zWin = -L / 2 - wt / 2;
-      const winLeftPier = new THREE.Mesh(new THREE.BoxGeometry(0.75, H, wt), whiteWallMat);
-      winLeftPier.position.set(-0.93 + 0.375, H / 2, zWin);
-      const winRightPier = new THREE.Mesh(new THREE.BoxGeometry(0.41, H, wt), whiteWallMat);
-      winRightPier.position.set(0.52 + 0.205, H / 2, zWin);
-      const winBottom = new THREE.Mesh(new THREE.BoxGeometry(0.70, 0.75, wt), whiteWallMat);
-      winBottom.position.set(0.17, 0.375, zWin);
-      const winTop = new THREE.Mesh(new THREE.BoxGeometry(0.70, 0.18, wt), whiteWallMat);
-      winTop.position.set(0.17, 2.29, zWin);
-      winWallGroup.add(winLeftPier, winRightPier, winBottom, winTop);
-
-      const winX = 0.17, sillY = 0.75, winH = 1.45, winW = 0.70;
-      const sill = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.035, 0.17), oakMat);
-      sill.position.set(winX, sillY + 0.015, -L / 2 + 0.025);
-      winWallGroup.add(sill);
-
-      const ft = 0.048;
-      const wTop = new THREE.Mesh(new THREE.BoxGeometry(winW, ft, 0.07), frameWhiteMat);
-      wTop.position.set(winX, sillY + winH - ft / 2, -L / 2 - 0.035);
-      const wBot = new THREE.Mesh(new THREE.BoxGeometry(winW, ft, 0.07), frameWhiteMat);
-      wBot.position.set(winX, sillY + ft / 2 + 0.02, -L / 2 - 0.035);
-      const wL = new THREE.Mesh(new THREE.BoxGeometry(ft, winH, 0.07), frameWhiteMat);
-      wL.position.set(winX - winW / 2 + ft / 2, sillY + winH / 2, -L / 2 - 0.035);
-      const wR = new THREE.Mesh(new THREE.BoxGeometry(ft, winH, 0.07), frameWhiteMat);
-      wR.position.set(winX + winW / 2 - ft / 2, sillY + winH / 2, -L / 2 - 0.035);
-      const wMid = new THREE.Mesh(new THREE.BoxGeometry(winW - 0.06, 0.038, 0.055), frameWhiteMat);
-      wMid.position.set(winX, sillY + winH * 0.52, -L / 2 - 0.035);
-      winWallGroup.add(wTop, wBot, wL, wR, wMid);
-
-      const glass = new THREE.Mesh(
-        new THREE.BoxGeometry(winW - 0.08, winH - 0.08, 0.01),
-        new THREE.MeshPhysicalMaterial({ color: 0xe3f4ff, transparent: true, opacity: 0.24, roughness: 0.08 })
-      );
-      glass.position.set(winX, sillY + winH / 2, -L / 2 - 0.035);
-      const skyBackdrop = new THREE.Mesh(
-        new THREE.PlaneGeometry(1.5, 1.9),
-        new THREE.MeshBasicMaterial({ map: makeCitySkyTexture(), side: THREE.DoubleSide })
-      );
-      skyBackdrop.position.set(winX, sillY + winH / 2, -L / 2 - 0.48);
-      winWallGroup.add(glass, skyBackdrop);
-
-      // Короб 23x24 справа от окна + встроенный обогреватель
-      const colCore = new THREE.Mesh(new THREE.BoxGeometry(0.23, H, 0.24), grilleMat);
-      colCore.position.set(W / 2 - 0.115, H / 2, -L / 2 + 0.12);
-      const trimPost = new THREE.Mesh(new THREE.BoxGeometry(0.025, H, 0.025), oakMat);
-      trimPost.position.set(W / 2 - 0.228, H / 2, -L / 2 + 0.238);
-      winWallGroup.add(colCore, trimPost);
-
-      const heaterGroup = new THREE.Group();
-      const heaterFrame = new THREE.Mesh(
-        new THREE.BoxGeometry(0.034, 0.44, 0.46),
-        new THREE.MeshStandardMaterial({ color: 0xe8ecea, roughness: 0.4, metalness: 0.22 })
-      );
-      heaterFrame.position.set(W / 2 - 0.015, 0.36, -1.02);
-      const heaterGlowMat = new THREE.MeshStandardMaterial({
-        color: 0x3b3532, emissive: 0xff6b2b, emissiveIntensity: 0.24, roughness: 0.6
-      });
-      const heaterCore = new THREE.Mesh(new THREE.BoxGeometry(0.038, 0.36, 0.38), heaterGlowMat);
-      heaterCore.position.set(W / 2 - 0.016, 0.36, -1.02);
-      heaterGroup.add(heaterFrame, heaterCore);
-
-      const louverMat = new THREE.MeshStandardMaterial({ color: 0xf7f9f8, metalness: 0.3, roughness: 0.35 });
-      for (let ly = 0.20; ly <= 0.52; ly += 0.032) {
-        const louver = new THREE.Mesh(new THREE.BoxGeometry(0.044, 0.012, 0.38), louverMat);
-        louver.position.set(W / 2 - 0.019, ly, -1.02);
-        louver.rotation.z = 0.22;
-        heaterGroup.add(louver);
-      }
-      const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.017, 0.017, 0.026, 16), brassMat);
-      knob.rotation.z = Math.PI / 2;
-      knob.position.set(W / 2 - 0.028, 0.53, -0.83);
-      heaterGroup.add(knob);
-      rightWallGroup.add(heaterGroup);
-      root.add(winWallGroup);
-
-      // Входная стена + встроенный шкаф
-      const doorWallGroup = new THREE.Group();
-      const zDoor = L / 2 + wt / 2;
-      const dwRight = new THREE.Mesh(new THREE.BoxGeometry(1.06, H, wt), whiteWallMat);
-      dwRight.position.set(-0.93 + 0.53, H / 2, zDoor);
-      const dwHeader = new THREE.Mesh(new THREE.BoxGeometry(0.80, 0.33, wt), whiteWallMat);
-      dwHeader.position.set(0.53, 2.215, zDoor);
-      doorWallGroup.add(dwRight, dwHeader);
-
-      const doorPanel = new THREE.Mesh(new THREE.BoxGeometry(0.72, 2.00, 0.042), oakMat);
-      doorPanel.position.set(0.53, 1.00, L / 2 + 0.01);
-      const doorKnob = new THREE.Mesh(new THREE.SphereGeometry(0.025, 16, 16), brassMat);
-      doorKnob.position.set(0.22, 0.98, L / 2 - 0.025);
-      doorWallGroup.add(doorPanel, doorKnob);
-
-      const wDepth = 0.52, zW = L / 2 - wDepth / 2;
-      const wSideL = new THREE.Mesh(new THREE.BoxGeometry(0.025, H, wDepth), wardrobeWhiteMat);
-      wSideL.position.set(-0.93 + 0.0125, H / 2, zW);
-      const wSideR = new THREE.Mesh(new THREE.BoxGeometry(0.025, H, wDepth), wardrobeWhiteMat);
-      wSideR.position.set(0.13 - 0.0125, H / 2, zW);
-      const wTop = new THREE.Mesh(new THREE.BoxGeometry(1.06, 0.025, wDepth), wardrobeWhiteMat);
-      wTop.position.set(-0.40, H - 0.0125, zW);
-      const wBot = new THREE.Mesh(new THREE.BoxGeometry(1.06, 0.06, wDepth), wardrobeWhiteMat);
-      wBot.position.set(-0.40, 0.03, zW);
-      const wBack = new THREE.Mesh(
-        new THREE.BoxGeometry(1.02, H - 0.06, 0.02),
-        new THREE.MeshStandardMaterial({ color: 0xeae5da, roughness: 0.8 })
-      );
-      wBack.position.set(-0.40, H / 2, L / 2 - 0.015);
-      doorWallGroup.add(wSideL, wSideR, wTop, wBot, wBack);
-
-      for (let sy of [0.42, 0.82, 1.82, 2.08]) {
-        const sh = new THREE.Mesh(new THREE.BoxGeometry(1.01, 0.02, wDepth - 0.04), oakMat);
-        sh.position.set(-0.40, sy, zW);
-        doorWallGroup.add(sh);
-      }
-
-      const clothColors = [0x6f9e58, 0xded9ce, 0x5c768d, 0xd49a6a, 0x8ba888, 0xf2efe9];
-      clothColors.forEach((col, i) => {
-        const shirt = new THREE.Mesh(
-          new THREE.BoxGeometry(0.055, 0.68, 0.38),
-          new THREE.MeshStandardMaterial({ color: col, roughness: 0.9 })
-        );
-        shirt.position.set(-0.76 + i * 0.14, 1.38, zW);
-        doorWallGroup.add(shirt);
-      });
-
-      const wardrobeLight = new THREE.PointLight(0xffdfa8, 0, 1.8);
-      wardrobeLight.position.set(-0.40, 1.78, zW - 0.10);
-      doorWallGroup.add(wardrobeLight);
-
-      const pivotWL = new THREE.Group();
-      pivotWL.position.set(-0.915, 0, L / 2 - wDepth);
-      const doorWL = new THREE.Mesh(new THREE.BoxGeometry(0.512, H - 0.03, 0.022), wardrobeWhiteMat);
-      doorWL.position.set(0.256, H / 2, -0.011);
-      pivotWL.add(doorWL);
-
-      const pivotWR = new THREE.Group();
-      pivotWR.position.set(0.115, 0, L / 2 - wDepth);
-      const doorWR = new THREE.Mesh(new THREE.BoxGeometry(0.512, H - 0.03, 0.022), wardrobeWhiteMat);
-      doorWR.position.set(-0.256, H / 2, -0.011);
-      pivotWR.add(doorWR);
-      doorWallGroup.add(pivotWL, pivotWR);
-
-      const mezzBox = new THREE.Mesh(new THREE.BoxGeometry(0.80, 0.33, wDepth), wardrobeWhiteMat);
-      mezzBox.position.set(0.53, 2.215, zW);
-      const mezzDoorL = new THREE.Mesh(new THREE.BoxGeometry(0.39, 0.31, 0.02), wardrobeWhiteMat);
-      mezzDoorL.position.set(0.33, 2.215, L / 2 - wDepth - 0.01);
-      const mezzDoorR = new THREE.Mesh(new THREE.BoxGeometry(0.39, 0.31, 0.02), wardrobeWhiteMat);
-      mezzDoorR.position.set(0.73, 2.215, L / 2 - wDepth - 0.01);
-      doorWallGroup.add(mezzBox, mezzDoorL, mezzDoorR);
-      root.add(doorWallGroup);
-
-      // Кровать 197 x 102 см
-      const bedGroup = new THREE.Group();
-      const bedW = 1.02, bedL = 1.97, bedX = -W / 2 + bedW / 2 + 0.015, bedZ = 0.04;
-      const frame = new THREE.Mesh(new THREE.BoxGeometry(bedW, 0.24, bedL), oakMat);
-      frame.position.set(bedX, 0.20, bedZ);
-      const hbTop = new THREE.Mesh(new THREE.BoxGeometry(bedW, 0.56, 0.05), oakMat);
-      hbTop.position.set(bedX, 0.60, bedZ - bedL / 2 + 0.025);
-      const mattress = new THREE.Mesh(
-        new THREE.BoxGeometry(bedW - 0.04, 0.17, bedL - 0.07),
-        new THREE.MeshStandardMaterial({ color: 0xfcfbf7, roughness: 0.9 })
-      );
-      mattress.position.set(bedX, 0.39, bedZ + 0.02);
-      const throwBlanket = new THREE.Mesh(
-        new THREE.BoxGeometry(bedW + 0.01, 0.195, 0.54),
-        new THREE.MeshStandardMaterial({ color: 0x87b36d, roughness: 0.95 })
-      );
-      throwBlanket.position.set(bedX, 0.398, bedZ + 0.66);
-      const p1 = new THREE.Mesh(
-        new THREE.BoxGeometry(0.62, 0.13, 0.38),
-        new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.85 })
-      );
-      p1.position.set(bedX - 0.08, 0.52, bedZ - bedL / 2 + 0.25);
-      p1.rotation.x = 0.22;
-      bedGroup.add(frame, hbTop, mattress, throwBlanket, p1);
-
-      const arts = [
-        ['#faf8f2', '#74a358', '#a3c98b', 0],
-        ['#faf8f2', '#5b8a44', '#8eb874', 1],
-        ['#faf8f2', '#89b56e', '#c0dbb0', 2]
-      ];
-      arts.forEach((a, idx) => {
-        const pz = bedZ - 0.48 + idx * 0.50;
-        const pf = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.54, 0.40), darkOakMat);
-        pf.position.set(-W / 2 + 0.012, 1.50, pz);
-        const pa = new THREE.Mesh(
-          new THREE.PlaneGeometry(0.35, 0.49),
-          new THREE.MeshBasicMaterial({ map: makeArtTexture(a[0], a[1], a[2], a[3]) })
-        );
-        pa.rotation.y = Math.PI / 2;
-        pa.position.set(-W / 2 + 0.026, 1.50, pz);
-        bedGroup.add(pf, pa);
-      });
-
-      const sconceLight = new THREE.PointLight(0xffcf82, 0, 1.6);
-      sconceLight.position.set(-W / 2 + 0.12, 1.15, bedZ - 0.84);
-      bedGroup.add(sconceLight);
-      root.add(bedGroup);
-
-      // Цветы у окна
-      const plantsGroup = new THREE.Group();
-      const sx = -0.58, sz = -L / 2 + 0.25;
-      const shelfLow = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.028, 0.32), oakMat);
-      shelfLow.position.set(sx, 0.36, sz);
-      const shelfHigh = new THREE.Mesh(new THREE.BoxGeometry(0.30, 0.028, 0.28), oakMat);
-      shelfHigh.position.set(sx + 0.10, 0.72, sz);
-      plantsGroup.add(shelfLow, shelfHigh);
-
-      function createPlant(px, py, pz, sc, potColor) {
-        const pot = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.078 * sc, 0.058 * sc, 0.14 * sc, 14),
-          new THREE.MeshStandardMaterial({ color: potColor, roughness: 0.65 })
-        );
-        pot.position.set(px, py + 0.07 * sc, pz);
-        plantsGroup.add(pot);
-        const leafMat = new THREE.MeshStandardMaterial({ color: 0x4b8736, roughness: 0.6 });
-        for (let i = 0; i < 6; i++) {
-          const ang = (i / 6) * Math.PI * 2;
-          const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.062 * sc, 8, 8), leafMat);
-          leaf.scale.set(0.55, 1.65, 0.38);
-          leaf.position.set(px + Math.cos(ang) * 0.055 * sc, py + 0.20 * sc, pz + Math.sin(ang) * 0.055 * sc);
-          leaf.rotation.z = Math.cos(ang) * 0.48;
-          plantsGroup.add(leaf);
-        }
-      }
-      createPlant(sx + 0.10, 0.735, sz, 1.15, 0xd87b56);
-      createPlant(sx - 0.14, 0.375, sz + 0.02, 1.0, 0xf2efe9);
-      createPlant(-0.80, 0.0, -L / 2 + 0.25, 1.45, 0xd87b56);
-      root.add(plantsGroup);
-
-      // Столик со стулом (74 x 40 см)
-      const deskGroup = new THREE.Group();
-      const deskW = 0.40, deskL = 0.74, deskH = 0.75;
-      const deskX = W / 2 - deskW / 2 - 0.015, deskZ = -0.38;
-      const deskTop = new THREE.Mesh(new THREE.BoxGeometry(deskW, 0.085, deskL), oakMat);
-      deskTop.position.set(deskX, deskH - 0.0425, deskZ);
-      deskGroup.add(deskTop);
-      for (let lx of [-deskW / 2 + 0.03, deskW / 2 - 0.03]) {
-        for (let lz of [-deskL / 2 + 0.03, deskL / 2 - 0.03]) {
-          const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.012, deskH - 0.08, 10), darkOakMat);
-          leg.position.set(deskX + lx, (deskH - 0.08) / 2, deskZ + lz);
-          deskGroup.add(leg);
-        }
-      }
-      const seat = new THREE.Mesh(
-        new THREE.BoxGeometry(0.36, 0.04, 0.38),
-        new THREE.MeshStandardMaterial({ color: 0xe4dfd3, roughness: 0.85 })
-      );
-      seat.position.set(deskX - 0.16, 0.45, deskZ);
-      const chairBack = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.24, 0.38), oakMat);
-      chairBack.position.set(deskX - 0.33, 0.68, deskZ);
-      const deskLight = new THREE.PointLight(0xffd28a, 0, 1.5);
-      deskLight.position.set(deskX + 0.02, deskH + 0.20, deskZ - 0.24);
-      deskGroup.add(seat, chairBack, deskLight);
-      root.add(deskGroup);
-
-      // Шкаф-пенал (66 x 36 x 205 см)
-      const cabGroup = new THREE.Group();
-      const cabD = 0.36, cabL = 0.66, cabH = 2.05;
-      const cabX = W / 2 - cabD / 2 - 0.01, cabZ = 0.38;
-      const cSide1 = new THREE.Mesh(new THREE.BoxGeometry(cabD, cabH, 0.022), oakMat);
-      cSide1.position.set(cabX, cabH / 2, cabZ - cabL / 2 + 0.011);
-      const cSide2 = new THREE.Mesh(new THREE.BoxGeometry(cabD, cabH, 0.022), oakMat);
-      cSide2.position.set(cabX, cabH / 2, cabZ + cabL / 2 - 0.011);
-      const cTop = new THREE.Mesh(new THREE.BoxGeometry(cabD, 0.025, cabL), oakMat);
-      cTop.position.set(cabX, cabH - 0.0125, cabZ);
-      const cBack = new THREE.Mesh(new THREE.BoxGeometry(0.018, cabH - 0.04, cabL - 0.03), wardrobeWhiteMat);
-      cBack.position.set(W / 2 - 0.02, cabH / 2, cabZ);
-      cabGroup.add(cSide1, cSide2, cTop, cBack);
-
-      for (let py of [0.45, 0.85, 1.16, 1.48, 1.78]) {
-        const sh = new THREE.Mesh(new THREE.BoxGeometry(cabD - 0.03, 0.02, cabL - 0.04), oakMat);
-        sh.position.set(cabX, py, cabZ);
-        cabGroup.add(sh);
-      }
-
-      const cabPivotL = new THREE.Group();
-      cabPivotL.position.set(cabX - cabD / 2, 0, cabZ - cabL / 2 + 0.022);
-      const cabDoorL = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.78, 0.305), wardrobeWhiteMat);
-      cabDoorL.position.set(-0.01, 0.455, 0.1525);
-      cabPivotL.add(cabDoorL);
-
-      const cabPivotR = new THREE.Group();
-      cabPivotR.position.set(cabX - cabD / 2, 0, cabZ + cabL / 2 - 0.022);
-      const cabDoorR = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.78, 0.305), wardrobeWhiteMat);
-      cabDoorR.position.set(-0.01, 0.455, -0.1525);
-      cabPivotR.add(cabDoorR);
-
-      const cabTopPivotL = new THREE.Group();
-      cabTopPivotL.position.set(cabX - cabD / 2, 0, cabZ - cabL / 2 + 0.022);
-      const cabTopDoorL = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.54, 0.305), wardrobeWhiteMat);
-      cabTopDoorL.position.set(-0.01, 1.755, 0.1525);
-      cabTopPivotL.add(cabTopDoorL);
-
-      const cabTopPivotR = new THREE.Group();
-      cabTopPivotR.position.set(cabX - cabD / 2, 0, cabZ + cabL / 2 - 0.022);
-      const cabTopDoorR = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.54, 0.305), wardrobeWhiteMat);
-      cabTopDoorR.position.set(-0.01, 1.755, -0.1525);
-      cabTopPivotR.add(cabTopDoorR);
-
-      cabGroup.add(cabPivotL, cabPivotR, cabTopPivotL, cabTopPivotR);
-      root.add(cabGroup);
-
-      return {
-        root, greenWallMat, whiteWallMat,
-        leftWallGroup, rightWallGroup, winWallGroup, doorWallGroup,
-        pivotWL, pivotWR, cabPivotL, cabPivotR, cabTopPivotL, cabTopPivotR,
-        wardrobeLight, sconceLight, deskLight, heaterGlowMat
-      };
-    }
-
-    const renderer = new THREE.WebGLRenderer({ canvas: sharedCanvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-
-    for (const vp of viewports) {
-      vp.scene = new THREE.Scene();
-      vp.camera = new THREE.PerspectiveCamera(42, 1.5, 0.1, 40);
-      vp.hemiLight = new THREE.HemisphereLight(0xffffff, 0xe6dfd3, 0.78);
-      vp.sunLight = new THREE.DirectionalLight(0xfff6e5, 0.92);
-      vp.sunLight.position.set(0.25, 3.1, -3.4);
-      const fillLight = new THREE.DirectionalLight(0xeef5ff, 0.38);
-      fillLight.position.set(-2.4, 2.4, 2.4);
-      vp.scene.add(vp.hemiLight, vp.sunLight, fillLight);
-      vp.room = buildRoomModel();
-      vp.scene.add(vp.room.root);
-    }
-
-    function renderLoop() {
-      requestAnimationFrame(renderLoop);
-      const cw = sharedCanvas.clientWidth || window.innerWidth;
-      const ch = sharedCanvas.clientHeight || window.innerHeight;
-      const dpr = renderer.getPixelRatio();
-      if (sharedCanvas.width !== Math.floor(cw * dpr) || sharedCanvas.height !== Math.floor(ch * dpr)) {
-        renderer.setSize(cw, ch, false);
-      }
-
-      renderer.setScissorTest(false);
-      renderer.clear();
-      renderer.setScissorTest(true);
-
-      for (const vp of viewports) {
-        const st = vp.state;
-        const rm = vp.room;
-        st.radius += (st.goalRadius - st.radius) * 0.12;
-        st.theta += (st.goalTheta - st.theta) * 0.12;
-        st.phi += (st.goalPhi - st.phi) * 0.12;
-        st.target.x += (st.goalTarget.x - st.target.x) * 0.12;
-        st.target.y += (st.goalTarget.y - st.target.y) * 0.12;
-        st.target.z += (st.goalTarget.z - st.target.z) * 0.12;
-
-        const openAng = st.wardrobesOpen ? 1.40 : 0;
-        rm.pivotWL.rotation.y += (-openAng - rm.pivotWL.rotation.y) * 0.12;
-        rm.pivotWR.rotation.y += (openAng - rm.pivotWR.rotation.y) * 0.12;
-        rm.cabPivotL.rotation.y += (-openAng - rm.cabPivotL.rotation.y) * 0.12;
-        rm.cabPivotR.rotation.y += (openAng - rm.cabPivotR.rotation.y) * 0.12;
-        rm.cabTopPivotL.rotation.y += (-openAng - rm.cabTopPivotL.rotation.y) * 0.12;
-        rm.cabTopPivotR.rotation.y += (openAng - rm.cabTopPivotR.rotation.y) * 0.12;
-
-        vp.hemiLight.intensity += ((st.nightMode ? 0.25 : 0.78) - vp.hemiLight.intensity) * 0.08;
-        vp.sunLight.intensity += ((st.nightMode ? 0.08 : 0.92) - vp.sunLight.intensity) * 0.08;
-        rm.sconceLight.intensity += ((st.nightMode ? 1.35 : 0) - rm.sconceLight.intensity) * 0.08;
-        rm.deskLight.intensity += ((st.nightMode ? 1.35 : 0) - rm.deskLight.intensity) * 0.08;
-        rm.wardrobeLight.intensity += (((st.nightMode || st.wardrobesOpen) ? 1.15 : 0) - rm.wardrobeLight.intensity) * 0.08;
-
-        const sinPhi = Math.sin(st.phi);
-        vp.camera.position.set(
-          st.target.x + st.radius * sinPhi * Math.sin(st.theta),
-          st.target.y + st.radius * Math.cos(st.phi),
-          st.target.z + st.radius * sinPhi * Math.cos(st.theta)
-        );
-        vp.camera.lookAt(st.target.x, st.target.y, st.target.z);
-
-        rm.rightWallGroup.visible = vp.camera.position.x < 1.32;
-        rm.leftWallGroup.visible = vp.camera.position.x > -1.32;
-        rm.doorWallGroup.visible = vp.camera.position.z < 1.92;
-        rm.winWallGroup.visible = vp.camera.position.z > -1.92;
-
-        const rect = vp.container.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > ch || rect.right < 0 || rect.left > cw || rect.width <= 0 || rect.height <= 0) {
-          continue;
-        }
-
-        const bottom = ch - rect.bottom;
-        renderer.setViewport(rect.left, bottom, rect.width, rect.height);
-        renderer.setScissor(rect.left, bottom, rect.width, rect.height);
-        vp.camera.aspect = rect.width / rect.height;
-        vp.camera.updateProjectionMatrix();
-
-        if (vp.isMain && vp.labelEls.length) {
-          vp.labelEls.forEach(({ el, pos }) => {
-            const v = new THREE.Vector3(pos.x, pos.y, pos.z).project(vp.camera);
-            if (v.z > 1) {
-              el.style.display = 'none';
-            } else {
-              el.style.display = 'block';
-              el.style.left = `${(v.x * 0.5 + 0.5) * rect.width}px`;
-              el.style.top = `${(-v.y * 0.5 + 0.5) * rect.height}px`;
-            }
-          });
-        }
-
-        renderer.render(vp.scene, vp.camera);
-      }
-    }
-    renderLoop();
-  }
-
-  // =========================================================
-  // ВАРИАНТ Б: АВТОНОМНЫЙ 3D-ДВИЖОК (ЕСЛИ НЕТ СЕТИ / БЛОК CDN)
-  // =========================================================
-  function startFallback3DApp() {
-    const statusEl = document.getElementById('loader-status');
-    if (statusEl) statusEl.style.display = 'none';
-
-    const ctx = sharedCanvas.getContext('2d');
-
-    function shadeHex(hex, factor) {
-      const c = parseInt(hex.replace('#', ''), 16);
-      const r = Math.min(255, Math.max(0, Math.round(((c >> 16) & 255) * factor)));
-      const g = Math.min(255, Math.max(0, Math.round(((c >> 8) & 255) * factor)));
-      const b = Math.min(255, Math.max(0, Math.round((c & 255) * factor)));
-      return `rgb(${r},${g},${b})`;
-    }
-
-    function makeBoxFaces(cx, cy, cz, sx, sy, sz, color, tag = '') {
-      const hx = sx / 2, hy = sy / 2, hz = sz / 2;
-      const v = [
-        { x: cx - hx, y: cy - hy, z: cz - hz },
-        { x: cx + hx, y: cy - hy, z: cz - hz },
-        { x: cx + hx, y: cy + hy, z: cz - hz },
-        { x: cx - hx, y: cy + hy, z: cz - hz },
-        { x: cx - hx, y: cy - hy, z: cz + hz },
-        { x: cx + hx, y: cy - hy, z: cz + hz },
-        { x: cx + hx, y: cy + hy, z: cz + hz },
-        { x: cx - hx, y: cy + hy, z: cz + hz }
-      ];
-      return [
-        { pts: [v[4], v[5], v[6], v[7]], n: { x: 0, y: 0, z: 1 },  color, tag },
-        { pts: [v[1], v[0], v[3], v[2]], n: { x: 0, y: 0, z: -1 }, color, tag },
-        { pts: [v[5], v[1], v[2], v[6]], n: { x: 1, y: 0, z: 0 },  color, tag },
-        { pts: [v[0], v[4], v[7], v[3]], n: { x: -1, y: 0, z: 0 }, color, tag },
-        { pts: [v[7], v[6], v[2], v[3]], n: { x: 0, y: 1, z: 0 },  color, tag },
-        { pts: [v[0], v[1], v[5], v[4]], n: { x: 0, y: -1, z: 0 }, color, tag }
-      ];
-    }
-
-    function renderFallbackLoop() {
-      requestAnimationFrame(renderFallbackLoop);
-      const cw = window.innerWidth;
-      const ch = window.innerHeight;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      if (sharedCanvas.width !== Math.floor(cw * dpr) || sharedCanvas.height !== Math.floor(ch * dpr)) {
-        sharedCanvas.width = Math.floor(cw * dpr);
-        sharedCanvas.height = Math.floor(ch * dpr);
-      }
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, cw, ch);
-
-      const W = 1.86, L = 3.10, H = 2.38, wt = 0.08;
-
-      for (const vp of viewports) {
-        const st = vp.state;
-        st.radius += (st.goalRadius - st.radius) * 0.12;
-        st.theta += (st.goalTheta - st.theta) * 0.12;
-        st.phi += (st.goalPhi - st.phi) * 0.12;
-        st.target.x += (st.goalTarget.x - st.target.x) * 0.12;
-        st.target.y += (st.goalTarget.y - st.target.y) * 0.12;
-        st.target.z += (st.goalTarget.z - st.target.z) * 0.12;
-
-        const rect = vp.container.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > ch || rect.right < 0 || rect.left > cw || rect.width <= 0 || rect.height <= 0) {
-          continue;
-        }
-
-        const sinPhi = Math.sin(st.phi);
-        const cam = {
-          x: st.target.x + st.radius * sinPhi * Math.sin(st.theta),
-          y: st.target.y + st.radius * Math.cos(st.phi),
-          z: st.target.z + st.radius * sinPhi * Math.cos(st.theta)
-        };
-
-        let fx = st.target.x - cam.x, fy = st.target.y - cam.y, fz = st.target.z - cam.z;
-        const fl = Math.hypot(fx, fy, fz) || 1;
-        fx /= fl; fy /= fl; fz /= fl;
-
-        let rx = -fz, ry = 0, rz = fx;
-        const rl = Math.hypot(rx, rz) || 1;
-        rx /= rl; rz /= rl;
-
-        const ux = ry * fz - rz * fy;
-        const uy = rz * fx - rx * fz;
-        const uz = rx * fy - ry * fx;
-
-        const faces = [];
-        faces.push(...makeBoxFaces(0, -0.03, 0, W, 0.06, L, '#966334'));
-        faces.push(...makeBoxFaces(-0.18, 0.008, 0.02, 1.32, 0.012, 2.04, '#e6e0d4'));
-
-        if (cam.x > -1.32) faces.push(...makeBoxFaces(-W / 2 - wt / 2, H / 2, 0, wt, H, L, st.greenColor));
-        if (cam.x < 1.32) {
-          faces.push(...makeBoxFaces(W / 2 + wt / 2, H / 2, 0, wt, H, L, st.whiteColor));
-          // Обогреватель справа от окна
-          faces.push(...makeBoxFaces(W / 2 - 0.018, 0.36, -1.02, 0.036, 0.44, 0.46, st.nightMode ? '#e6783c' : '#d8dedb'));
-        }
-        if (cam.z > -1.92) {
-          faces.push(...makeBoxFaces(-0.93 + 0.375, H / 2, -L / 2 - wt / 2, 0.75, H, wt, st.whiteColor));
-          faces.push(...makeBoxFaces(0.52 + 0.205, H / 2, -L / 2 - wt / 2, 0.41, H, wt, st.whiteColor));
-          faces.push(...makeBoxFaces(0.17, 0.375, -L / 2 - wt / 2, 0.70, 0.75, wt, st.whiteColor));
-          faces.push(...makeBoxFaces(0.17, 2.29, -L / 2 - wt / 2, 0.70, 0.18, wt, st.whiteColor));
-          faces.push(...makeBoxFaces(0.17, 1.47, -L / 2 - 0.03, 0.66, 1.40, 0.02, '#b9dff7'));
-          faces.push(...makeBoxFaces(0.17, 0.76, -L / 2 + 0.02, 0.78, 0.035, 0.16, '#b9824c'));
-          faces.push(...makeBoxFaces(W / 2 - 0.115, H / 2, -L / 2 + 0.12, 0.23, H, 0.24, '#c4c9c7'));
-        }
-        if (cam.z < 1.92) {
-          faces.push(...makeBoxFaces(-0.93 + 0.53, H / 2, L / 2 + wt / 2, 1.06, H, wt, st.whiteColor));
-          faces.push(...makeBoxFaces(0.53, 2.215, L / 2 + wt / 2, 0.80, 0.33, wt, st.whiteColor));
-          faces.push(...makeBoxFaces(0.53, 1.00, L / 2 + 0.01, 0.72, 2.00, 0.04, '#b9824c'));
-          // Шкаф 106 см и антресоль 33 см
-          faces.push(...makeBoxFaces(-0.40, H / 2, L / 2 - 0.26, 1.06, H, 0.52, st.wardrobesOpen ? '#dcd4c4' : '#fcfbf8'));
-          faces.push(...makeBoxFaces(0.53, 2.215, L / 2 - 0.26, 0.80, 0.33, 0.52, '#fcfbf8'));
-        }
-
-        // Кровать 197 x 102
-        faces.push(...makeBoxFaces(-0.41, 0.20, 0.04, 1.02, 0.24, 1.97, '#b9824c'));
-        faces.push(...makeBoxFaces(-0.41, 0.38, 0.06, 0.98, 0.16, 1.90, '#faf8f2'));
-        faces.push(...makeBoxFaces(-0.41, 0.39, 0.68, 1.00, 0.17, 0.54, '#87b36d'));
-        faces.push(...makeBoxFaces(-0.48, 0.50, -0.68, 0.58, 0.11, 0.36, '#ffffff'));
-
-        // Цветы у окна
-        faces.push(...makeBoxFaces(-0.58, 0.36, -1.30, 0.54, 0.03, 0.32, '#b9824c'));
-        faces.push(...makeBoxFaces(-0.48, 0.72, -1.30, 0.30, 0.03, 0.28, '#b9824c'));
-        faces.push(...makeBoxFaces(-0.48, 0.92, -1.30, 0.16, 0.24, 0.16, '#4b8736'));
-        faces.push(...makeBoxFaces(-0.78, 0.26, -1.30, 0.22, 0.34, 0.22, '#4b8736'));
-
-        // Столик и шкаф-пенал на белой стене
-        faces.push(...makeBoxFaces(0.71, 0.72, -0.38, 0.40, 0.07, 0.74, '#b9824c'));
-        faces.push(...makeBoxFaces(0.56, 0.45, -0.38, 0.34, 0.04, 0.36, '#e4dfd3'));
-        faces.push(...makeBoxFaces(0.74, 1.025, 0.38, 0.36, 2.05, 0.66, st.wardrobesOpen ? '#b9824c' : '#fcfbf8'));
-
-        const fovScale = (rect.height * 0.5) / Math.tan((21 * Math.PI) / 180);
-        const projectedFaces = [];
-
-        for (const f of faces) {
-          const cx = (f.pts[0].x + f.pts[2].x) * 0.5;
-          const cy = (f.pts[0].y + f.pts[2].y) * 0.5;
-          const cz = (f.pts[0].z + f.pts[2].z) * 0.5;
-          const vx = cam.x - cx, vy = cam.y - cy, vz = cam.z - cz;
-          if (f.n.x * vx + f.n.y * vy + f.n.z * vz <= 0) continue;
-
-          const sPts = [];
-          let zSum = 0, behind = false;
-          for (const p of f.pts) {
-            const dx = p.x - cam.x, dy = p.y - cam.y, dz = p.z - cam.z;
-            const xc = dx * rx + dy * ry + dz * rz;
-            const yc = dx * ux + dy * uy + dz * uz;
-            const zc = dx * fx + dy * fy + dz * fz;
-            if (zc <= 0.15) { behind = true; break; }
-            zSum += zc;
-            sPts.push({
-              x: rect.left + rect.width * 0.5 + (xc / zc) * fovScale,
-              y: rect.top + rect.height * 0.5 - (yc / zc) * fovScale
-            });
-          }
-          if (behind) continue;
-
-          const light = Math.max(0, f.n.x * -0.35 + f.n.y * 0.85 + f.n.z * -0.38);
-          const shade = (st.nightMode ? 0.55 : 0.75) + 0.25 * light;
-          projectedFaces.push({ sPts, z: zSum / 4, fill: shadeHex(f.color, shade) });
-        }
-
-        projectedFaces.sort((a, b) => b.z - a.z);
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(rect.left, rect.top, rect.width, rect.height);
-        ctx.clip();
-
-        for (const pf of projectedFaces) {
-          ctx.beginPath();
-          ctx.moveTo(pf.sPts[0].x, pf.sPts[0].y);
-          for (let i = 1; i < pf.sPts.length; i++) ctx.lineTo(pf.sPts[i].x, pf.sPts[i].y);
-          ctx.closePath();
-          ctx.fillStyle = pf.fill;
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(30,40,34,0.14)';
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-        }
-        ctx.restore();
-
-        if (vp.isMain && vp.labelEls.length) {
-          vp.labelEls.forEach(({ el, pos }) => {
-            const dx = pos.x - cam.x, dy = pos.y - cam.y, dz = pos.z - cam.z;
-            const xc = dx * rx + dy * ry + dz * rz;
-            const yc = dx * ux + dy * uy + dz * uz;
-            const zc = dx * fx + dy * fy + dz * fz;
-            if (zc <= 0.2) {
-              el.style.display = 'none';
-            } else {
-              el.style.display = 'block';
-              el.style.left = `${rect.width * 0.5 + (xc / zc) * fovScale}px`;
-              el.style.top = `${rect.height * 0.5 - (yc / zc) * fovScale}px`;
-            }
-          });
-        }
-      }
-    }
-    renderFallbackLoop();
-  }
-
-  // Запуск: пробуем WebGL (Three.js), при таймауте/офлайне включаем автономный 3D
-  loadThreeWithTimeout(2600)
-    .then(startThreeApp)
-    .catch(startFallback3DApp);
+  // Полноэкранный просмотр иллюстраций по клику
+  const lightbox = document.getElementById('lightbox');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxContent = document.getElementById('lightbox-content');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('[data-lightbox]').forEach((box) => {
+    box.addEventListener('click', () => {
+      const svg = box.querySelector('svg');
+      if (!svg) return;
+      lightboxTitle.textContent = box.dataset.lightbox;
+      lightboxContent.innerHTML = '';
+      lightboxContent.appendChild(svg.cloneNode(true));
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) lightbox.classList.remove('open');
+  });
 </script>
 
 </body>
