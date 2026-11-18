@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>3D-дизайн комнаты 186 × 310 см — Интерактивный проект</title>
+  <style>
+    :root {
+      --bg: #f3f5f1;
+      --surface: #ffffff;
+      --surface-alt: #f9faf7;
+      --text: #1b221e;
+      --muted: #5b665f;
+      --accent: #5e9642;
+      --accent-dark: #45732e;
+      --accent-soft: #e7f2e0;
+      --warm: #d9823b;
+      --border: #dde3da;
+      --shadow-sm: 0 4px 14px rgba(20, 30, 22, 0.05);
+      --shadow-lg: 0 18px 42px rgba(20, 30, 22, 0.09);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    #shared-3d-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+      display: block;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #74b054, #4e7d35);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 12px rgba(94, 150, 66, 0.28);
+    }
+
+    .brand h1 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 2px;
+    }
+
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent-dark);
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+
+    .viewer-wrap {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      background: radial-gradient(circle at 50% 28%, #e5eef5 0%, #cfdbe3 100%);
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: background 0.5s ease;
+    }
+
+    .viewer-wrap.night-mode {
+      background: radial-gradient(circle at 50% 28%, #232c38 0%, #141920 100%);
+    }
+
+    .viewer-wrap:active {
+      cursor: grabbing;
+    }
+
+    .status-banner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      pointer-events: none;
+      z-index: 2;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .status-banner small {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    .hud-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .hud-pill {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(221, 227, 218, 0.95);
+      padding: 7px 12px;
+      border-radius: 11px;
+      font-size: 0.78rem;
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+      pointer-events: auto;
+    }
+
+    .hud-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      pointer-events: auto;
+    }
+
+    .zoom-pad {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 7;
+    }
+
+    .zoom-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--text);
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .zoom-btn:active {
+      transform: scale(0.94);
+      background: var(--accent-soft);
+    }
+
+    .dim-labels-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 5;
+      transition: opacity 0.2s ease;
+    }
+
+    .dim-labels-layer.hidden {
+      opacity: 0;
+    }
+
+    .dim-tag {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      background: rgba(27, 34, 30, 0.88);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 7px;
+      border-radius: 6px;
+      white-space: nowrap;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
+    }
+
+    .controls-panel {
+      position: relative;
+      z-index: 10;
+      padding: 16px 20px;
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .presets-scroller {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 2px;
+    }
+
+    .presets-scroller::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ctrl-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    button.btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      padding: 8px 13px;
+      min-height: 36px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.16s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    button.btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    button.btn:active {
+      transform: scale(0.97);
+    }
+
+    button.btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 3px 10px rgba(94, 150, 66, 0.28);
+    }
+
+    button.btn.warm-active {
+      background: var(--warm);
+      color: #fff;
+      border-color: var(--warm);
+    }
+
+    .palette-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 20px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .swatch-group {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .swatch {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 0 1px #b5bfb6;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .swatch.selected {
+      box-shadow: 0 0 0 2.5px var(--text);
+      transform: scale(1.06);
+    }
+
+    .plan-overview {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 330px 1fr;
+      gap: 22px;
+      margin-bottom: 42px;
+    }
+
+    .plan-card, .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .plan-card h3, .summary-card h3 {
+      font-size: 1.08rem;
+      margin-bottom: 12px;
+    }
+
+    .plan-svg {
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      height: auto;
+      display: block;
+      background: #fafbf9;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .spec-item {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px 15px;
+    }
+
+    .spec-item span {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .spec-item strong {
+      font-size: 0.94rem;
+      color: var(--text);
+    }
+
+    .section-head {
+      position: relative;
+      z-index: 10;
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.32rem, 3vw, 1.65rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .walls-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .wall-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      overflow: hidden;
+    }
+
+    .wall-card:nth-child(even) .wall-3d {
+      order: 2;
+    }
+
+    .wall-3d {
+      position: relative;
+      min-height: 410px;
+      background: radial-gradient(circle at 50% 30%, #e7eff5 0%, #d4dfe6 100%);
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .wall-3d:active {
+      cursor: grabbing;
+    }
+
+    .wall-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.93);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .wall-quick-bar {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      display: flex;
+      gap: 6px;
+      z-index: 7;
+    }
+
+    .wall-body {
+      position: relative;
+      z-index: 10;
+      background: var(--surface);
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .wall-step {
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-dark);
+    }
+
+    .wall-body h3 {
+      font-size: clamp(1.14rem, 2.4vw, 1.32rem);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      background: var(--accent-soft);
+      color: #274718;
+      padding: 4px 9px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .wall-body p {
+      color: #36403a;
+      font-size: 0.92rem;
+    }
+
+    .wall-body ul {
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.89rem;
+      color: #36403a;
+    }
+
+    @media (max-width: 960px) {
+      .plan-overview { grid-template-columns: 1fr; }
+      .wall-card { grid-template-columns: 1fr; }
+      .wall-card:nth-child(even) .wall-3d { order: 0; }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 14px;
+        gap: 8px;
+      }
+      .brand p { display: none; }
+      main { padding: 12px 12px 64px; }
+      .hero-card { border-radius: 16px; margin-bottom: 24px; }
+      .viewer-wrap { height: 58svh; min-height: 350px; max-height: 460px; }
+      .hud-top { top: 10px; left: 10px; right: 10px; }
+      .hud-pill { width: 100%; font-size: 0.72rem; padding: 6px 10px; }
+      .hud-actions { width: 100%; justify-content: space-between; }
+      .hud-actions button.btn { flex: 1 1 auto; padding: 7px 8px; font-size: 0.75rem; }
+      .controls-panel { padding: 12px 14px; gap: 12px; }
+      .dim-tag { font-size: 0.62rem; padding: 2px 5px; }
+      .plan-card, .summary-card { padding: 16px; border-radius: 16px; }
+      .specs-grid { grid-template-columns: 1fr; gap: 8px; }
+      .wall-card { border-radius: 16px; }
+      .wall-3d { min-height: 320px; }
+      .wall-body { padding: 18px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="shared-3d-canvas"></canvas>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-badge">3D</div>
+      <div>
+        <h1>Комната 186 × 310 см</h1>
+        <p>Интерактивная 3D-модель с мебелью, окном и обогревателем</p>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="#scene-main">Общая 3D</a>
+      <a href="#plan">План</a>
+      <a href="#side-1">1. Салатовая стена</a>
+      <a href="#side-2">2. Шкаф и дверь</a>
+      <a href="#side-3">3. Окно и обогреватель</a>
+      <a href="#side-4">4. Столик и пенал</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ГЛАВНАЯ ИНТЕРАКТИВНАЯ 3D-СЦЕНА -->
+  <section id="scene-main" class="hero-card">
+    <div id="main-viewer" class="viewer-wrap">
+      <div id="loader-status" class="status-banner">
+        <span>Загрузка 3D-модели комнаты...</span>
+        <small>Если модель не появилась через 3 секунды — нажмите «Поделиться» / «Открыть в браузере» (Chrome или Safari), так как встроенный просмотрщик файлов блокирует 3D.</small>
+      </div>
+      <div class="dim-labels-layer" id="dim-layer"></div>
+
+      <div class="hud-top">
+        <div class="hud-pill">
+          <strong>Управление:</strong> 1 палец / ЛКМ — вращение • 2 пальца / ПКМ — зум и сдвиг
+        </div>
+        <div class="hud-actions">
+          <button class="btn" id="btn-lighting">☀️ День / Вечер</button>
+          <button class="btn" id="btn-wardrobes">🚪 Шкафы</button>
+          <button class="btn" id="btn-dims">📏 Размеры</button>
+          <button class="btn" id="btn-reset">↺ Сброс</button>
+        </div>
+      </div>
+
+      <div class="zoom-pad">
+        <button class="zoom-btn" data-zoom="main" data-dir="-1" aria-label="Приблизить">+</button>
+        <button class="zoom-btn" data-zoom="main" data-dir="1" aria-label="Отдалить">−</button>
+      </div>
+    </div>
+
+    <div class="controls-panel">
+      <div class="presets-scroller">
+        <span class="ctrl-label">Ракурс:</span>
+        <button class="btn active" data-preset="overview">Общий вид</button>
+        <button class="btn" data-preset="fromDoor">От двери</button>
+        <button class="btn" data-preset="greenWall">Салатовая стена</button>
+        <button class="btn" data-preset="wardrobe">Встроенный шкаф</button>
+        <button class="btn" data-preset="windowHeater">Окно и обогреватель</button>
+        <button class="btn" data-preset="deskCabinet">Столик и пенал</button>
+      </div>
+
+      <div class="palette-row">
+        <div class="swatch-group">
+          <span class="ctrl-label">Салатовый:</span>
+          <div class="swatch selected" style="background:#b5d89a" data-green="#b5d89a" title="Нежно-салатовый"></div>
+          <div class="swatch" style="background:#9fcb7e" data-green="#9fcb7e" title="Свежий фисташковый"></div>
+          <div class="swatch" style="background:#c5e0b4" data-green="#c5e0b4" title="Пастельный шалфей"></div>
+          <div class="swatch" style="background:#95bc82" data-green="#95bc82" title="Травяной приглушённый"></div>
+        </div>
+
+        <div class="swatch-group">
+          <span class="ctrl-label">Белые стены:</span>
+          <div class="swatch selected" style="background:#f7f5ef" data-white="#f7f5ef" title="Тёплый молочно-белый"></div>
+          <div class="swatch" style="background:#ffffff" data-white="#ffffff" title="Чистый белый"></div>
+          <div class="swatch" style="background:#ece8de" data-white="#ece8de" title="Светлый греж"></div>
+          <div class="swatch" style="background:#e5eaec" data-white="#e5eaec" title="Светло-серый туман"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2D ЧЕРТЁЖ ПЛАНИРОВКИ И СПЕЦИФИКАЦИЯ -->
+  <section id="plan" class="plan-overview">
+    <div class="plan-card">
+      <h3>План комнаты (вид сверху)</h3>
+      <svg class="plan-svg" viewBox="0 0 320 440" xmlns="http://www.w3.org/2000/svg">
+        <rect x="55" y="45" width="210" height="350" fill="#ffffff" stroke="#1b221e" stroke-width="4" />
+        <line x1="55" y1="45" x2="55" y2="395" stroke="#5e9642" stroke-width="7" />
+        <rect x="61" y="51" width="66" height="54" rx="6" fill="#e7f2e0" stroke="#5e9642" stroke-dasharray="3 3" />
+        <text x="94" y="81" font-size="10" text-anchor="middle" fill="#2b4c1b" font-weight="600">Цветы</text>
+        <rect x="139" y="41" width="79" height="8" fill="#7fc3f0" stroke="#1b221e" stroke-width="1.5" />
+        <text x="178" y="34" font-size="10" text-anchor="middle" fill="#1b221e" font-weight="600">Окно 70</text>
+        <rect x="239" y="45" width="26" height="27" fill="#d0d7d2" stroke="#1b221e" stroke-width="1.5" />
+        <text x="252" y="61" font-size="8" text-anchor="middle" fill="#1b221e">23×24</text>
+        <rect x="257" y="78" width="8" height="46" fill="#e68a45" />
+        <text x="249" y="104" font-size="9" text-anchor="end" fill="#b85a16" font-weight="600">Обогрев.</text>
+        <rect x="61" y="114" width="115" height="222" rx="6" fill="#edf4e8" stroke="#5e9642" stroke-width="1.8" />
+        <text x="118" y="222" font-size="11" text-anchor="middle" fill="#274718" font-weight="700">Кровать</text>
+        <text x="118" y="237" font-size="10" text-anchor="middle" fill="#274718">197 × 102 см</text>
+        <rect x="218" y="132" width="43" height="82" rx="4" fill="#f5ede3" stroke="#9e7449" stroke-width="1.5" />
+        <text x="239" y="176" font-size="10" text-anchor="middle" fill="#6b4a28" font-weight="600">Столик</text>
+        <rect x="223" y="224" width="38" height="72" rx="4" fill="#f2f3f5" stroke="#5b665f" stroke-width="1.5" />
+        <text x="242" y="263" font-size="10" text-anchor="middle" fill="#36403a" font-weight="600">Шкаф</text>
+        <rect x="59" y="340" width="118" height="53" fill="#eef1ec" stroke="#1b221e" stroke-width="1.5" />
+        <text x="118" y="370" font-size="10" text-anchor="middle" fill="#1b221e" font-weight="600">Шкаф 106 см</text>
+        <line x1="177" y1="395" x2="265" y2="395" stroke="#ffffff" stroke-width="6" />
+        <path d="M 177 395 L 177 315 A 80 80 0 0 1 257 395" fill="none" stroke="#9e7449" stroke-width="1.5" stroke-dasharray="4 3" />
+        <text x="222" y="414" font-size="10" text-anchor="middle" fill="#1b221e" font-weight="600">Дверь 80 + антр. 33</text>
+        <text x="160" y="16" font-size="11" text-anchor="middle" fill="#5b665f" font-weight="700">Ширина 186 см</text>
+        <text x="24" y="220" font-size="11" text-anchor="middle" fill="#5b665f" font-weight="700" transform="rotate(-90 24 220)">Длина 310 см</text>
+      </svg>
+    </div>
+
+    <div class="summary-card">
+      <h3>Эргономика и точная расстановка мебели</h3>
+      <p style="color: var(--muted); font-size: 0.92rem;">
+        Все элементы расставлены в реальном масштабе <strong>186 × 310 × 238 см</strong> так, чтобы сохранить удобные проходы, доступ к обогревателю и полный угол открывания входной двери <strong>80 см</strong>.
+      </p>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <span>Спальная зона (салатовая стена)</span>
+          <strong>Кровать 197 × 102 см</strong>
+        </div>
+        <div class="spec-item">
+          <span>Основное хранение у входа</span>
+          <strong>Шкаф 106 см + антресоль 33 см</strong>
+        </div>
+        <div class="spec-item">
+          <span>Отопление справа от окна</span>
+          <strong>Короб 23×24 см + конвектор в стене</strong>
+        </div>
+        <div class="spec-item">
+          <span>Рабочая зона у окна (белая стена)</span>
+          <strong>Столик 74 × 40 см со стулом</strong>
+        </div>
+        <div class="spec-item">
+          <span>Дополнительное хранение</span>
+          <strong>Шкаф-пенал 66 × 36 × 205 см</strong>
+        </div>
+        <div class="spec-item">
+          <span>Светлый угол слева от окна</span>
+          <strong>Этажерка под цветы (простенок 75 см)</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПОДРОБНЫЙ РАЗБОР КАЖДОЙ ИЗ 4 СТОРОН -->
+  <div class="section-head">
+    <h2>Детальный 3D-обзор каждой из четырёх стен</h2>
+    <p>Каждую сцену ниже можно вращать одним пальцем, приближать двумя пальцами или кнопками «+» / «−».</p>
+  </div>
+
+  <div class="walls-list">
+    <article id="side-1" class="wall-card">
+      <div id="view-wall-1" class="wall-3d">
+        <div class="wall-tag">Сторона 1 • Салатовая акцентная стена</div>
+        <div class="wall-quick-bar">
+          <button class="btn" data-wall-reset="w1">↺ Сброс</button>
+        </div>
+        <div class="zoom-pad">
+          <button class="zoom-btn" data-zoom="w1" data-dir="-1">+</button>
+          <button class="zoom-btn" data-zoom="w1" data-dir="1">−</button>
+        </div>
+      </div>
+      <div class="wall-body">
+        <span class="wall-step">Стена 01 • 310 × 238 см</span>
+        <h3>Акцентная салатовая стена с кроватью и декором</h3>
+        <div class="chips">
+          <span class="chip">Длина: 310 см</span>
+          <span class="chip">Кровать: 197 × 102 см</span>
+          <span class="chip">Оттенок: NCS S 1515-G30Y</span>
+        </div>
+        <p>Чистая длинная стена слева от входа окрашивается в спокойный пастельно-салатовый цвет. Кровать <strong>197 × 102 см</strong> встаёт ровно между уголком для цветов у окна (61 см) и встроенным шкафом у двери (52 см).</p>
+        <ul>
+          <li><strong>Декор над кроватью:</strong> три вертикальных ботанических постера в дубовых рамах уравновешивают длину стены.</li>
+          <li><strong>Локальный свет:</strong> поворотное латунное бра у изголовья позволяет читать вечером без верхнего света.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article id="side-2" class="wall-card">
+      <div id="view-wall-2" class="wall-3d">
+        <div class="wall-tag">Сторона 2 • Входная стена и встроенный шкаф</div>
+        <div class="wall-quick-bar">
+          <button class="btn active" data-wall-door="w2">🚪 Створки шкафа</button>
+          <button class="btn" data-wall-reset="w2">↺ Сброс</button>
+        </div>
+        <div class="zoom-pad">
+          <button class="zoom-btn" data-zoom="w2" data-dir="-1">+</button>
+          <button class="zoom-btn" data-zoom="w2" data-dir="1">−</button>
+        </div>
+      </div>
+      <div class="wall-body">
+        <span class="wall-step">Стена 02 • 186 × 238 см</span>
+        <h3>Дверь 80 см, антресоль 33 см и встроенный шкаф 106 см</h3>
+        <div class="chips">
+          <span class="chip">Дверь: 80 × 205 см</span>
+          <span class="chip">Над дверью: 33 см</span>
+          <span class="chip">Шкаф справа: 106 см</span>
+        </div>
+        <p>Справа от двери в нишу глубиной 52 см встраивается платяной шкаф шириной <strong>106 см</strong>, который переходит в антресольную секцию высотой <strong>33 см</strong> над дверным проёмом.</p>
+        <ul>
+          <li><strong>Наполнение:</strong> штанга для одежды, нижние полки для обуви и ящиков, плюс вместительная верхняя антресоль.</li>
+          <li><strong>Фасады без ручек:</strong> матовые белые дверцы с системой <em>push-to-open</em> сливаются со стеной.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article id="side-3" class="wall-card">
+      <div id="view-wall-3" class="wall-3d">
+        <div class="wall-tag">Сторона 3 • Окно, обогреватель и цветы</div>
+        <div class="wall-quick-bar">
+          <button class="btn" data-wall-reset="w3">↺ Сброс</button>
+        </div>
+        <div class="zoom-pad">
+          <button class="zoom-btn" data-zoom="w3" data-dir="-1">+</button>
+          <button class="zoom-btn" data-zoom="w3" data-dir="1">−</button>
+        </div>
+      </div>
+      <div class="wall-body">
+        <span class="wall-step">Стена 03 • 186 × 238 см</span>
+        <h3>Окно 70 см, встроенный обогреватель справа и зона цветов</h3>
+        <div class="chips">
+          <span class="chip">Слева: 75 см под цветы</span>
+          <span class="chip">Окно: 70 × 145 см</span>
+          <span class="chip">Справа: короб 23×24 + обогреватель</span>
+        </div>
+        <p>В торцевой стене расположен оконный проём шириной <strong>70 см</strong> с деревянным подоконником и полупрозрачной римской шторой. Справа от окна находится вертикальный короб (<strong>23 × 24 см</strong>) и встроенный в стену конвекторный обогреватель.</p>
+        <ul>
+          <li><strong>Обогреватель справа от окна:</strong> утоплен в стену на высоте 14 см от пола, оснащён ламелями теплоотдачи и регулятором температуры.</li>
+          <li><strong>Уголок для цветов (75 см слева):</strong> многоярусная подставка и напольное кашпо получают максимум дневного света.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article id="side-4" class="wall-card">
+      <div id="view-wall-4" class="wall-3d">
+        <div class="wall-tag">Сторона 4 • Белая стена, столик и шкаф-пенал</div>
+        <div class="wall-quick-bar">
+          <button class="btn" data-wall-door="w4">🚪 Створки пенала</button>
+          <button class="btn" data-wall-reset="w4">↺ Сброс</button>
+        </div>
+        <div class="zoom-pad">
+          <button class="zoom-btn" data-zoom="w4" data-dir="-1">+</button>
+          <button class="zoom-btn" data-zoom="w4" data-dir="1">−</button>
+        </div>
+      </div>
+      <div class="wall-body">
+        <span class="wall-step">Стена 04 • 310 × 238 см</span>
+        <h3>Тёплая белая стена, компактный столик и шкаф-пенал</h3>
+        <div class="chips">
+          <span class="chip">Столик: 74 × 40 см</span>
+          <span class="chip">Шкаф-пенал: 66 × 36 × 205 см</span>
+          <span class="chip">Цвет: RAL 9010 Тёплый белый</span>
+        </div>
+        <p>Напротив салатовой стены выбран <strong>тёплый молочно-белый оттенок</strong>: он нейтрализует холодные тени, отражает свет из окна и визуально расширяет комнату.</p>
+        <ul>
+          <li><strong>Столик (74 × 40 см):</strong> стоит ближе к окну и обогревателю; мягкий стул полностью задвигается под столешницу.</li>
+          <li><strong>Шкаф-пенал (66 × 36 × 205 см):</strong> закрытые секции сверху и снизу + открытые полки по центру, установлен с отступом 83 см от угла двери для свободного входа.</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</main>
+
+<script>
+  // =========================================================
+  // 0. ПАРАЛЛЕЛЬНАЯ ЗАГРУЗКА THREE.JS + ТАЙМАУТ НА АВТОНОМНЫЙ 3D
+  // =========================================================
+  function loadScript(url) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = url;
+      s.async = true;
+      s.onload = () => (window.THREE ? resolve(window.THREE) : reject(new Error('No THREE')));
+      s.onerror = () => reject(new Error('Failed ' + url));
+      document.head.appendChild(s);
+    });
+  }
+
+  function loadThreeWithTimeout(ms = 2600) {
+    if (window.THREE) return Promise.resolve(window.THREE);
+    const urls = [
+      'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+      'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js',
+      'https://unpkg.com/three@0.128.0/build/three.min.js'
+    ];
+    const raceLoaders = Promise.any
+      ? Promise.any(urls.map(loadScript))
+      : loadScript(urls[0]);
+
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('CDN timeout')), ms)
+    );
+    return Promise.race([raceLoaders, timeout]);
+  }
+
+  // =========================================================
+  // ОБЩЕЕ УПРАВЛЕНИЕ КАМЕРОЙ И UI ДЛЯ ОБОИХ ДВИЖКОВ
+  // =========================================================
+  const isMobile = window.innerWidth <= 640;
+  const sharedCanvas = document.getElementById('shared-3d-canvas');
+  const viewportMap = {};
+  const viewports = [];
+  let activeViewport = null;
+
+  const mainPresetDefault = {
+    radius: isMobile ? 5.15 : 4.55,
+    theta: 0.68,
+    phi: 1.04,
+    target: { x: -0.02, y: 1.05, z: -0.08 }
+  };
+
+  const presets = {
+    overview:     mainPresetDefault,
+    fromDoor:     { radius: isMobile ? 2.85 : 2.55, theta: 0.04,  phi: 1.38, target: { x: 0.0, y: 1.10, z: -0.82 } },
+    greenWall:    { radius: isMobile ? 3.55 : 3.15, theta: 1.50,  phi: 1.28, target: { x: -0.65, y: 1.05, z: 0.02 } },
+    wardrobe:     { radius: isMobile ? 3.30 : 2.95, theta: 3.08,  phi: 1.28, target: { x: 0.0, y: 1.18, z: 1.15 } },
+    windowHeater: { radius: isMobile ? 2.75 : 2.45, theta: -0.36, phi: 1.28, target: { x: 0.28, y: 0.96, z: -1.25 } },
+    deskCabinet:  { radius: isMobile ? 3.25 : 2.85, theta: -1.48, phi: 1.28, target: { x: 0.65, y: 1.02, z: -0.02 } }
+  };
+
+  function createBaseViewportState(key, containerId, initSpherical, initTarget, isMain = false) {
+    const container = document.getElementById(containerId);
+    const state = {
+      initSpherical: { ...initSpherical },
+      initTarget: { ...initTarget },
+      radius: initSpherical.radius,
+      theta: initSpherical.theta,
+      phi: initSpherical.phi,
+      target: { ...initTarget },
+      goalRadius: initSpherical.radius,
+      goalTheta: initSpherical.theta,
+      goalPhi: initSpherical.phi,
+      goalTarget: { ...initTarget },
+      pointers: new Map(),
+      lastPinchDist: 0,
+      lastMidX: 0,
+      lastMidY: 0,
+      wardrobesOpen: false,
+      nightMode: false,
+      greenColor: '#b5d89a',
+      whiteColor: '#f7f5ef'
+    };
+
+    const vp = { key, container, state, isMain, labelEls: [] };
+
+    if (isMain) {
+      const dimAnchors = [
+        { text: 'Длина 310 см', pos: { x: -0.93, y: 2.46, z: 0.0 } },
+        { text: 'Ширина 186 см', pos: { x: 0.0, y: 2.46, z: -1.55 } },
+        { text: 'Кровать 197×102', pos: { x: -0.42, y: 0.65, z: 0.04 } },
+        { text: 'Окно 70 см', pos: { x: 0.17, y: 1.55, z: -1.55 } },
+        { text: 'Короб 23×24', pos: { x: 0.81, y: 1.85, z: -1.32 } },
+        { text: 'Обогреватель', pos: { x: 0.90, y: 0.56, z: -1.02 } },
+        { text: 'Столик 74×40', pos: { x: 0.72, y: 0.85, z: -0.38 } },
+        { text: 'Пенал 66 см', pos: { x: 0.74, y: 2.12, z: 0.38 } },
+        { text: 'Шкаф 106 см', pos: { x: -0.40, y: 2.46, z: 1.30 } },
+        { text: 'Дверь 80 + 33', pos: { x: 0.53, y: 2.22, z: 1.30 } }
+      ];
+      const layer = document.getElementById('dim-layer');
+      if (isMobile) layer.classList.add('hidden');
+      vp.labelEls = dimAnchors.map((d) => {
+        const el = document.createElement('div');
+        el.className = 'dim-tag';
+        el.textContent = d.text;
+        layer.appendChild(el);
+        return { el, pos: d.pos };
+      });
+    }
+
+    container.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    container.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button')) return;
+      activeViewport = vp;
+      state.pointers.set(e.pointerId, {
+        x: e.clientX,
+        y: e.clientY,
+        button: e.button,
+        shift: e.shiftKey
+      });
+      if (state.pointers.size === 2) {
+        const pts = Array.from(state.pointers.values());
+        state.lastPinchDist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
+        state.lastMidX = (pts[0].x + pts[1].x) * 0.5;
+        state.lastMidY = (pts[0].y + pts[1].y) * 0.5;
+      }
+    });
+
+    container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      state.goalRadius = Math.max(1.4, Math.min(7.5, state.goalRadius + e.deltaY * 0.0028));
+    }, { passive: false });
+
+    viewports.push(vp);
+    viewportMap[key] = vp;
+    return vp;
+  }
+
+  window.addEventListener('pointermove', (e) => {
+    if (!activeViewport) return;
+    const st = activeViewport.state;
+    if (!st.pointers.has(e.pointerId)) return;
+
+    const prev = st.pointers.get(e.pointerId);
+    const dx = e.clientX - prev.x;
+    const dy = e.clientY - prev.y;
+    prev.x = e.clientX;
+    prev.y = e.clientY;
+
+    if (st.pointers.size === 1) {
+      if (prev.button === 2 || prev.shift) {
+        const panSpeed = 0.0022 * st.radius;
+        const rx = Math.cos(st.theta), rz = -Math.sin(st.theta);
+        st.goalTarget.x -= rx * dx * panSpeed;
+        st.goalTarget.z -= rz * dx * panSpeed;
+        st.goalTarget.y = Math.max(0.2, Math.min(2.1, st.goalTarget.y + dy * panSpeed));
+      } else {
+        st.goalTheta -= dx * 0.0085;
+        st.goalPhi = Math.max(0.24, Math.min(Math.PI / 2 - 0.03, st.goalPhi - dy * 0.0075));
+      }
+    } else if (st.pointers.size === 2) {
+      const pts = Array.from(st.pointers.values());
+      const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
+      const midX = (pts[0].x + pts[1].x) * 0.5;
+      const midY = (pts[0].y + pts[1].y) * 0.5;
+
+      if (st.lastPinchDist > 0) {
+        const deltaDist = st.lastPinchDist - dist;
+        st.goalRadius = Math.max(1.4, Math.min(7.5, st.goalRadius + deltaDist * 0.012));
+      }
+
+      const panSpeed = 0.0024 * st.radius;
+      const rx = Math.cos(st.theta), rz = -Math.sin(st.theta);
+      st.goalTarget.x -= rx * (midX - st.lastMidX) * panSpeed;
+      st.goalTarget.z -= rz * (midX - st.lastMidX) * panSpeed;
+      st.goalTarget.y = Math.max(0.2, Math.min(2.1, st.goalTarget.y + (midY - st.lastMidY) * panSpeed));
+
+      st.lastPinchDist = dist;
+      st.lastMidX = midX;
+      st.lastMidY = midY;
+    }
+  });
+
+  function clearPointer(e) {
+    for (const vp of viewports) {
+      vp.state.pointers.delete(e.pointerId);
+      if (vp.state.pointers.size < 2) vp.state.lastPinchDist = 0;
+    }
+    if (activeViewport && activeViewport.state.pointers.size === 0) activeViewport = null;
+  }
+
+  window.addEventListener('pointerup', clearPointer);
+  window.addEventListener('pointercancel', clearPointer);
+
+  // Регистрация всех 5 окон
+  const mainView = createBaseViewportState('main', 'main-viewer', mainPresetDefault, mainPresetDefault.target, true);
+  createBaseViewportState('w1', 'view-wall-1', { radius: isMobile ? 3.65 : 3.25, theta: 1.48,  phi: 1.28 }, { x: -0.65, y: 1.05, z: 0.02 });
+  const v2 = createBaseViewportState('w2', 'view-wall-2', { radius: isMobile ? 3.30 : 2.95, theta: 3.06,  phi: 1.30 }, { x: 0.0, y: 1.18, z: 1.15 });
+  v2.state.wardrobesOpen = true;
+  createBaseViewportState('w3', 'view-wall-3', { radius: isMobile ? 2.95 : 2.65, theta: -0.25, phi: 1.28 }, { x: 0.18, y: 0.98, z: -1.25 });
+  createBaseViewportState('w4', 'view-wall-4', { radius: isMobile ? 3.55 : 3.15, theta: -1.48, phi: 1.28 }, { x: 0.65, y: 1.05, z: -0.02 });
+
+  function applyPreset(key) {
+    const p = presets[key];
+    if (!p) return;
+    mainView.state.goalRadius = p.radius;
+    mainView.state.goalTheta = p.theta;
+    mainView.state.goalPhi = p.phi;
+    Object.assign(mainView.state.goalTarget, p.target);
+  }
+
+  document.querySelectorAll('[data-preset]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-preset]').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyPreset(btn.dataset.preset);
+    });
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    document.querySelectorAll('[data-preset]').forEach((b) => b.classList.remove('active'));
+    document.querySelector('[data-preset="overview"]').classList.add('active');
+    applyPreset('overview');
+  });
+
+  const btnLighting = document.getElementById('btn-lighting');
+  const mainContainer = document.getElementById('main-viewer');
+  btnLighting.addEventListener('click', () => {
+    mainView.state.nightMode = !mainView.state.nightMode;
+    mainContainer.classList.toggle('night-mode', mainView.state.nightMode);
+    btnLighting.classList.toggle('warm-active', mainView.state.nightMode);
+    btnLighting.textContent = mainView.state.nightMode ? '🌙 Вечер' : '☀️ День / Вечер';
+  });
+
+  const btnWardrobes = document.getElementById('btn-wardrobes');
+  btnWardrobes.addEventListener('click', () => {
+    mainView.state.wardrobesOpen = !mainView.state.wardrobesOpen;
+    btnWardrobes.classList.toggle('active', mainView.state.wardrobesOpen);
+    btnWardrobes.textContent = mainView.state.wardrobesOpen ? '🚪 Закрыть' : '🚪 Шкафы';
+  });
+
+  const btnDims = document.getElementById('btn-dims');
+  const dimLayer = document.getElementById('dim-layer');
+  if (!isMobile) btnDims.classList.add('active');
+  btnDims.addEventListener('click', () => {
+    const isHidden = dimLayer.classList.toggle('hidden');
+    btnDims.classList.toggle('active', !isHidden);
+  });
+
+  document.querySelectorAll('[data-zoom]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const vp = viewportMap[btn.dataset.zoom];
+      if (!vp) return;
+      vp.state.goalRadius = Math.max(1.4, Math.min(7.5, vp.state.goalRadius + Number(btn.dataset.dir) * 0.55));
+    });
+  });
+
+  document.querySelectorAll('[data-wall-door]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const vp = viewportMap[btn.dataset.wallDoor];
+      if (!vp) return;
+      vp.state.wardrobesOpen = !vp.state.wardrobesOpen;
+      btn.classList.toggle('active', vp.state.wardrobesOpen);
+    });
+  });
+
+  document.querySelectorAll('[data-wall-reset]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const vp = viewportMap[btn.dataset.wallReset];
+      if (!vp) return;
+      vp.state.goalRadius = vp.state.initSpherical.radius;
+      vp.state.goalTheta = vp.state.initSpherical.theta;
+      vp.state.goalPhi = vp.state.initSpherical.phi;
+      Object.assign(vp.state.goalTarget, vp.state.initTarget);
+    });
+  });
+
+  document.querySelectorAll('[data-green]').forEach((sw) => {
+    sw.addEventListener('click', () => {
+      document.querySelectorAll('[data-green]').forEach((s) => s.classList.remove('selected'));
+      sw.classList.add('selected');
+      viewports.forEach((v) => {
+        v.state.greenColor = sw.dataset.green;
+        if (v.room) v.room.greenWallMat.color.set(sw.dataset.green);
+      });
+    });
+  });
+
+  document.querySelectorAll('[data-white]').forEach((sw) => {
+    sw.addEventListener('click', () => {
+      document.querySelectorAll('[data-white]').forEach((s) => s.classList.remove('selected'));
+      sw.classList.add('selected');
+      viewports.forEach((v) => {
+        v.state.whiteColor = sw.dataset.white;
+        if (v.room) v.room.whiteWallMat.color.set(sw.dataset.white);
+      });
+    });
+  });
+
+  // =========================================================
+  // ВАРИАНТ А: ПОЛНОЦЕННЫЙ WEBGL-РЕНДЕР (THREE.JS)
+  // =========================================================
+  function startThreeApp() {
+    const statusEl = document.getElementById('loader-status');
+    if (statusEl) statusEl.style.display = 'none';
+
+    function makeParquetTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512; c.height = 512;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#8b5a2b';
+      ctx.fillRect(0, 0, 512, 512);
+      const w = 64, h = 16;
+      const palette = ['#7c4d23', '#8f5e30', '#9c6938', '#73451d', '#865528'];
+      for (let y = 0; y < 512; y += h) {
+        const shift = ((y / h) % 2) * (w * 0.5);
+        for (let x = -w; x < 512 + w; x += w) {
+          const idx = Math.abs(Math.floor((x + y * 3) / 16)) % palette.length;
+          ctx.fillStyle = palette[idx];
+          ctx.fillRect(x + shift + 0.8, y + 0.8, w - 1.6, h - 1.6);
+        }
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(4, 6); tex.rotation = Math.PI / 4;
+      return tex;
+    }
+
+    function makeGrilleTexture() {
+      const c = document.createElement('canvas');
+      c.width = 128; c.height = 128;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#c4c9c7'; ctx.fillRect(0, 0, 128, 128);
+      ctx.fillStyle = '#4e5452';
+      for (let y = 6; y < 128; y += 10) {
+        for (let x = 6; x < 128; x += 10) {
+          ctx.beginPath(); ctx.arc(x, y, 2.3, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(2, 12);
+      return tex;
+    }
+
+    function makeArtTexture(bg, c1, c2, style) {
+      const c = document.createElement('canvas');
+      c.width = 256; c.height = 340;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, 256, 340);
+      ctx.strokeStyle = '#e5e0d5'; ctx.lineWidth = 14; ctx.strokeRect(7, 7, 242, 326);
+      ctx.fillStyle = c1;
+      if (style === 0) {
+        ctx.beginPath(); ctx.arc(128, 145, 56, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = c2; ctx.beginPath(); ctx.ellipse(128, 210, 22, 65, 0, 0, Math.PI * 2); ctx.fill();
+      } else if (style === 1) {
+        ctx.beginPath(); ctx.ellipse(115, 165, 36, 82, -0.25, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = c2; ctx.beginPath(); ctx.ellipse(152, 185, 28, 62, 0.3, 0, Math.PI * 2); ctx.fill();
+      } else {
+        ctx.beginPath(); ctx.moveTo(128, 70); ctx.quadraticCurveTo(196, 165, 128, 260); ctx.quadraticCurveTo(60, 165, 128, 70); ctx.fill();
+      }
+      return new THREE.CanvasTexture(c);
+    }
+
+    function makeCitySkyTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512; c.height = 512;
+      const ctx = c.getContext('2d');
+      const grad = ctx.createLinearGradient(0, 0, 0, 512);
+      grad.addColorStop(0, '#8cc4eb'); grad.addColorStop(0.6, '#d9ecf8'); grad.addColorStop(1, '#f3ede2');
+      ctx.fillStyle = grad; ctx.fillRect(0, 0, 512, 512);
+      ctx.fillStyle = '#d3beaa'; ctx.fillRect(20, 240, 155, 272);
+      ctx.fillStyle = '#bfa690'; ctx.fillRect(300, 210, 190, 302);
+      ctx.fillStyle = '#6f9f54';
+      ctx.beginPath(); ctx.arc(215, 325, 78, 0, Math.PI * 2); ctx.arc(265, 345, 58, 0, Math.PI * 2); ctx.fill();
+      return new THREE.CanvasTexture(c);
+    }
+
+    function buildRoomModel() {
+      const root = new THREE.Group();
+      const W = 1.86, L = 3.10, H = 2.38, wt = 0.09;
+
+      const greenWallMat = new THREE.MeshStandardMaterial({ color: 0xb5d89a, roughness: 0.86 });
+      const whiteWallMat = new THREE.MeshStandardMaterial({ color: 0xf7f5ef, roughness: 0.86 });
+      const wardrobeWhiteMat = new THREE.MeshStandardMaterial({ color: 0xfdfcfa, roughness: 0.58 });
+      const oakMat = new THREE.MeshStandardMaterial({ color: 0xb9824c, roughness: 0.52 });
+      const darkOakMat = new THREE.MeshStandardMaterial({ color: 0x774c27, roughness: 0.58 });
+      const frameWhiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.38 });
+      const brassMat = new THREE.MeshStandardMaterial({ color: 0xd6b04c, metalness: 0.72, roughness: 0.25 });
+      const grilleMat = new THREE.MeshStandardMaterial({ map: makeGrilleTexture(), metalness: 0.35, roughness: 0.45 });
+
+      const floor = new THREE.Mesh(
+        new THREE.BoxGeometry(W, 0.07, L),
+        new THREE.MeshStandardMaterial({ map: makeParquetTexture(), roughness: 0.42 })
+      );
+      floor.position.set(0, -0.035, 0);
+      floor.receiveShadow = true;
+      root.add(floor);
+
+      const rug = new THREE.Mesh(
+        new THREE.BoxGeometry(1.36, 0.012, 2.08),
+        new THREE.MeshStandardMaterial({ color: 0xeae5db, roughness: 0.95 })
+      );
+      rug.position.set(-0.18, 0.006, 0.02);
+      rug.receiveShadow = true;
+      root.add(rug);
+
+      const leftWallGroup = new THREE.Group();
+      const leftWall = new THREE.Mesh(new THREE.BoxGeometry(wt, H, L), greenWallMat);
+      leftWall.position.set(-W / 2 - wt / 2, H / 2, 0);
+      leftWall.receiveShadow = true;
+      leftWallGroup.add(leftWall);
+      root.add(leftWallGroup);
+
+      const rightWallGroup = new THREE.Group();
+      const rightWall = new THREE.Mesh(new THREE.BoxGeometry(wt, H, L), whiteWallMat);
+      rightWall.position.set(W / 2 + wt / 2, H / 2, 0);
+      rightWall.receiveShadow = true;
+      rightWallGroup.add(rightWall);
+      root.add(rightWallGroup);
+
+      // Оконная стена
+      const winWallGroup = new THREE.Group();
+      const zWin = -L / 2 - wt / 2;
+      const winLeftPier = new THREE.Mesh(new THREE.BoxGeometry(0.75, H, wt), whiteWallMat);
+      winLeftPier.position.set(-0.93 + 0.375, H / 2, zWin);
+      const winRightPier = new THREE.Mesh(new THREE.BoxGeometry(0.41, H, wt), whiteWallMat);
+      winRightPier.position.set(0.52 + 0.205, H / 2, zWin);
+      const winBottom = new THREE.Mesh(new THREE.BoxGeometry(0.70, 0.75, wt), whiteWallMat);
+      winBottom.position.set(0.17, 0.375, zWin);
+      const winTop = new THREE.Mesh(new THREE.BoxGeometry(0.70, 0.18, wt), whiteWallMat);
+      winTop.position.set(0.17, 2.29, zWin);
+      winWallGroup.add(winLeftPier, winRightPier, winBottom, winTop);
+
+      const winX = 0.17, sillY = 0.75, winH = 1.45, winW = 0.70;
+      const sill = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.035, 0.17), oakMat);
+      sill.position.set(winX, sillY + 0.015, -L / 2 + 0.025);
+      winWallGroup.add(sill);
+
+      const ft = 0.048;
+      const wTop = new THREE.Mesh(new THREE.BoxGeometry(winW, ft, 0.07), frameWhiteMat);
+      wTop.position.set(winX, sillY + winH - ft / 2, -L / 2 - 0.035);
+      const wBot = new THREE.Mesh(new THREE.BoxGeometry(winW, ft, 0.07), frameWhiteMat);
+      wBot.position.set(winX, sillY + ft / 2 + 0.02, -L / 2 - 0.035);
+      const wL = new THREE.Mesh(new THREE.BoxGeometry(ft, winH, 0.07), frameWhiteMat);
+      wL.position.set(winX - winW / 2 + ft / 2, sillY + winH / 2, -L / 2 - 0.035);
+      const wR = new THREE.Mesh(new THREE.BoxGeometry(ft, winH, 0.07), frameWhiteMat);
+      wR.position.set(winX + winW / 2 - ft / 2, sillY + winH / 2, -L / 2 - 0.035);
+      const wMid = new THREE.Mesh(new THREE.BoxGeometry(winW - 0.06, 0.038, 0.055), frameWhiteMat);
+      wMid.position.set(winX, sillY + winH * 0.52, -L / 2 - 0.035);
+      winWallGroup.add(wTop, wBot, wL, wR, wMid);
+
+      const glass = new THREE.Mesh(
+        new THREE.BoxGeometry(winW - 0.08, winH - 0.08, 0.01),
+        new THREE.MeshPhysicalMaterial({ color: 0xe3f4ff, transparent: true, opacity: 0.24, roughness: 0.08 })
+      );
+      glass.position.set(winX, sillY + winH / 2, -L / 2 - 0.035);
+      const skyBackdrop = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.5, 1.9),
+        new THREE.MeshBasicMaterial({ map: makeCitySkyTexture(), side: THREE.DoubleSide })
+      );
+      skyBackdrop.position.set(winX, sillY + winH / 2, -L / 2 - 0.48);
+      winWallGroup.add(glass, skyBackdrop);
+
+      // Короб 23x24 справа от окна + встроенный обогреватель
+      const colCore = new THREE.Mesh(new THREE.BoxGeometry(0.23, H, 0.24), grilleMat);
+      colCore.position.set(W / 2 - 0.115, H / 2, -L / 2 + 0.12);
+      const trimPost = new THREE.Mesh(new THREE.BoxGeometry(0.025, H, 0.025), oakMat);
+      trimPost.position.set(W / 2 - 0.228, H / 2, -L / 2 + 0.238);
+      winWallGroup.add(colCore, trimPost);
+
+      const heaterGroup = new THREE.Group();
+      const heaterFrame = new THREE.Mesh(
+        new THREE.BoxGeometry(0.034, 0.44, 0.46),
+        new THREE.MeshStandardMaterial({ color: 0xe8ecea, roughness: 0.4, metalness: 0.22 })
+      );
+      heaterFrame.position.set(W / 2 - 0.015, 0.36, -1.02);
+      const heaterGlowMat = new THREE.MeshStandardMaterial({
+        color: 0x3b3532, emissive: 0xff6b2b, emissiveIntensity: 0.24, roughness: 0.6
+      });
+      const heaterCore = new THREE.Mesh(new THREE.BoxGeometry(0.038, 0.36, 0.38), heaterGlowMat);
+      heaterCore.position.set(W / 2 - 0.016, 0.36, -1.02);
+      heaterGroup.add(heaterFrame, heaterCore);
+
+      const louverMat = new THREE.MeshStandardMaterial({ color: 0xf7f9f8, metalness: 0.3, roughness: 0.35 });
+      for (let ly = 0.20; ly <= 0.52; ly += 0.032) {
+        const louver = new THREE.Mesh(new THREE.BoxGeometry(0.044, 0.012, 0.38), louverMat);
+        louver.position.set(W / 2 - 0.019, ly, -1.02);
+        louver.rotation.z = 0.22;
+        heaterGroup.add(louver);
+      }
+      const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.017, 0.017, 0.026, 16), brassMat);
+      knob.rotation.z = Math.PI / 2;
+      knob.position.set(W / 2 - 0.028, 0.53, -0.83);
+      heaterGroup.add(knob);
+      rightWallGroup.add(heaterGroup);
+      root.add(winWallGroup);
+
+      // Входная стена + встроенный шкаф
+      const doorWallGroup = new THREE.Group();
+      const zDoor = L / 2 + wt / 2;
+      const dwRight = new THREE.Mesh(new THREE.BoxGeometry(1.06, H, wt), whiteWallMat);
+      dwRight.position.set(-0.93 + 0.53, H / 2, zDoor);
+      const dwHeader = new THREE.Mesh(new THREE.BoxGeometry(0.80, 0.33, wt), whiteWallMat);
+      dwHeader.position.set(0.53, 2.215, zDoor);
+      doorWallGroup.add(dwRight, dwHeader);
+
+      const doorPanel = new THREE.Mesh(new THREE.BoxGeometry(0.72, 2.00, 0.042), oakMat);
+      doorPanel.position.set(0.53, 1.00, L / 2 + 0.01);
+      const doorKnob = new THREE.Mesh(new THREE.SphereGeometry(0.025, 16, 16), brassMat);
+      doorKnob.position.set(0.22, 0.98, L / 2 - 0.025);
+      doorWallGroup.add(doorPanel, doorKnob);
+
+      const wDepth = 0.52, zW = L / 2 - wDepth / 2;
+      const wSideL = new THREE.Mesh(new THREE.BoxGeometry(0.025, H, wDepth), wardrobeWhiteMat);
+      wSideL.position.set(-0.93 + 0.0125, H / 2, zW);
+      const wSideR = new THREE.Mesh(new THREE.BoxGeometry(0.025, H, wDepth), wardrobeWhiteMat);
+      wSideR.position.set(0.13 - 0.0125, H / 2, zW);
+      const wTop = new THREE.Mesh(new THREE.BoxGeometry(1.06, 0.025, wDepth), wardrobeWhiteMat);
+      wTop.position.set(-0.40, H - 0.0125, zW);
+      const wBot = new THREE.Mesh(new THREE.BoxGeometry(1.06, 0.06, wDepth), wardrobeWhiteMat);
+      wBot.position.set(-0.40, 0.03, zW);
+      const wBack = new THREE.Mesh(
+        new THREE.BoxGeometry(1.02, H - 0.06, 0.02),
+        new THREE.MeshStandardMaterial({ color: 0xeae5da, roughness: 0.8 })
+      );
+      wBack.position.set(-0.40, H / 2, L / 2 - 0.015);
+      doorWallGroup.add(wSideL, wSideR, wTop, wBot, wBack);
+
+      for (let sy of [0.42, 0.82, 1.82, 2.08]) {
+        const sh = new THREE.Mesh(new THREE.BoxGeometry(1.01, 0.02, wDepth - 0.04), oakMat);
+        sh.position.set(-0.40, sy, zW);
+        doorWallGroup.add(sh);
+      }
+
+      const clothColors = [0x6f9e58, 0xded9ce, 0x5c768d, 0xd49a6a, 0x8ba888, 0xf2efe9];
+      clothColors.forEach((col, i) => {
+        const shirt = new THREE.Mesh(
+          new THREE.BoxGeometry(0.055, 0.68, 0.38),
+          new THREE.MeshStandardMaterial({ color: col, roughness: 0.9 })
+        );
+        shirt.position.set(-0.76 + i * 0.14, 1.38, zW);
+        doorWallGroup.add(shirt);
+      });
+
+      const wardrobeLight = new THREE.PointLight(0xffdfa8, 0, 1.8);
+      wardrobeLight.position.set(-0.40, 1.78, zW - 0.10);
+      doorWallGroup.add(wardrobeLight);
+
+      const pivotWL = new THREE.Group();
+      pivotWL.position.set(-0.915, 0, L / 2 - wDepth);
+      const doorWL = new THREE.Mesh(new THREE.BoxGeometry(0.512, H - 0.03, 0.022), wardrobeWhiteMat);
+      doorWL.position.set(0.256, H / 2, -0.011);
+      pivotWL.add(doorWL);
+
+      const pivotWR = new THREE.Group();
+      pivotWR.position.set(0.115, 0, L / 2 - wDepth);
+      const doorWR = new THREE.Mesh(new THREE.BoxGeometry(0.512, H - 0.03, 0.022), wardrobeWhiteMat);
+      doorWR.position.set(-0.256, H / 2, -0.011);
+      pivotWR.add(doorWR);
+      doorWallGroup.add(pivotWL, pivotWR);
+
+      const mezzBox = new THREE.Mesh(new THREE.BoxGeometry(0.80, 0.33, wDepth), wardrobeWhiteMat);
+      mezzBox.position.set(0.53, 2.215, zW);
+      const mezzDoorL = new THREE.Mesh(new THREE.BoxGeometry(0.39, 0.31, 0.02), wardrobeWhiteMat);
+      mezzDoorL.position.set(0.33, 2.215, L / 2 - wDepth - 0.01);
+      const mezzDoorR = new THREE.Mesh(new THREE.BoxGeometry(0.39, 0.31, 0.02), wardrobeWhiteMat);
+      mezzDoorR.position.set(0.73, 2.215, L / 2 - wDepth - 0.01);
+      doorWallGroup.add(mezzBox, mezzDoorL, mezzDoorR);
+      root.add(doorWallGroup);
+
+      // Кровать 197 x 102 см
+      const bedGroup = new THREE.Group();
+      const bedW = 1.02, bedL = 1.97, bedX = -W / 2 + bedW / 2 + 0.015, bedZ = 0.04;
+      const frame = new THREE.Mesh(new THREE.BoxGeometry(bedW, 0.24, bedL), oakMat);
+      frame.position.set(bedX, 0.20, bedZ);
+      const hbTop = new THREE.Mesh(new THREE.BoxGeometry(bedW, 0.56, 0.05), oakMat);
+      hbTop.position.set(bedX, 0.60, bedZ - bedL / 2 + 0.025);
+      const mattress = new THREE.Mesh(
+        new THREE.BoxGeometry(bedW - 0.04, 0.17, bedL - 0.07),
+        new THREE.MeshStandardMaterial({ color: 0xfcfbf7, roughness: 0.9 })
+      );
+      mattress.position.set(bedX, 0.39, bedZ + 0.02);
+      const throwBlanket = new THREE.Mesh(
+        new THREE.BoxGeometry(bedW + 0.01, 0.195, 0.54),
+        new THREE.MeshStandardMaterial({ color: 0x87b36d, roughness: 0.95 })
+      );
+      throwBlanket.position.set(bedX, 0.398, bedZ + 0.66);
+      const p1 = new THREE.Mesh(
+        new THREE.BoxGeometry(0.62, 0.13, 0.38),
+        new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.85 })
+      );
+      p1.position.set(bedX - 0.08, 0.52, bedZ - bedL / 2 + 0.25);
+      p1.rotation.x = 0.22;
+      bedGroup.add(frame, hbTop, mattress, throwBlanket, p1);
+
+      const arts = [
+        ['#faf8f2', '#74a358', '#a3c98b', 0],
+        ['#faf8f2', '#5b8a44', '#8eb874', 1],
+        ['#faf8f2', '#89b56e', '#c0dbb0', 2]
+      ];
+      arts.forEach((a, idx) => {
+        const pz = bedZ - 0.48 + idx * 0.50;
+        const pf = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.54, 0.40), darkOakMat);
+        pf.position.set(-W / 2 + 0.012, 1.50, pz);
+        const pa = new THREE.Mesh(
+          new THREE.PlaneGeometry(0.35, 0.49),
+          new THREE.MeshBasicMaterial({ map: makeArtTexture(a[0], a[1], a[2], a[3]) })
+        );
+        pa.rotation.y = Math.PI / 2;
+        pa.position.set(-W / 2 + 0.026, 1.50, pz);
+        bedGroup.add(pf, pa);
+      });
+
+      const sconceLight = new THREE.PointLight(0xffcf82, 0, 1.6);
+      sconceLight.position.set(-W / 2 + 0.12, 1.15, bedZ - 0.84);
+      bedGroup.add(sconceLight);
+      root.add(bedGroup);
+
+      // Цветы у окна
+      const plantsGroup = new THREE.Group();
+      const sx = -0.58, sz = -L / 2 + 0.25;
+      const shelfLow = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.028, 0.32), oakMat);
+      shelfLow.position.set(sx, 0.36, sz);
+      const shelfHigh = new THREE.Mesh(new THREE.BoxGeometry(0.30, 0.028, 0.28), oakMat);
+      shelfHigh.position.set(sx + 0.10, 0.72, sz);
+      plantsGroup.add(shelfLow, shelfHigh);
+
+      function createPlant(px, py, pz, sc, potColor) {
+        const pot = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.078 * sc, 0.058 * sc, 0.14 * sc, 14),
+          new THREE.MeshStandardMaterial({ color: potColor, roughness: 0.65 })
+        );
+        pot.position.set(px, py + 0.07 * sc, pz);
+        plantsGroup.add(pot);
+        const leafMat = new THREE.MeshStandardMaterial({ color: 0x4b8736, roughness: 0.6 });
+        for (let i = 0; i < 6; i++) {
+          const ang = (i / 6) * Math.PI * 2;
+          const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.062 * sc, 8, 8), leafMat);
+          leaf.scale.set(0.55, 1.65, 0.38);
+          leaf.position.set(px + Math.cos(ang) * 0.055 * sc, py + 0.20 * sc, pz + Math.sin(ang) * 0.055 * sc);
+          leaf.rotation.z = Math.cos(ang) * 0.48;
+          plantsGroup.add(leaf);
+        }
+      }
+      createPlant(sx + 0.10, 0.735, sz, 1.15, 0xd87b56);
+      createPlant(sx - 0.14, 0.375, sz + 0.02, 1.0, 0xf2efe9);
+      createPlant(-0.80, 0.0, -L / 2 + 0.25, 1.45, 0xd87b56);
+      root.add(plantsGroup);
+
+      // Столик со стулом (74 x 40 см)
+      const deskGroup = new THREE.Group();
+      const deskW = 0.40, deskL = 0.74, deskH = 0.75;
+      const deskX = W / 2 - deskW / 2 - 0.015, deskZ = -0.38;
+      const deskTop = new THREE.Mesh(new THREE.BoxGeometry(deskW, 0.085, deskL), oakMat);
+      deskTop.position.set(deskX, deskH - 0.0425, deskZ);
+      deskGroup.add(deskTop);
+      for (let lx of [-deskW / 2 + 0.03, deskW / 2 - 0.03]) {
+        for (let lz of [-deskL / 2 + 0.03, deskL / 2 - 0.03]) {
+          const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.012, deskH - 0.08, 10), darkOakMat);
+          leg.position.set(deskX + lx, (deskH - 0.08) / 2, deskZ + lz);
+          deskGroup.add(leg);
+        }
+      }
+      const seat = new THREE.Mesh(
+        new THREE.BoxGeometry(0.36, 0.04, 0.38),
+        new THREE.MeshStandardMaterial({ color: 0xe4dfd3, roughness: 0.85 })
+      );
+      seat.position.set(deskX - 0.16, 0.45, deskZ);
+      const chairBack = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.24, 0.38), oakMat);
+      chairBack.position.set(deskX - 0.33, 0.68, deskZ);
+      const deskLight = new THREE.PointLight(0xffd28a, 0, 1.5);
+      deskLight.position.set(deskX + 0.02, deskH + 0.20, deskZ - 0.24);
+      deskGroup.add(seat, chairBack, deskLight);
+      root.add(deskGroup);
+
+      // Шкаф-пенал (66 x 36 x 205 см)
+      const cabGroup = new THREE.Group();
+      const cabD = 0.36, cabL = 0.66, cabH = 2.05;
+      const cabX = W / 2 - cabD / 2 - 0.01, cabZ = 0.38;
+      const cSide1 = new THREE.Mesh(new THREE.BoxGeometry(cabD, cabH, 0.022), oakMat);
+      cSide1.position.set(cabX, cabH / 2, cabZ - cabL / 2 + 0.011);
+      const cSide2 = new THREE.Mesh(new THREE.BoxGeometry(cabD, cabH, 0.022), oakMat);
+      cSide2.position.set(cabX, cabH / 2, cabZ + cabL / 2 - 0.011);
+      const cTop = new THREE.Mesh(new THREE.BoxGeometry(cabD, 0.025, cabL), oakMat);
+      cTop.position.set(cabX, cabH - 0.0125, cabZ);
+      const cBack = new THREE.Mesh(new THREE.BoxGeometry(0.018, cabH - 0.04, cabL - 0.03), wardrobeWhiteMat);
+      cBack.position.set(W / 2 - 0.02, cabH / 2, cabZ);
+      cabGroup.add(cSide1, cSide2, cTop, cBack);
+
+      for (let py of [0.45, 0.85, 1.16, 1.48, 1.78]) {
+        const sh = new THREE.Mesh(new THREE.BoxGeometry(cabD - 0.03, 0.02, cabL - 0.04), oakMat);
+        sh.position.set(cabX, py, cabZ);
+        cabGroup.add(sh);
+      }
+
+      const cabPivotL = new THREE.Group();
+      cabPivotL.position.set(cabX - cabD / 2, 0, cabZ - cabL / 2 + 0.022);
+      const cabDoorL = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.78, 0.305), wardrobeWhiteMat);
+      cabDoorL.position.set(-0.01, 0.455, 0.1525);
+      cabPivotL.add(cabDoorL);
+
+      const cabPivotR = new THREE.Group();
+      cabPivotR.position.set(cabX - cabD / 2, 0, cabZ + cabL / 2 - 0.022);
+      const cabDoorR = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.78, 0.305), wardrobeWhiteMat);
+      cabDoorR.position.set(-0.01, 0.455, -0.1525);
+      cabPivotR.add(cabDoorR);
+
+      const cabTopPivotL = new THREE.Group();
+      cabTopPivotL.position.set(cabX - cabD / 2, 0, cabZ - cabL / 2 + 0.022);
+      const cabTopDoorL = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.54, 0.305), wardrobeWhiteMat);
+      cabTopDoorL.position.set(-0.01, 1.755, 0.1525);
+      cabTopPivotL.add(cabTopDoorL);
+
+      const cabTopPivotR = new THREE.Group();
+      cabTopPivotR.position.set(cabX - cabD / 2, 0, cabZ + cabL / 2 - 0.022);
+      const cabTopDoorR = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.54, 0.305), wardrobeWhiteMat);
+      cabTopDoorR.position.set(-0.01, 1.755, -0.1525);
+      cabTopPivotR.add(cabTopDoorR);
+
+      cabGroup.add(cabPivotL, cabPivotR, cabTopPivotL, cabTopPivotR);
+      root.add(cabGroup);
+
+      return {
+        root, greenWallMat, whiteWallMat,
+        leftWallGroup, rightWallGroup, winWallGroup, doorWallGroup,
+        pivotWL, pivotWR, cabPivotL, cabPivotR, cabTopPivotL, cabTopPivotR,
+        wardrobeLight, sconceLight, deskLight, heaterGlowMat
+      };
+    }
+
+    const renderer = new THREE.WebGLRenderer({ canvas: sharedCanvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+
+    for (const vp of viewports) {
+      vp.scene = new THREE.Scene();
+      vp.camera = new THREE.PerspectiveCamera(42, 1.5, 0.1, 40);
+      vp.hemiLight = new THREE.HemisphereLight(0xffffff, 0xe6dfd3, 0.78);
+      vp.sunLight = new THREE.DirectionalLight(0xfff6e5, 0.92);
+      vp.sunLight.position.set(0.25, 3.1, -3.4);
+      const fillLight = new THREE.DirectionalLight(0xeef5ff, 0.38);
+      fillLight.position.set(-2.4, 2.4, 2.4);
+      vp.scene.add(vp.hemiLight, vp.sunLight, fillLight);
+      vp.room = buildRoomModel();
+      vp.scene.add(vp.room.root);
+    }
+
+    function renderLoop() {
+      requestAnimationFrame(renderLoop);
+      const cw = sharedCanvas.clientWidth || window.innerWidth;
+      const ch = sharedCanvas.clientHeight || window.innerHeight;
+      const dpr = renderer.getPixelRatio();
+      if (sharedCanvas.width !== Math.floor(cw * dpr) || sharedCanvas.height !== Math.floor(ch * dpr)) {
+        renderer.setSize(cw, ch, false);
+      }
+
+      renderer.setScissorTest(false);
+      renderer.clear();
+      renderer.setScissorTest(true);
+
+      for (const vp of viewports) {
+        const st = vp.state;
+        const rm = vp.room;
+        st.radius += (st.goalRadius - st.radius) * 0.12;
+        st.theta += (st.goalTheta - st.theta) * 0.12;
+        st.phi += (st.goalPhi - st.phi) * 0.12;
+        st.target.x += (st.goalTarget.x - st.target.x) * 0.12;
+        st.target.y += (st.goalTarget.y - st.target.y) * 0.12;
+        st.target.z += (st.goalTarget.z - st.target.z) * 0.12;
+
+        const openAng = st.wardrobesOpen ? 1.40 : 0;
+        rm.pivotWL.rotation.y += (-openAng - rm.pivotWL.rotation.y) * 0.12;
+        rm.pivotWR.rotation.y += (openAng - rm.pivotWR.rotation.y) * 0.12;
+        rm.cabPivotL.rotation.y += (-openAng - rm.cabPivotL.rotation.y) * 0.12;
+        rm.cabPivotR.rotation.y += (openAng - rm.cabPivotR.rotation.y) * 0.12;
+        rm.cabTopPivotL.rotation.y += (-openAng - rm.cabTopPivotL.rotation.y) * 0.12;
+        rm.cabTopPivotR.rotation.y += (openAng - rm.cabTopPivotR.rotation.y) * 0.12;
+
+        vp.hemiLight.intensity += ((st.nightMode ? 0.25 : 0.78) - vp.hemiLight.intensity) * 0.08;
+        vp.sunLight.intensity += ((st.nightMode ? 0.08 : 0.92) - vp.sunLight.intensity) * 0.08;
+        rm.sconceLight.intensity += ((st.nightMode ? 1.35 : 0) - rm.sconceLight.intensity) * 0.08;
+        rm.deskLight.intensity += ((st.nightMode ? 1.35 : 0) - rm.deskLight.intensity) * 0.08;
+        rm.wardrobeLight.intensity += (((st.nightMode || st.wardrobesOpen) ? 1.15 : 0) - rm.wardrobeLight.intensity) * 0.08;
+
+        const sinPhi = Math.sin(st.phi);
+        vp.camera.position.set(
+          st.target.x + st.radius * sinPhi * Math.sin(st.theta),
+          st.target.y + st.radius * Math.cos(st.phi),
+          st.target.z + st.radius * sinPhi * Math.cos(st.theta)
+        );
+        vp.camera.lookAt(st.target.x, st.target.y, st.target.z);
+
+        rm.rightWallGroup.visible = vp.camera.position.x < 1.32;
+        rm.leftWallGroup.visible = vp.camera.position.x > -1.32;
+        rm.doorWallGroup.visible = vp.camera.position.z < 1.92;
+        rm.winWallGroup.visible = vp.camera.position.z > -1.92;
+
+        const rect = vp.container.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > ch || rect.right < 0 || rect.left > cw || rect.width <= 0 || rect.height <= 0) {
+          continue;
+        }
+
+        const bottom = ch - rect.bottom;
+        renderer.setViewport(rect.left, bottom, rect.width, rect.height);
+        renderer.setScissor(rect.left, bottom, rect.width, rect.height);
+        vp.camera.aspect = rect.width / rect.height;
+        vp.camera.updateProjectionMatrix();
+
+        if (vp.isMain && vp.labelEls.length) {
+          vp.labelEls.forEach(({ el, pos }) => {
+            const v = new THREE.Vector3(pos.x, pos.y, pos.z).project(vp.camera);
+            if (v.z > 1) {
+              el.style.display = 'none';
+            } else {
+              el.style.display = 'block';
+              el.style.left = `${(v.x * 0.5 + 0.5) * rect.width}px`;
+              el.style.top = `${(-v.y * 0.5 + 0.5) * rect.height}px`;
+            }
+          });
+        }
+
+        renderer.render(vp.scene, vp.camera);
+      }
+    }
+    renderLoop();
+  }
+
+  // =========================================================
+  // ВАРИАНТ Б: АВТОНОМНЫЙ 3D-ДВИЖОК (ЕСЛИ НЕТ СЕТИ / БЛОК CDN)
+  // =========================================================
+  function startFallback3DApp() {
+    const statusEl = document.getElementById('loader-status');
+    if (statusEl) statusEl.style.display = 'none';
+
+    const ctx = sharedCanvas.getContext('2d');
+
+    function shadeHex(hex, factor) {
+      const c = parseInt(hex.replace('#', ''), 16);
+      const r = Math.min(255, Math.max(0, Math.round(((c >> 16) & 255) * factor)));
+      const g = Math.min(255, Math.max(0, Math.round(((c >> 8) & 255) * factor)));
+      const b = Math.min(255, Math.max(0, Math.round((c & 255) * factor)));
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function makeBoxFaces(cx, cy, cz, sx, sy, sz, color, tag = '') {
+      const hx = sx / 2, hy = sy / 2, hz = sz / 2;
+      const v = [
+        { x: cx - hx, y: cy - hy, z: cz - hz },
+        { x: cx + hx, y: cy - hy, z: cz - hz },
+        { x: cx + hx, y: cy + hy, z: cz - hz },
+        { x: cx - hx, y: cy + hy, z: cz - hz },
+        { x: cx - hx, y: cy - hy, z: cz + hz },
+        { x: cx + hx, y: cy - hy, z: cz + hz },
+        { x: cx + hx, y: cy + hy, z: cz + hz },
+        { x: cx - hx, y: cy + hy, z: cz + hz }
+      ];
+      return [
+        { pts: [v[4], v[5], v[6], v[7]], n: { x: 0, y: 0, z: 1 },  color, tag },
+        { pts: [v[1], v[0], v[3], v[2]], n: { x: 0, y: 0, z: -1 }, color, tag },
+        { pts: [v[5], v[1], v[2], v[6]], n: { x: 1, y: 0, z: 0 },  color, tag },
+        { pts: [v[0], v[4], v[7], v[3]], n: { x: -1, y: 0, z: 0 }, color, tag },
+        { pts: [v[7], v[6], v[2], v[3]], n: { x: 0, y: 1, z: 0 },  color, tag },
+        { pts: [v[0], v[1], v[5], v[4]], n: { x: 0, y: -1, z: 0 }, color, tag }
+      ];
+    }
+
+    function renderFallbackLoop() {
+      requestAnimationFrame(renderFallbackLoop);
+      const cw = window.innerWidth;
+      const ch = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (sharedCanvas.width !== Math.floor(cw * dpr) || sharedCanvas.height !== Math.floor(ch * dpr)) {
+        sharedCanvas.width = Math.floor(cw * dpr);
+        sharedCanvas.height = Math.floor(ch * dpr);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cw, ch);
+
+      const W = 1.86, L = 3.10, H = 2.38, wt = 0.08;
+
+      for (const vp of viewports) {
+        const st = vp.state;
+        st.radius += (st.goalRadius - st.radius) * 0.12;
+        st.theta += (st.goalTheta - st.theta) * 0.12;
+        st.phi += (st.goalPhi - st.phi) * 0.12;
+        st.target.x += (st.goalTarget.x - st.target.x) * 0.12;
+        st.target.y += (st.goalTarget.y - st.target.y) * 0.12;
+        st.target.z += (st.goalTarget.z - st.target.z) * 0.12;
+
+        const rect = vp.container.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > ch || rect.right < 0 || rect.left > cw || rect.width <= 0 || rect.height <= 0) {
+          continue;
+        }
+
+        const sinPhi = Math.sin(st.phi);
+        const cam = {
+          x: st.target.x + st.radius * sinPhi * Math.sin(st.theta),
+          y: st.target.y + st.radius * Math.cos(st.phi),
+          z: st.target.z + st.radius * sinPhi * Math.cos(st.theta)
+        };
+
+        let fx = st.target.x - cam.x, fy = st.target.y - cam.y, fz = st.target.z - cam.z;
+        const fl = Math.hypot(fx, fy, fz) || 1;
+        fx /= fl; fy /= fl; fz /= fl;
+
+        let rx = -fz, ry = 0, rz = fx;
+        const rl = Math.hypot(rx, rz) || 1;
+        rx /= rl; rz /= rl;
+
+        const ux = ry * fz - rz * fy;
+        const uy = rz * fx - rx * fz;
+        const uz = rx * fy - ry * fx;
+
+        const faces = [];
+        faces.push(...makeBoxFaces(0, -0.03, 0, W, 0.06, L, '#966334'));
+        faces.push(...makeBoxFaces(-0.18, 0.008, 0.02, 1.32, 0.012, 2.04, '#e6e0d4'));
+
+        if (cam.x > -1.32) faces.push(...makeBoxFaces(-W / 2 - wt / 2, H / 2, 0, wt, H, L, st.greenColor));
+        if (cam.x < 1.32) {
+          faces.push(...makeBoxFaces(W / 2 + wt / 2, H / 2, 0, wt, H, L, st.whiteColor));
+          // Обогреватель справа от окна
+          faces.push(...makeBoxFaces(W / 2 - 0.018, 0.36, -1.02, 0.036, 0.44, 0.46, st.nightMode ? '#e6783c' : '#d8dedb'));
+        }
+        if (cam.z > -1.92) {
+          faces.push(...makeBoxFaces(-0.93 + 0.375, H / 2, -L / 2 - wt / 2, 0.75, H, wt, st.whiteColor));
+          faces.push(...makeBoxFaces(0.52 + 0.205, H / 2, -L / 2 - wt / 2, 0.41, H, wt, st.whiteColor));
+          faces.push(...makeBoxFaces(0.17, 0.375, -L / 2 - wt / 2, 0.70, 0.75, wt, st.whiteColor));
+          faces.push(...makeBoxFaces(0.17, 2.29, -L / 2 - wt / 2, 0.70, 0.18, wt, st.whiteColor));
+          faces.push(...makeBoxFaces(0.17, 1.47, -L / 2 - 0.03, 0.66, 1.40, 0.02, '#b9dff7'));
+          faces.push(...makeBoxFaces(0.17, 0.76, -L / 2 + 0.02, 0.78, 0.035, 0.16, '#b9824c'));
+          faces.push(...makeBoxFaces(W / 2 - 0.115, H / 2, -L / 2 + 0.12, 0.23, H, 0.24, '#c4c9c7'));
+        }
+        if (cam.z < 1.92) {
+          faces.push(...makeBoxFaces(-0.93 + 0.53, H / 2, L / 2 + wt / 2, 1.06, H, wt, st.whiteColor));
+          faces.push(...makeBoxFaces(0.53, 2.215, L / 2 + wt / 2, 0.80, 0.33, wt, st.whiteColor));
+          faces.push(...makeBoxFaces(0.53, 1.00, L / 2 + 0.01, 0.72, 2.00, 0.04, '#b9824c'));
+          // Шкаф 106 см и антресоль 33 см
+          faces.push(...makeBoxFaces(-0.40, H / 2, L / 2 - 0.26, 1.06, H, 0.52, st.wardrobesOpen ? '#dcd4c4' : '#fcfbf8'));
+          faces.push(...makeBoxFaces(0.53, 2.215, L / 2 - 0.26, 0.80, 0.33, 0.52, '#fcfbf8'));
+        }
+
+        // Кровать 197 x 102
+        faces.push(...makeBoxFaces(-0.41, 0.20, 0.04, 1.02, 0.24, 1.97, '#b9824c'));
+        faces.push(...makeBoxFaces(-0.41, 0.38, 0.06, 0.98, 0.16, 1.90, '#faf8f2'));
+        faces.push(...makeBoxFaces(-0.41, 0.39, 0.68, 1.00, 0.17, 0.54, '#87b36d'));
+        faces.push(...makeBoxFaces(-0.48, 0.50, -0.68, 0.58, 0.11, 0.36, '#ffffff'));
+
+        // Цветы у окна
+        faces.push(...makeBoxFaces(-0.58, 0.36, -1.30, 0.54, 0.03, 0.32, '#b9824c'));
+        faces.push(...makeBoxFaces(-0.48, 0.72, -1.30, 0.30, 0.03, 0.28, '#b9824c'));
+        faces.push(...makeBoxFaces(-0.48, 0.92, -1.30, 0.16, 0.24, 0.16, '#4b8736'));
+        faces.push(...makeBoxFaces(-0.78, 0.26, -1.30, 0.22, 0.34, 0.22, '#4b8736'));
+
+        // Столик и шкаф-пенал на белой стене
+        faces.push(...makeBoxFaces(0.71, 0.72, -0.38, 0.40, 0.07, 0.74, '#b9824c'));
+        faces.push(...makeBoxFaces(0.56, 0.45, -0.38, 0.34, 0.04, 0.36, '#e4dfd3'));
+        faces.push(...makeBoxFaces(0.74, 1.025, 0.38, 0.36, 2.05, 0.66, st.wardrobesOpen ? '#b9824c' : '#fcfbf8'));
+
+        const fovScale = (rect.height * 0.5) / Math.tan((21 * Math.PI) / 180);
+        const projectedFaces = [];
+
+        for (const f of faces) {
+          const cx = (f.pts[0].x + f.pts[2].x) * 0.5;
+          const cy = (f.pts[0].y + f.pts[2].y) * 0.5;
+          const cz = (f.pts[0].z + f.pts[2].z) * 0.5;
+          const vx = cam.x - cx, vy = cam.y - cy, vz = cam.z - cz;
+          if (f.n.x * vx + f.n.y * vy + f.n.z * vz <= 0) continue;
+
+          const sPts = [];
+          let zSum = 0, behind = false;
+          for (const p of f.pts) {
+            const dx = p.x - cam.x, dy = p.y - cam.y, dz = p.z - cam.z;
+            const xc = dx * rx + dy * ry + dz * rz;
+            const yc = dx * ux + dy * uy + dz * uz;
+            const zc = dx * fx + dy * fy + dz * fz;
+            if (zc <= 0.15) { behind = true; break; }
+            zSum += zc;
+            sPts.push({
+              x: rect.left + rect.width * 0.5 + (xc / zc) * fovScale,
+              y: rect.top + rect.height * 0.5 - (yc / zc) * fovScale
+            });
+          }
+          if (behind) continue;
+
+          const light = Math.max(0, f.n.x * -0.35 + f.n.y * 0.85 + f.n.z * -0.38);
+          const shade = (st.nightMode ? 0.55 : 0.75) + 0.25 * light;
+          projectedFaces.push({ sPts, z: zSum / 4, fill: shadeHex(f.color, shade) });
+        }
+
+        projectedFaces.sort((a, b) => b.z - a.z);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(rect.left, rect.top, rect.width, rect.height);
+        ctx.clip();
+
+        for (const pf of projectedFaces) {
+          ctx.beginPath();
+          ctx.moveTo(pf.sPts[0].x, pf.sPts[0].y);
+          for (let i = 1; i < pf.sPts.length; i++) ctx.lineTo(pf.sPts[i].x, pf.sPts[i].y);
+          ctx.closePath();
+          ctx.fillStyle = pf.fill;
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(30,40,34,0.14)';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        if (vp.isMain && vp.labelEls.length) {
+          vp.labelEls.forEach(({ el, pos }) => {
+            const dx = pos.x - cam.x, dy = pos.y - cam.y, dz = pos.z - cam.z;
+            const xc = dx * rx + dy * ry + dz * rz;
+            const yc = dx * ux + dy * uy + dz * uz;
+            const zc = dx * fx + dy * fy + dz * fz;
+            if (zc <= 0.2) {
+              el.style.display = 'none';
+            } else {
+              el.style.display = 'block';
+              el.style.left = `${rect.width * 0.5 + (xc / zc) * fovScale}px`;
+              el.style.top = `${rect.height * 0.5 - (yc / zc) * fovScale}px`;
+            }
+          });
+        }
+      }
+    }
+    renderFallbackLoop();
+  }
+
+  // Запуск: пробуем WebGL (Three.js), при таймауте/офлайне включаем автономный 3D
+  loadThreeWithTimeout(2600)
+    .then(startThreeApp)
+    .catch(startFallback3DApp);
+</script>
+
+</body>
+</html>
